@@ -1,0 +1,94 @@
+/* =====================================================================================
+   BILLU'S PIZZA KITCHEN — DESIGN TOKENS
+   The one place for colour, type, spacing, radii, shadows and motion. Every component
+   style in assets/ui/design.css reads these; change a value here and it changes everywhere.
+   ===================================================================================== */
+:root{
+  /* ---------- colour: raw palette ---------- */
+  --c-wood-900:#3B2210;   /* darkest wood: outlines, text on light */
+  --c-wood-800:#5A3418;
+  --c-wood-700:#7A4A22;   /* primary wooden surface */
+  --c-wood-500:#A8723F;
+  --c-wood-300:#D9B48A;
+  --c-tomato-700:#A8321F;
+  --c-tomato-500:#D94A2E; /* action / accent */
+  --c-tomato-300:#F08A6A;
+  --c-basil-800:#245F23;
+  --c-basil-600:#3B8C34;  /* success: CHECK, NEXT, SERVE */
+  --c-basil-400:#6DB85A;
+  --c-basil-100:#E3F4DA;
+  --c-cheese-600:#E0A21A;
+  --c-cheese-400:#FFC83D; /* highlight / selected */
+  --c-cheese-200:#FFE7A3;
+  --c-cream-50:#FFFBF1;
+  --c-cream-100:#FFF4DC;  /* cards */
+  --c-cream-200:#F7E6C4;
+  --c-ink-900:#3A2210;    /* text: 13.6:1 on cream-100 */
+  --c-ink-700:#5C3A1E;    /* secondary text: 9.2:1 on cream-100 */
+  --c-coral-600:#D9634F;  /* the one error colour: soft coral, "try again" */
+  --c-coral-400:#F28C78;
+  --c-coral-100:#FDE3DC;
+  --c-white:#FFFFFF;
+
+  /* ---------- colour: roles ---------- */
+  --surface-wood:var(--c-wood-700);
+  --surface-wood-dark:var(--c-wood-900);
+  --surface-card:var(--c-cream-100);
+  --surface-card-2:var(--c-cream-50);
+  --outline:var(--c-wood-900);
+  --text:var(--c-ink-900);
+  --text-soft:var(--c-ink-700);
+  --text-on-wood:var(--c-cream-50);
+  --accent:var(--c-tomato-500);
+  --accent-dark:var(--c-tomato-700);
+  --success:var(--c-basil-600);
+  --success-dark:var(--c-basil-800);
+  --success-soft:var(--c-basil-100);
+  --highlight:var(--c-cheese-400);
+  --highlight-dark:var(--c-cheese-600);
+  --highlight-soft:var(--c-cheese-200);
+  --error:var(--c-coral-600);
+  --error-soft:var(--c-coral-100);
+  --error-glow:var(--c-coral-400);
+  --focus:#1A3FAA;          /* focus ring: strong blue, clear on wood and on cream */
+
+  /* ---------- type ---------- */
+  --font-display:"Baloo 2","Nunito",system-ui,sans-serif;   /* headings, numbers, buttons */
+  --font-body:"Nunito","Baloo 2",system-ui,sans-serif;      /* body and speech */
+  --fs-1:16px; --fs-2:20px; --fs-3:24px; --fs-4:32px; --fs-5:48px;   /* the only five sizes */
+  --fs-speech:var(--fs-3);   /* speech banner: 24 on desktop (≥22), 20 on phones (≥18) */
+  --lh-tight:1.15; --lh-body:1.3;
+  --fw-body:700; --fw-display:800;
+
+  /* ---------- spacing: 8 px grid ---------- */
+  --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px; --sp-5:40px; --sp-6:48px;
+  --safe-top:max(var(--sp-3),env(safe-area-inset-top));
+  --safe-bottom:max(var(--sp-3),env(safe-area-inset-bottom));
+  --safe-left:max(var(--sp-3),env(safe-area-inset-left));
+  --safe-right:max(var(--sp-3),env(safe-area-inset-right));
+
+  /* ---------- radii ---------- */
+  --r-sm:12px; --r-card:20px; --r-pill:999px;
+
+  /* ---------- shadows (wood-tinted) ---------- */
+  --sh-1:0 2px 4px rgba(59,34,16,.18);
+  --sh-2:0 4px 10px rgba(59,34,16,.22);
+  --sh-3:0 10px 24px rgba(59,34,16,.28);
+  --sh-press:0 1px 2px rgba(59,34,16,.25);
+  --sh-btn:0 4px 0 var(--success-dark),0 6px 12px rgba(59,34,16,.25);       /* the plank's "thickness" */
+  --sh-btn-press:0 1px 0 var(--success-dark),0 2px 4px rgba(59,34,16,.25);
+  --glow-select:0 0 0 4px var(--highlight),0 0 18px rgba(255,200,61,.75);
+  --glow-error:0 0 0 4px var(--error-glow),0 0 20px rgba(242,140,120,.7);
+
+  /* ---------- sizes ---------- */
+  --tap:48px;              /* minimum target */
+  --icon-btn:56px;         /* round wooden buttons */
+  --btn-h:64px;            /* primary plank */
+
+  /* ---------- motion: one curve, three durations ---------- */
+  --ease:cubic-bezier(.3,.7,.3,1);
+  --t-fast:150ms; --t-med:250ms; --t-slow:400ms;
+}
+/* phones: smaller speech text (still ≥ 18 px on screen) */
+@media (max-width:600px){ :root{ --fs-speech:var(--fs-2); } }
+@media (prefers-reduced-motion: reduce){ :root{ --t-fast:1ms; --t-med:1ms; --t-slow:1ms; } }

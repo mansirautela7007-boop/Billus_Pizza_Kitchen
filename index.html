@@ -21,6 +21,7 @@ body{margin:0;font:14px system-ui,-apple-system,sans-serif}
 img{max-width:100%}
 [hidden]{display:none!important}
 </style>
+<link rel="stylesheet" href="assets/ui/tokens.css?v=ds9">
 </head>
 <body>
 <script>
@@ -63,11 +64,12 @@ img{max-width:100%}
   const iw=g(window,"innerWidth")||g(Window.prototype,"innerWidth"), ih=g(window,"innerHeight")||g(Window.prototype,"innerHeight");
   const realW=()=>iw.get.call(window), realH=()=>ih.get.call(window);
   let Z=1;
-  function fit(){ Z=Math.min(6,realW()/W0,realH()/H0); Z=Math.max(Z,.2); d.style.zoom=Z===1?"":String(Z);
+  function fit(){ const P=realW()<realH();   /* design pass: portrait is played upright (a stacked layout), laid out at least 430 wide; landscape as before */
+    Z=P ? (realW()<430 ? realW()/430 : realW()>900 ? realW()/900 : 1) : Math.min(6,realW()/W0,realH()/H0); Z=Math.max(Z,.2); d.style.zoom=Z===1?"":String(Z); d.classList.toggle("portrait",P);
     // viewport units follow the page's own (drawn) size: the CSS uses var(--vw) etc. in place of vw
     const w=realW()/Z/100, h=realH()/Z/100;
     d.style.setProperty("--vw",w+"px"); d.style.setProperty("--vh",h+"px"); d.style.setProperty("--vmin",Math.min(w,h)+"px"); d.style.setProperty("--vmax",Math.max(w,h)+"px");
-    media(); d.classList.toggle("turnme", realW()<realH()); const tm=document.getElementById("turnme"); if(tm) tm.style.zoom=String(1/Z); }
+    media(); d.classList.toggle("turnme", false); const tm=document.getElementById("turnme"); if(tm) tm.style.zoom=String(1/Z); }
   // width/height conditions in @media rules are judged on the page's own size too
   function media(){ for(const sh of document.styleSheets){ let rs; try{ rs=sh.cssRules; }catch(e){ continue; }
     for(const r of rs){ if(!(r instanceof CSSMediaRule)) continue; if(r._o===undefined) r._o=r.media.mediaText;
@@ -1469,10 +1471,10 @@ const NAMES = {parrot:"Parrot",tez:"Tez",monty:"Monty",ant:"Ant",squirrel:"Squir
   bear:"Bear",sloth:"Sloth",hippo:"Hippo",giraffe:"Giraffe"};
 const LEVELS = {
   "1.1": { title:"Top and serve", cut:false, end:["4 orders served! You’re a topping star!","Next, let’s learn to cut the pizza too!"], orders:[
-    {cust:"tez",      n:2,  d:7,  shape:"round",  idle:"Tap the slices Tez wants.", line:"Take your time… 2/7 of a pizza, please.",       ok:"2 of 7 slices. Slow and tasty!"},
     {cust:"monty",    n:3,  d:4,  shape:"square", idle:"Tap the parts Monty wants.", line:"3/4 of a pizza, please!",                       ok:"3/4 with {t}! My favourite!"},
     {cust:"squirrel", who:"the squirrel", n:2,  d:5,  shape:"rect",   idle:"Tap the strips the squirrel wants.", line:"Quick, quick! 2/5 of a pizza, please!",         ok:"2/5! The {t} smells so good!"},
-    {cust:"jhumru",   n:9,  d:10, shape:"rect",   idle:"Tap the pieces Jhumru wants.", line:"Last but not least! 9/10 of a pizza, please!",  ok:"9 of 10 pieces, and {t} too! Delicious!"} ]},
+    {cust:"jhumru",   n:9,  d:10, shape:"rect",   idle:"Tap the pieces Jhumru wants.", line:"9/10 of a pizza, please!",  ok:"9 of 10 pieces, and {t} too! Delicious!"},
+    {cust:"tez",      n:2,  d:7,  shape:"round",  idle:"Tap the slices Tez wants.", line:"Last but not least! Take your time… 2/7 of a pizza, please.",       ok:"2 of 7 slices. Slow and tasty!"} ]},
   "1.2": { title:"Cut, top and serve", cut:true, end:["5 more orders, all perfect! You’re a master chef!","You read every fraction right!"], orders:[
     {cust:"frog", who:"the frog",    n:1,  d:4,  shape:"square", moulds:[2,4,6],  cut:"4 equal parts!", top:"Pick a topping, then top the frog’s share.", idle:"Tap the part the frog wants.", line:"Ribbit! 1/4 of a pizza, please!",                ok:"1/4 with {t}! Ribbit-licious!"},
     {cust:"gorilla", who:"the gorilla", n:4,  d:5,  shape:"rect",   moulds:[4,5,6],  cut:"5 equal strips!", top:"Pick a topping, then top the gorilla’s share.", idle:"Tap the strips the gorilla wants.", line:"Hungry gorilla here! 4/5 of a pizza, please!",   ok:"4 of 5 strips. Thank you, Chef!"},
@@ -2173,9 +2175,15 @@ async function loadOrder(){
       { const tr=$("tray"); tr.classList.add("trayPulse"); if(window.KSFX) KSFX.play("sparkle",{vol:.3});
         await sayW("Choose the correct pizza mould. It will cut the pizza into equal parts, as many as required.","","noori",gen); tr.classList.remove("trayPulse"); } if(!live(gen)) return;
       { const w=sayW(`The parrot has ordered ${o.n}/${o.d} of a pizza. Let's make it.`,"","noori",gen); setTimeout(()=>{ if(live(gen)) blinkNum("d",4); },1500); await w; } if(!live(gen)) return;
-      blinkNum("d",3); const rm=document.querySelector(`.mould[data-m="${o.d}"]`); if(rm){ rm.classList.remove("pulseok"); void rm.offsetWidth; rm.classList.add("pulseok"); setTimeout(()=>rm.classList.remove("pulseok"),3200); }
-      say(`The bottom number is ${o.d}. Which mould will you choose?`); S.busy=false; armIdle();
-      { const key=S.lv+":"+S.i; guide(()=>S.phase==="mould"&&!S.busy&&S.lv+":"+S.i===key?document.querySelector(`.mould[data-m="${o.d}"]`):null); }   // hands-on, as with the giraffe: the hand shows the right mould (only it can be tapped)
+      // review 4: the child gets to tap a mould first; the hint and the hand come only if no mould has been tapped after a few seconds
+      S.busy=false; armIdle();
+      { const key=S.lv+":"+S.i, mw0=S.mwKey===key?S.mw:0;
+        const tried=()=>S.phase!=="mould"||S.busy||S.lv+":"+S.i!==key||(S.mwKey===key?S.mw:0)!==mw0;
+        const t0=performance.now(); await new Promise(r=>(function w(){ if(!live(gen)||tried()||performance.now()-t0>6000&&!PAUSE.on) r(); else setTimeout(w,150); })());
+        if(!live(gen)||tried()) return;
+        blinkNum("d",3); const rm=document.querySelector(`.mould[data-m="${o.d}"]`); if(rm){ rm.classList.remove("pulseok"); void rm.offsetWidth; rm.classList.add("pulseok"); setTimeout(()=>rm.classList.remove("pulseok"),3200); }
+        say(`The bottom number is ${o.d}. Which mould will you choose?`);
+        guide(()=>S.phase==="mould"&&!S.busy&&S.lv+":"+S.i===key?document.querySelector(`.mould[data-m="${o.d}"]`):null); }   // the hand shows the right mould (only it can be tapped)
       return; }
     say(custLine(o));
     await wait(1500); if(!live(gen)) return;
@@ -2190,7 +2198,7 @@ async function guidedOrder(o,gen){
   await sayW(custLine(o),"","noori",gen); if(!live(gen)) return;
   setDock(true);
   await sayW("Let's make this order together!","","noori",gen); if(!live(gen)) return;
-  blinkNum("d",6); const sw=sayW("I’ll cut the pizza for you.","","noori",gen);
+  blinkNum("d",6); const sw=sayW("I’ll cut the pizza for you.","","billu",gen);
   await wait(500); if(!live(gen)) return;
   await rollCutter(gen); if(!live(gen)) return;   // the cutter rolls along each cut
   await split(gen); if(!live(gen)) return;
@@ -2909,9 +2917,10 @@ async function runLearning(ok){
     return new Promise(r=>{ if(TUT.fast){ run(); r(); return; } atVO(t,()=>{ run(); r(); },()=>ok()); }); };
   // 1. one whole
   lStage(`<div class="li">${lPizzaHTML("lA")}<div class="lword lwhole">1 whole</div></div>`); lDraw($("lA"),2);
+  await say("noori","Let’s practise on a plain cheese pizza."); if(!ok()) return;   // review 3: the story's pizza had toppings; the lesson says why this one is plain
   { const s=say("noori","This is one whole pizza."); at(.9,()=>bumpEl(document.querySelector("#tutLearn .tpzw"))); await s; } if(!ok()) return;
   // 2. cut into 2 equal parts: once cut, BOTH halves pulse (review 2: only the right one used to)
-  { const s=say("noori","To make a half, we cut it into 2 equal parts."); await lCut($("lA")); if(!ok()) return; lLit($("lA"),0); lLit($("lA"),1); await s; if(!ok()) return; }
+  { const s=say("noori","To make a half, we cut it into 2 equal parts."); await lCut($("lA")); if(!ok()) return; { const w=document.querySelector("#tutLearn .lwhole"); if(w){ w.innerHTML="2 halves = 1 whole"; w.classList.add("r3swap"); } } lLit($("lA"),0); lLit($("lA"),1); await s; if(!ok()) return; }   // review 3: the label changes once the pizza is cut
   // 3. one half is 1/2: each part pulses with "Each part is one-half", then the 1/2 card with "We write it as 1/2" (review 2)
   lStage(`<div class="li row">${lPizzaHTML("lA")}<div class="li" id="lB">${lCard(1,2,"big")}</div></div>`); lDraw($("lA"),2,{cut:true});
   { const A=$("lA"), s=say("noori","Each part is one-half. We write it as 1/2. This is a fraction.");
@@ -2938,7 +2947,7 @@ async function runLearning(ok){
     const s=say("noori",line,d>6?32000:27000), P=$("lA");   // the line stays up until the parts are on the plate
     await lCut(P,{ms:d>6?340:440}); if(!ok()) return;
     await wait(250);
-    for(let i=0;i<n;i++){ lTop(P,i); await wait(300); }
+    for(let i=0;i<n;i++){ lLit(P,i); if(Sound.tick) Sound.tick(i); await wait(300); }   // review 3: the parts to serve glow (no topping), so the served slices are the same plain cheese pizza as the board
     await wait(350); if(!ok()) return;
     $("lPlw").classList.add("in"); if(Sound.pop) Sound.pop(); await wait(420); if(!ok()) return;   // the plate comes in; the pizza moves over to make room
     lServePlate(P,$("lPl"),[...Array(n).keys()]); await wait(TUT.fast?0:350+n*170); if(!ok()) return;
@@ -2962,19 +2971,18 @@ async function runLearning(ok){
   // just the pizza being cut and counted, and its card with the bottom number (no 1/2 here; 1/2 comes with Chintu)
   lStage(`<div class="li" id="lSlot"></div>`,"denom");
   { const s=say("noori","The bottom number is the denominator. It tells us how many equal parts to cut.",42000);   // the line waits for all three pizzas
-    for(const d of [3,5,8]){ $("lSlot").innerHTML=`${lPizzaHTML("lD")}<div id="lDc">${lCard("",d,"noq")}<div class="lword">Denominator</div></div>`; lDraw($("lD"),d);   // the card stands beside the pizza the whole time
-      await lCut($("lD"),{ms:400,pause:450}); if(!ok()) return; lGlow($("lDc").firstChild,"d"); lPulse($("lD")); if(window.KSFX) KSFX.play("sparkle",{vol:.25}); await wait(1500); if(!ok()) return; }
+    for(const [nn,d] of [[2,3],[4,5],[3,8]]){ $("lSlot").innerHTML=`${lPizzaHTML("lD")}<div id="lDc">${lCard(nn,d,"fd")}<div class="lword">Denominator</div></div>`; lDraw($("lD"),d);   // review 3: the whole fraction, the bottom number highlighted (the same pattern as the numerator)   // the card stands beside the pizza the whole time
+      await lCut($("lD"),{ms:400,pause:450}); if(!ok()) return; lPulse($("lD")); if(window.KSFX) KSFX.play("sparkle",{vol:.25}); await wait(1500); if(!ok()) return; }
     await s; if(!ok()) return; }
   // 9. the numerator: one pizza at a time: one half goes to Chintu, then 2/3, then 3/5
   // the card on the left, the pizza in the middle, Chintu (the whole monkey) on the right: his half flies over to him.
   // Then 2/3 and 3/5: Chintu leaves and the big card always shows the pizza's own fraction
   // the pizza on the left, its card (with "Numerator") on the right: 1/2, then 2/3, then 3/5; the parts the customer wants get the topping and pop up
-  lStage(`<div class="li" id="lSlot"></div><div class="li" id="lHw">${lCard(1,2,"big","lH")}<div class="lword">Numerator</div></div>`,"numer");
-  lGlow($("lH"),"n");
+  lStage(`<div class="li" id="lSlot"></div><div class="li" id="lHw">${lCard(1,2,"big fn","lH")}<div class="lword">Numerator</div></div>`,"numer");
   { const s=say("noori","The top number is the numerator. It tells us how many parts the customer wants.",36000);   // the line waits for all three pizzas
     let first=true;
     for(const [d,n] of [[2,1],[3,2],[5,3]]){
-      if(!first){ $("lHw").firstElementChild.outerHTML=lCard(n,d,"big","lH"); lGlow($("lH"),"n"); } first=false;
+      if(!first){ $("lHw").firstElementChild.outerHTML=lCard(n,d,"big fn","lH"); } first=false;
       $("lSlot").innerHTML=`${lPizzaHTML("lN")}`; lDraw($("lN"),d,{cut:true}); const P=$("lN");
       await wait(450); for(let i=0;i<n;i++){ lTop(P,i); lLit(P,i); await wait(380); }
       await wait(1300); if(!ok()) return; }
@@ -2992,20 +3000,20 @@ async function runLearning(ok){
   lDraw($("lA"),8,{cut:true,tops:[0,1,2,3,4],top:"mushroom"});
   lHi($("tutLearn").querySelector(".lf"));
   // review 2: the 5 topped parts pop one by one as "5 parts" is said, then all 8 as "out of 8"
-  { const P=$("lA"), s=say("noori","5/8 means 5 parts out of 8. We read it as ‘five upon eight’ or ‘five by eight’.");
+  { const P=$("lA"), s=say("noori","5/8 means 5 parts out of 8. We read it as ‘five-eighths’. You may also hear ‘five upon eight’ or ‘five by eight’.");
     at(1.4,()=>[0,1,2,3,4].forEach(i=>setTimeout(()=>{ if(ok()){ lLit(P,i); if(Sound.tick) Sound.tick(i); } },i*180))); at(2.7,()=>lPulse(P)); await s; } if(!ok()) return;
   // 12. Billu is ready
   lStage(`<div class="lchar lready"><img src="${A}billu_happy.webp" alt="Billu"></div>`); if(window.SFX&&SFX.ding) SFX.ding();   // review 2: Billu himself, big, on this line
   await say("billu","I’m ready for more orders!"); if(!ok()) return;
   // 13. review 2: the kitchen's order rail: every customer of the game has an order ticket; the tickets drop onto two wooden rails one by one
-  { const ORD=[["giraffe",3,4],["tez",2,7],["monty",3,4],["squirrel",2,5],["jhumru",9,10],["parrot",2,3],["frog",1,4],["gorilla",4,5],["mouse",1,6],["sloth",3,10],["hippo",11,12]];
+  { const ORD=[["giraffe",3,4],["monty",3,4],["squirrel",2,5],["jhumru",9,10],["tez",2,7],["parrot",2,3],["frog",1,4],["gorilla",4,5],["mouse",1,6],["sloth",3,10],["hippo",11,12]];
     const NM={giraffe:"Giraffe",parrot:"Parrot",...NAMES};
-    const ticket=([k,n,d],i)=>`<div class="oticket" style="--d:${(.25+i*.24).toFixed(2)}s;--tilt:${[-3,2,-1.5,3,-2,1.5][i%6]}deg"><i class="oclip"></i>
+    const ticket=([k,n,d],i)=>`<div class="oticket" style="--d:${(.05+i*.07).toFixed(2)}s;--tilt:${[-3,2,-1.5,3,-2,1.5][i%6]}deg"><i class="oclip"></i>
       <div class="ot-paper"><div class="ot-top">ORDER <b>#${i+1}</b></div><div class="ot-ava"><img src="assets/web/face/${k}.webp" alt=""></div>
       <div class="ot-name">${NM[k]}</div>${lCard(n,d,"ot-fr")}<div class="ot-of">of a pizza</div></div></div>`;
     lStage(`<div class="orails"><div class="orail"><i class="orod"></i>${ORD.slice(0,6).map(ticket).join("")}</div>
       <div class="orail"><i class="orod"></i>${ORD.slice(6).map((o,i)=>ticket(o,i+6)).join("")}</div></div>`,"orders");
-    if(!TUT.fast) ORD.forEach((_,i)=>setTimeout(()=>{ if(ok()&&Sound.plop) Sound.plop(); },250+i*240+380));   // each ticket lands with a little pop
+    if(!TUT.fast) ORD.forEach((_,i)=>setTimeout(()=>{ if(ok()&&Sound.plop) Sound.plop(); },50+i*70+380));   // review 3: the tickets are all up at once, so the board is never empty   // each ticket lands with a little pop
     await Promise.all([say("noori","So many customers! Can you help us?"),wait(TUT.fast?0:1500)]); if(!ok()) return; }   // the next screen comes after every ticket is up
   // the queue stays on the board until the leaves have covered it (the board is reset after that, in runTutorial),
   // so the old giraffe "Top and serve" board never flashes up between this screen and the tablecloth
@@ -3713,7 +3721,7 @@ async function storyContext1(){
 }
 $("home").addEventListener("click",()=>{ hideHint(); S.gen++; $("end").hidden=true; $("start").hidden=false; S.phase="idle"; });
 /* Level 2 is the next page of the same game (online it is served at /level2) */
-function goLevel2(){ CURTAIN.cover().then(()=>{ location.href=new URL((location.protocol==="file:"?"level2.html":"level2")+"#play",location.href).href; }); }
+function goLevel2(){ CURTAIN.cover().then(()=>{ location.href=new URL("level2.html#play",location.href).href; }); }
 /* the main screen's PLAY: the story, then Tutorial 1.1, then Level 1.1 -> 1.2 -> Level 2 */
 $("mainPlay").addEventListener("click",()=>{ const go=()=>{ window.__sauceNow=true; SAUCE(()=>startLevel("1.1",true)); }; TITLE.said?go():TITLE.say(go); });   // the sauce bottle pours over the screen, then the story   // the pre-LBD screen zooms into the plate, then the story
 $("jump").innerHTML=`<optgroup label="Story"><option value="S">Story · Billu’s Pizza Kitchen</option></optgroup><optgroup label="Tutorial"><option value="T">Tutorial 1.1 · Top and serve</option><option value="TG">Tutorial 1.1 · Giraffe on the tablecloth</option><option value="T2">Tutorial 1.2 · Cut, top and serve</option></optgroup>`+Object.entries(LEVELS).map(([lv,L])=>`<optgroup label="Level ${lv} · ${L.title}">${L.orders.map((o,i)=>
@@ -3788,14 +3796,14 @@ const S1=(()=>{ let b="billu0", n=0, el=null; const P=()=>`assets/story/scene1_n
     {lvl:"Level 1", page:"l1", groups:[
       {t:"Start", items:[["HOME","Main screen",["noori"]],["S","Story 1",["billu_idle"]]]},
       {t:"Tutorial 1.1", items:[["T","Lesson: What is a fraction?",["noori"]],["TG","Giraffe 3/4 · with the hand",["giraffe"]]]},
-      {t:"Level 1.1 · Top and serve", items:[["1.1:0","Tez 2/7",["tez"]],["1.1:1","Monty 3/4",["monty"]],["1.1:2","Squirrel 2/5",["squirrel"]],["1.1:3","Jhumru 9/10",["jhumru"]]]},
+      {t:"Level 1.1 · Top and serve", items:[["1.1:0","Monty 3/4",["monty"]],["1.1:1","Squirrel 2/5",["squirrel"]],["1.1:2","Jhumru 9/10",["jhumru"]],["1.1:3","Tez 2/7",["tez"]]]},
       {t:"Tutorial 1.2", items:[["T2","Parrot 2/3 · moulds",["parrot"]]]},
       {t:"Level 1.2 · Cut, top and serve", items:[["1.2:0","Frog 1/4",["frog"]],["1.2:1","Gorilla 4/5",["gorilla"]],["1.2:2","Mouse 1/6",["mouse"]],["1.2:3","Sloth 3/10",["sloth"]],["1.2:4","Hippo 11/12",["hippo"]]]}]},
     {lvl:"Level 2 · Big Eater Contest", page:"l2", groups:[
       {t:"Start", items:[["S","Story 2",["billu_idle"]],["T","Tutorial 2 · Who ate more?",["noori"]]]},
-      {t:"Set A · Same denominator", items:[["0","Match 1",vs("tez","monty")],["1","Match 2",vs("madhu","ant")],["2","Match 3",vs("bijli","badal")]]},
-      {t:"Set B · Same numerator", items:[["3","Set B intro",["noori"]],["4","Match 4",vs("ant","madhu")],["5","Match 5",vs("monty","tez")],["6","Match 6",vs("squirrel","mouse")]]},
-      {t:"Set C · Fractions only", items:[["7","Set C intro",["noori"]],["8","Round 7",vs("monty","peacock")],["9","Round 8",vs("mouse","ant")],["10","Round 9",vs("hippo","jhumru")],["11","Round 10",vs("madhu","squirrel")]]},
+      {t:"Set A · Same denominator", items:[["0","Match 1",vs("tez","monty")],["1","Match 2",vs("bijli","badal")],["2","Match 3",vs("madhu","ant")]]},
+      {t:"Set B · Same numerator", items:[["3","Set B intro",["noori"]],["4","Match 4",vs("squirrel","mouse")],["5","Match 5",vs("ant","madhu")],["6","Match 6",vs("monty","tez")]]},
+      {t:"Set C · Fractions only", items:[["7","Set C intro",["noori"]],["8","Round 7",vs("mouse","ant")],["9","Round 8",vs("monty","peacock")],["10","Round 9",vs("hippo","jhumru")],["11","Round 10",vs("madhu","squirrel")]]},
       {t:"Golden Trophy Final", items:[["12","Final · put in order",["trophy"]],["13","Champion",["trophy"]]]}]}];
   const pic=k=>`<img src="assets/web/${k}.webp" alt="" loading="lazy">`;
   const label=v=>{ for(const L of MAP) if(L.page===PAGE) for(const g of L.groups) for(const it of g.items) if(it[0]===v) return `${/^Level/.test(g.t)?"":L.lvl.split(" · ")[0]+" · "}${g.t} · ${it[1]}`; return (sel.selectedOptions[0]||{}).text||""; };
@@ -3814,7 +3822,7 @@ const S1=(()=>{ let b="billu0", n=0, el=null; const P=()=>`assets/story/scene1_n
   pan.addEventListener("click",e=>{ if(e.target.closest(".x")){ open(false); return; }
     const c=e.target.closest(".chip3"); if(!c) return; open(false);
     if(c.dataset.p===PAGE) go(c.dataset.v);
-    else location.href=(PAGE==="l1"?"level2":"./")+"#qa="+encodeURIComponent(c.dataset.v); });
+    else location.href=(PAGE==="l1"?"level2.html":"./")+"#qa="+encodeURIComponent(c.dataset.v); });
   // arriving from the other page's QA panel: jump straight to the step
   const m=/^#qa=(.+)$/.exec(location.hash);
   if(m){ const v=decodeURIComponent(m[1]); history.replaceState(null,"",location.pathname); setTimeout(()=>go(v),300); }
@@ -3873,7 +3881,7 @@ body.paused #story::after,body.paused #tut::after{content:"";position:absolute;i
   // the signs show only while a story or a tutorial is on screen
   setInterval(()=>{ const inStory=!st.hidden, inTut=!tu.hidden&&tu.classList.contains("open"), on=inStory||inTut;
     bar.classList.toggle("on",on); bar.classList.toggle("intut",!inStory&&inTut);
-    if(!on&&PAUSE.on&&!PAUSE.away) setPause(false); },200);
+    if(!on&&PAUSE.on&&!PAUSE.away&&!PAUSE.menu) setPause(false); },200);   // review 3: the gameplay pause menu keeps its pause
   // another tab or window: everything goes quiet and waits right there, and carries on on return
   const goAway=()=>{ if(!PAUSE.on){ PAUSE.away=true; setPause(true); } };
   document.addEventListener("gameaway",goAway);
@@ -4623,6 +4631,7 @@ body .tut .talk.talk:has(p.tall),body #ssub#ssub:not(.bub):has(p.tall),body .car
    the box and the speaker's round photo are measured together and the whole thing is nudged to the centre */
 (()=>{ let q=0;
   const fix=()=>{ q=0; const W=innerWidth;
+    if(document.documentElement.classList.contains("portrait")) return;   // design pass: on phones the boxes span the screen (no nudging)
     document.querySelectorAll("#app>.card,.tut .talk,#ssub:not(.bub)").forEach(b=>{
       if(!b.getClientRects().length) return; const old=+b.dataset.cx||0;
       let L=Infinity,R=-Infinity; [b,b.querySelector(".guide,.who")].forEach(e=>{ if(!e||!e.getClientRects().length) return; const r=e.getBoundingClientRect(); L=Math.min(L,r.left); R=Math.max(R,r.right); });
@@ -4785,7 +4794,7 @@ html body #guide img.faceimg.faceimg,html body img#guideImg.faceimg.faceimg,html
 .dbx>.say,.dbx>p,.dbx .say{margin-left:calc(-1 * var(--dbxshift,0px))!important}
 </style>
 <script>
-(()=>{ const BOX=new Set(["noori","billu_idle","chintu_face","ant","mouse","squirrel","jhumru","sloth","madhu","parrot","hippo","giraffe","gorilla","bijli","bear","tez","badal","frog"]);
+(()=>{ const BOX=new Set(), BOX_ART=new Set(["noori","billu_idle","chintu_face","ant","mouse","squirrel","jhumru","sloth","madhu","parrot","hippo","giraffe","gorilla","bijli","bear","tez","badal","frog"]);
   const IM={}; BOX.forEach(n=>{ const i=new Image(); i.src="assets/ui/dbox/"+n+".webp"; IM[n]=i; });
   const L=560, R=260, SH=452;   // the box picture: left end (photo circle) and right end keep their shape, the even middle stretches
   const ALIAS={monty:"chintu_face",chintu_full:"chintu_face"};   // Monty is the monkey with the blue cap: the same box as Chintu
@@ -5280,5 +5289,393 @@ html body .servelayer figcaption .fr{display:inline-grid!important;font-size:.95
 html body .servelayer figcaption .fr b{color:#5A2E10!important;text-shadow:none!important}
 html body .servelayer figcaption .fr b:first-child{border-bottom-color:#5A2E10!important}
 </style>
+<!-- ===================================================================================================
+     REVIEW 3: maths visuals, gameplay feedback, layout and accessibility
+     (P0 maths accuracy, P1 feedback and bugs, P2 content, P3 accessibility)
+     =================================================================================================== -->
+<style id="r3css">
+/* --- P0.1 equal cuts: the slices stay together, every cut is drawn exactly on the slice edges from the pizza's own centre,
+       clipped to the crust (it never runs onto the board) --- */
+#pz .edge{stroke:#5A2A0E!important;stroke-opacity:.9!important;stroke-width:8!important}
+.tut .learn .pz .edge,#tutPz .edge{stroke:#5A2A0E!important;stroke-opacity:.9!important;stroke-width:8!important}
+
+/* --- P0.4 numerator / denominator: the whole fraction, one number highlighted, the other faded (the same pattern on both slides) --- */
+html body .tut .lf.fn b.n,html body .tut .lf.fd b.d{color:#C8402E!important;display:inline-block;transform-origin:50% 50%;
+  animation:r3num 1.6s ease-in-out infinite!important;text-shadow:0 0 .25em rgba(255,206,80,.9)!important;background:none!important;box-shadow:none!important}
+html body .tut .lf.fn b.d,html body .tut .lf.fd b.n{opacity:.3!important;visibility:visible!important;animation:none!important}
+html body .tut #lDc .lf.fd b.d::before{display:none!important}
+@keyframes r3num{0%,100%{transform:scale(1.18)}50%{transform:scale(1.34)}}
+/* --- P0.5 the label under the cut pizza changes to "2 halves = 1 whole" --- */
+.tut .lword.r3swap{animation:r3fadeIn .5s ease both}
+@keyframes r3fadeIn{from{opacity:0}to{opacity:1}}
+/* --- P0.2 lesson serve: the plate is big enough to hold the served parts at their real size --- */
+html body .tut .learn.serveplate .lplw.in{width:calc(var(--ls) * 1.18)!important}
+html body .tut .learn.serveplate .lplate{width:calc(var(--ls) * 1.18)!important}
+.tut .learn.serveplate .pz{overflow:visible}
+
+/* --- P1.8 live counter under the order card, and the reset button --- */
+.r3cntw{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px}
+.r3cnt{font-family:var(--display);font-weight:800;font-size:clamp(16px,calc(2.3*var(--vh)),21px);color:#5A2E10;background:#FFF6E2;
+  border:3px solid #D9A55A;border-radius:999px;padding:.2em .8em;white-space:nowrap;transition:background .25s,border-color .25s,color .25s}
+.r3cnt b{font-size:1.15em}
+.r3cnt.full{background:#E3F5DB;border-color:#3F8A3C;color:#1F5E1F}
+.r3reset{width:max(48px,calc(48px / var(--z,1)));height:max(48px,calc(48px / var(--z,1)));border-radius:50%;border:3px solid #D9A55A;background:#FFF6E2;color:#5A2E10;
+  display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 auto}
+.r3reset svg{width:55%;height:55%}
+.r3reset[hidden],.r3cntw[hidden]{display:none!important}
+/* --- P1.9 CHECK only with a topping on the pizza; it pulses when the count is right. NEXT only after the serve --- */
+html body #done[hidden]{display:none!important}
+html body #done.r3pulse{animation:r3pulse 1.1s ease-in-out infinite}
+@keyframes r3pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09);filter:brightness(1.1) drop-shadow(0 0 12px rgba(120,220,90,.9))}}
+/* --- P1.18 safe margins (at least 24 screen px) for CHECK/NEXT and the star tracker --- */
+html body #done{bottom:max(24px,calc(24px / var(--z,1)))!important}
+html body .trail{left:max(24px,calc(24px / var(--z,1)))!important}
+/* --- P1.7 wrong answer: the child's pizza stays; the wrong slices get a soft red outline and a little shake --- */
+#pz .part.r3wrong .hit{fill:rgba(225,50,40,.18)!important;stroke:#E53935;stroke-width:12;stroke-linejoin:round}
+#pz .part.r3wrong{animation:r3shake .5s ease-in-out 2}
+@keyframes r3shake{25%{translate:-6px 0}75%{translate:6px 0}}
+.ocard .rc-frac b.r3glow{color:#C8402E!important;text-shadow:0 0 .3em rgba(255,200,60,1),0 0 .6em rgba(255,200,60,.8)!important;animation:r3num 1.4s ease-in-out infinite!important;display:block}
+/* --- P1.11 selected topping bowl: raised, a thick green ring and a check badge; the others dim a little --- */
+html body #slots .katori.sel{transform:translateY(-10px)!important;scale:1.08}
+html body #slots .katori.sel::before{content:"";position:absolute;inset:4% 2% 0;border-radius:50%;border:6px solid #2E8B3A;box-shadow:0 0 0 3px #FFFFFF,0 0 18px rgba(46,139,58,.7);pointer-events:none;z-index:2}
+html body #slots .katori.sel::after{content:"✓";position:absolute;right:-2%;top:-6%;width:34%;aspect-ratio:1;border-radius:50%;background:#2E8B3A;color:#FFFFFF;
+  font:900 clamp(16px,calc(2.6*var(--vh)),26px)/1 system-ui,sans-serif;display:grid;place-items:center;box-shadow:0 0 0 3px #FFFFFF,0 3px 6px rgba(0,0,0,.3);z-index:3;pointer-events:none}
+html body #slots:has(.katori.sel) .katori:not(.sel){opacity:.55;filter:saturate(.6)}
+html body #slots:has(.katori.sel) .katori:not(.sel)+.bowl-label{opacity:.6}
+html body #slots .katori:focus-visible{opacity:1!important;filter:none!important;outline:4px solid #1A3FAA!important;outline-offset:4px!important;border-radius:50%}
+/* --- P1.13 the star tracker: only the star just earned pops --- */
+html body .trail .tok.qs.got{animation:none}
+html body .trail .tok.qs.got.r3pop{animation:r3star .8s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes r3star{0%{transform:scale(.4)}45%{transform:scale(1.7) rotate(18deg)}100%{transform:scale(1)}}
+/* --- P1.13 the praise is said and written in the speech banner on the Served / Left screen too --- */
+body.platescene #app>.card{opacity:1!important;pointer-events:auto!important}
+/* --- P1.18 the Served / Left screen laid out by the game (r3serve): the plate and labels are placed in screen units --- */
+.servelayer.r3serve figure{top:auto;translate:-50% 0}
+.servelayer.r3serve figure.b{gap:0}
+/* --- P1.17 story scene 1: the narrator's line as a caption --- */
+.r3cap{position:absolute;left:50%;translate:-50% 0;bottom:calc(6*var(--vh));z-index:60;max-width:min(560px,70%);padding:.55em 1.1em;border-radius:22px;
+  background:#FFFFFF;border:4px solid #3A2414;box-shadow:0 6px 0 rgba(58,36,20,.35);font-family:var(--display);font-weight:800;color:#2B1A0E;
+  font-size:clamp(18px,calc(3.2*var(--vh)),30px);line-height:1.25;text-align:center;animation:r3fadeIn .4s ease both;pointer-events:none}
+
+/* --- P3.27 pause button and menu during gameplay --- */
+#r3pause{position:fixed;left:max(24px,calc(24px / var(--z,1)));top:max(24px,calc(24px / var(--z,1)));z-index:460;width:max(56px,calc(52px / var(--z,1)));height:max(56px,calc(52px / var(--z,1)));
+  border:0;padding:0;border-radius:50%;cursor:pointer;background:url("assets/ui/round_wood.webp?v=5ef7504d") center/100% 100% no-repeat;color:#FFF3D6;
+  display:grid;place-items:center;filter:drop-shadow(0 4px 5px rgba(50,25,0,.4))}
+#r3pause svg{width:44%;height:44%}
+#r3pause[hidden]{display:none!important}
+#r3menu{position:fixed;inset:0;z-index:99995;display:grid;place-items:center;background:rgba(30,16,6,.55)}
+#r3menu[hidden]{display:none!important}
+#r3menu .box{background:#FFF6E2;border:5px solid #8A5A2E;border-radius:28px;padding:26px 30px;display:grid;gap:14px;min-width:min(340px,86vw);box-shadow:0 14px 0 rgba(60,30,10,.35)}
+#r3menu h2{margin:0 0 4px;text-align:center;font-family:var(--display);font-weight:800;font-size:30px;color:#5A2E10}
+#r3menu button{min-height:56px;border-radius:999px;border:0;cursor:pointer;font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:.03em;
+  background:linear-gradient(180deg,#FFB75C,#F07F12);color:#2A1405;box-shadow:0 5px 0 #A9540A}
+#r3menu button.alt{background:linear-gradient(180deg,#FFFFFF,#F1E4CC);box-shadow:0 5px 0 #C9AE84}
+
+/* --- P3.23 a strong visible focus ring on everything the child can use --- */
+html body button:focus-visible,html body [role="button"]:focus-visible,html body select:focus-visible,html body a:focus-visible,html body [tabindex]:not([tabindex="-1"]):focus-visible{
+  outline:3px solid #1A3FAA!important;outline-offset:3px!important;box-shadow:0 0 0 6px rgba(255,255,255,.85)!important}
+html body #pz .hit:focus-visible{outline:none!important;stroke:#1A3FAA;stroke-width:12;fill:rgba(26,63,170,.16)}
+html body #pz .hit:focus{outline:none}
+/* --- P3.26 tap targets at least 48 x 48 screen px (the page is scaled, so the size is given in screen px) --- */
+html body #bgmBtn,html body .top>.qa,html body button.qa{width:max(48px,calc(48px / var(--z,1)))!important;height:max(48px,calc(48px / var(--z,1)))!important;scale:1!important}
+html body #bgmBtn svg{width:46%;height:46%}
+html body .pctl button{height:max(var(--pch,60px),calc(48px / var(--z,1)))!important;min-width:calc(48px / var(--z,1))}
+
+html body #done{min-height:max(48px,calc(48px / var(--z,1)));min-width:max(120px,calc(96px / var(--z,1)))}
+.r3sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* --- P3.28 reduced motion: no confetti, shakes or pulses; things fade in and out instead --- */
+@media (prefers-reduced-motion: reduce){
+  html body *,html body *::before,html body *::after{animation-name:r3fadeIn!important;animation-duration:.3s!important;animation-iteration-count:1!important;animation-delay:0s!important;
+    transition-property:opacity!important;transition-duration:.25s!important;scroll-behavior:auto!important}
+  #pz .part.r3wrong{animation:none!important}
+}
+</style>
+<div id="r3live" class="r3sr" role="status" aria-live="polite"></div>
+<button id="r3pause" type="button" aria-label="Pause" hidden><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1.5"/><rect x="14" y="4" width="5" height="16" rx="1.5"/></svg></button>
+<div id="r3menu" role="dialog" aria-modal="true" aria-labelledby="r3mt" hidden>
+  <div class="box"><h2 id="r3mt">Paused</h2>
+    <button type="button" id="r3resume">Resume</button>
+    <button type="button" id="r3restart" class="alt">Restart order</button>
+    <button type="button" id="r3levels" class="alt">Back to levels</button>
+    <button type="button" id="r3music" class="alt" aria-pressed="true">Music: on</button>
+  </div>
+</div>
+<script>
+(()=>{ "use strict";
+const RM=matchMedia("(prefers-reduced-motion: reduce)"), rm=()=>RM.matches;
+const root=document.documentElement;
+const setZ=()=>root.style.setProperty("--z",String(window.FITZ?FITZ():1)); setZ(); addEventListener("resize",setZ);
+const liveEl=document.getElementById("r3live");
+const announce=t=>{ liveEl.textContent=""; setTimeout(()=>{ liveEl.textContent=String(t).replace(/(\d+)\/(\d+)/g,"$1 out of $2"); },40); };
+window.R3={announce};
+const plural=(x,w)=>`${x} ${x===1?w:w+"s"}`;
+const topName=k=>{ const t=TOPPINGS.find(t=>t.k===k); return t?t.name.toLowerCase():k; };
+const unitWord=o=>{ const p=pieceName(o,S.k||o.d); return (p==="Slices"?"slice":p==="Strips"?"strip":p==="Squares"?"square":"piece"); };
+const isGame=()=>$("story").hidden&&$("tut").hidden&&$("start").hidden&&$("end").hidden;
+
+/* ===== P0.1 equal cuts: no pull-apart gaps. Every slice is a sector of the same centre (angle 360/d from 12 o'clock, clockwise)
+   or an equal grid cell, and its cut edge is drawn on its own outline, clipped to the crust ===== */
+window.offsetsOf=g=>g.parts.map(()=>({x:0,y:0}));
+window.lSpread=function(){};
+
+/* ===== P0.6 toppings stay inside their slice: each slice's toppings are masked to the slice shape with a small inner margin ===== */
+let _mk=0;
+function clipTops(svg,g){ if(!svg||!g) return; const ns="http://www.w3.org/2000/svg";
+  let defs=svg.querySelector("defs.r3"); if(!defs){ defs=document.createElementNS(ns,"defs"); defs.setAttribute("class","r3"); svg.insertBefore(defs,svg.firstChild); }
+  defs.innerHTML=""; const tag="r3m"+(++_mk);
+  svg.querySelectorAll(".part[data-i]").forEach(el=>{ const i=+el.dataset.i, p=g.parts[i], t=el.querySelector(".tops"); if(!p||!t) return;
+    defs.insertAdjacentHTML("beforeend",`<mask id="${tag}_${i}" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1000" height="1000"><path d="${p.d}" fill="#fff" stroke="#000" stroke-width="12" stroke-linejoin="round"/></mask>`);
+    t.setAttribute("mask",`url(#${tag}_${i})`); }); }
+
+/* ===== P3.22 every slice is a real button: role, tab stop, label, Enter / Space ===== */
+function ariaParts(){ if(!G||!PZ) return; const o=cur(); if(!o) return; const n=G.parts.length, w=unitWord(o), W=w[0].toUpperCase()+w.slice(1);
+  PZ.setAttribute("role","group"); PZ.setAttribute("aria-label",`Pizza in ${plural(n,w)}`);
+  PZ.querySelectorAll(".hit").forEach(h=>{ const i=+h.dataset.i, k=S.covered&&S.covered.get(i);
+    h.setAttribute("role","button"); h.setAttribute("tabindex",n>1&&S.phase==="top"?"0":"-1");
+    h.setAttribute("aria-label",`${W} ${i+1} of ${n}, ${k?topName(k):"no topping"}`); h.setAttribute("aria-pressed",k?"true":"false"); }); }
+PZ.addEventListener("keydown",e=>{ if(e.key!=="Enter"&&e.key!==" ") return; const h=e.target.closest&&e.target.closest(".hit"); if(!h) return;
+  e.preventDefault(); if(S.phase!=="top"||S.busy) return; const i=+h.dataset.i;
+  if(S.covered.has(i)){ uncover(i); return; }
+  if(!S.topping){ say("Pick a topping first!"); announce("Pick a topping first!"); document.querySelectorAll(".katori").forEach(b=>{ b.classList.remove("ask"); void b.offsetWidth; b.classList.add("ask"); }); return; }
+  cover(i,S.topping); });
+{ const r0=window.renderParts; window.renderParts=function(...a){ const r=r0.apply(this,a); clipTops(PZ,G); ariaParts(); return r; }; }
+{ const l0=window.lDraw; window.lDraw=function(svg,...a){ const r=l0.call(this,svg,...a); clipTops(svg,svg._g&&svg._g.parts.length===svg.querySelectorAll(".part").length?svg._g:geom("round",svg.querySelectorAll(".part").length)); return r; }; }
+{ const t0=window.tutPizza; window.tutPizza=function(...a){ const r=t0.apply(this,a); clipTops($("tutPz"),TUT.g); return r; }; }
+
+/* ===== P0.2 lesson: the served parts move onto the plate at their real size (no scaling) ===== */
+window.lServePlate=function(svg,plate,parts){ const pr=svg.getBoundingClientRect(), qr=plate.getBoundingClientRect(), k=600/pr.width;
+  const dx=((qr.left+qr.width/2)-(pr.left+pr.width/2))*k, dy=((qr.top+qr.height*302/630)-(pr.top+pr.height/2))*k;
+  parts.forEach((i,k2)=>{ const el=svg.querySelector(`.part[data-i="${i}"]`); if(!el) return; setTimeout(()=>{
+    el.classList.remove("lit"); el.style.transition=rm()?"opacity .25s":"transform .9s cubic-bezier(.45,0,.2,1)"; el.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`;
+    el.classList.add("served"); if(Sound.plop) setTimeout(()=>Sound.plop(),800); },TUT.fast?0:k2*170); }); };
+
+/* ===== P1.8 / P1.10 the live counter "Topped: X of N" and the reset button, under the order card ===== */
+{ const sc0=window.showCustomer; window.showCustomer=function(...a){ const r=sc0.apply(this,a); const o=cur();
+    $("cust").insertAdjacentHTML("beforeend",`<div class="r3cntw" id="r3cntw" hidden><div class="r3cnt" id="r3cnt" role="status" aria-live="off">Topped: <b>0</b> of ${o.n}</div>
+      <button class="r3reset" id="r3reset" type="button" aria-label="Remove all toppings" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v5h5"/></svg></button></div>`);
+    $("r3reset").addEventListener("click",()=>{ if(S.phase!=="top"||S.busy||!S.covered.size) return; [...S.covered.keys()].forEach(i=>uncover(i)); announce("All toppings removed."); });
+    return r; }; }
+window.setCount=function(){ const o=cur(), w=$("r3cntw"), c=$("r3cnt"), rs=$("r3reset"); if($("count")) $("count").hidden=true; if(!w||!o) return;
+  const x=S.covered?S.covered.size:0, on=S.phase==="top"&&o.n>0;
+  w.hidden=!on; c.innerHTML=`Topped: <b>${x}</b> of ${o.n}`; c.classList.toggle("full",x===o.n); rs.hidden=!(on&&x>0&&!o.guided);
+  ariaParts(); };
+
+/* ===== P1.9 / P1.13 CHECK shows only with a topping on the pizza, pulses when the count is right; NEXT only once the serve is over ===== */
+{ const sd0=window.setDone; window.setDone=function(kind,enabled,ready){ const r=sd0.apply(this,arguments); const b=$("done");
+    const show=kind==="next" ? !!enabled : (S.phase==="top"&&!!S.covered&&S.covered.size>0&&!S.busy);
+    b.hidden=!show; b.classList.toggle("r3pulse",kind!=="next"&&!!ready&&show); return r; }; }
+
+/* ===== P1.10 tapping a topped slice takes the topping off; taught once ===== */
+let taught=false;
+{ const c0=window.cover; window.cover=function(i,kind,...a){ const had=S.covered.has(i); const r=c0.call(this,i,kind,...a);
+    if(!had&&S.covered.has(i)){ const o=cur(), n=G.parts.length;
+      announce(`${unitWord(o)} ${i+1} of ${n}, ${topName(kind)}. Topped: ${S.covered.size} of ${o.n}.`);
+      if(!taught&&!o.guided&&!o.tut&&S.covered.size<o.n){ taught=true; say("Tap a slice again to remove it."); } }
+    setCount(); return r; }; }
+{ const u0=window.uncover; window.uncover=function(i,...a){ const r=u0.call(this,i,...a); const o=cur();
+    announce(`${unitWord(o)} ${i+1} of ${G.parts.length}, no topping. Topped: ${S.covered.size} of ${o.n}.`); setCount();
+    if(!S.covered.size) setDone("done",false); return r; }; }
+{ const p0=window.pickTopping; window.pickTopping=function(k,...a){ const r=p0.call(this,k,...a);
+    document.querySelectorAll("#slots .katori").forEach(b=>b.setAttribute("aria-pressed",b.dataset.top===k?"true":"false")); announce(`${topName(k)} picked`); return r; }; }
+
+/* ===== P1.12 the first order: the hand shows the bowls ("Pick a topping first!"), then a slice ===== */
+window.showHint=function(){ if(S.phase!=="top"||S.covered.size||S.hinted) return; const o=cur(); if(!o||o.tut||o.guided) return;
+  S.hinted=true; say("Pick a topping first!"); const key=S.lv+":"+S.i;
+  guide(()=>{ if(S.phase!=="top"||S.lv+":"+S.i!==key||S.covered.size) return null;
+    if(!S.topping){ const k=document.querySelector("#slots .katori"); if(k) k._lockTo=document.body; return k; }
+    const h=partEl(0)&&partEl(0).querySelector(".hit"); if(h) h._lockTo=document.body; return h; }); };
+
+/* ===== P1.7 wrong answer: keep the pizza, mark the wrong slices, say exactly what was wrong; clear after 2.5 s or a tap.
+   Two wrong tries on an order: the numerator glows and the hand shows the slices ===== */
+window.miss=async function(){ const o=cur(), gen=S.gen;
+  S.tries++; S.busy=true; Sound.bad(); guideMood("hmm"); custMood("sad");
+  const key=S.lv+":"+S.i; if(S.twKey!==key){ S.twKey=key; S.tw=0; } S.tw++;
+  const x=S.covered.size, who=capF(custWho(o)), line=`You served ${x} ${x===1?"part":"parts"}. ${who} wants ${o.n}.`;
+  say(line,"bad"); announce(line);
+  const order=[...S.covered.keys()], wrong=x>o.n?order.slice(o.n):order;
+  wrong.forEach(i=>partEl(i)&&partEl(i).classList.add("r3wrong"));
+  $("done").hidden=true; $("done").classList.remove("r3pulse"); blinkNum("n",3);
+  await new Promise(res=>{ let t=0; const fin=()=>{ clearTimeout(t); removeEventListener("pointerdown",fin,true); removeEventListener("keydown",fin,true); res(); };
+    t=setTimeout(fin,2500); setTimeout(()=>{ addEventListener("pointerdown",fin,true); addEventListener("keydown",fin,true); },250); });
+  if(!live(gen)) return;
+  const anims=[];
+  S.covered.forEach((_,i)=>partEl(i).querySelectorAll(".pc").forEach(im=>anims.push(settle(im.animate([{opacity:1},{opacity:0}],{duration:350,fill:"forwards"})))));
+  await Promise.all(anims); if(!live(gen)) return;
+  S.covered.forEach((_,i)=>{ const p=partEl(i); p.querySelector(".tops").innerHTML=""; p.classList.remove("r3wrong"); });
+  PZ.querySelectorAll(".r3wrong").forEach(p=>p.classList.remove("r3wrong"));
+  S.covered.clear(); S.busy=false; setCount(); setDone("done",false);
+  if(S.tw>=2){ const b=document.querySelector("#slip .rc-frac b"); if(b) b.classList.add("r3glow");
+    say(`The top number is ${o.n}. Follow the hand and top ${o.n} ${o.n===1?"part":"parts"}.`); showSlices(o.n,true); }
+  else say(LEVELS[S.lv]&&LEVELS[S.lv].cut&&!o.guided&&!o.tut&&o.top?o.top:custLine(o));
+};
+
+/* ===== P1.13 praise, said and written, in a few different words; the star just earned pops ===== */
+const praise=o=>{ const who=capF(custWho(o)), f=`${o.n}/${o.d}`;
+  return [`Perfect! ${who} gets ${f}!`,`Yum, exactly right! ${who} got ${f} of a pizza.`,servedLine(o)][S.i%3]; };
+{ const s0=window.serve; window.serve=function(...a){ const o=cur(), i=S.i, first=S.tries===0; const p=s0.apply(this,a);
+    $("done").hidden=true; $("r3cntw")&&($("r3cntw").hidden=true);
+    if(!o.tut&&!o.guided){ const line=praise(o); say(line,"good"); announce(line+" Star "+(S.done.filter(Boolean).length)+" of "+LEVELS[S.lv].orders.length+" filled."); S.r3pop=i; renderTop(); }
+    return p; }; }
+{ const rt0=window.renderTop; window.renderTop=function(...a){ const r=rt0.apply(this,a); const t=$("trail");
+    if(t){ t.setAttribute("aria-hidden","false"); t.setAttribute("role","img"); const L=LEVELS[S.lv]; t.setAttribute("aria-label",`Stars: ${S.done.filter(Boolean).length} of ${L.orders.length} orders served`);
+      if(S.r3pop!=null){ const s=t.querySelectorAll(".tok")[S.r3pop]; if(s&&s.classList.contains("got")){ s.classList.add("r3pop"); const k=S.r3pop; setTimeout(()=>{ if(S.r3pop===k) S.r3pop=null; },900); } } }
+    return r; }; }
+{ const lo0=window.loadOrder; window.loadOrder=function(...a){ S.r3pop=null; return lo0.apply(this,a); }; }
+
+/* ===== P0.2 / P0.3 / P1.18 the Served / Left screen: the board stays whole-size relative to the served slices (one scale for both),
+   the plate is sized to hold the served slices, and everything is kept inside safe margins, clear of the stars, the banner and NEXT ===== */
+window.plateScene=async function(gen){
+  const o=cur(), st=$("stage"), bw=$("boardwrap"); st.classList.add("serving"); hideHint();
+  const Z=window.FITZ?FITZ():1, M=Math.max(24,24/Z);
+  bw.classList.remove("in","thud","wiggle"); bw.style.transition="none"; bw.style.transform=""; void bw.offsetWidth;
+  const br=bw.getBoundingClientRect(), pr=PZ.getBoundingClientRect(), u0=pr.width/600;
+  const served=new Set(S.covered.keys()), ids=G.parts.map((_,i)=>i), idsA=ids.filter(i=>served.has(i)), idsB=ids.filter(i=>!served.has(i));
+  // the served pieces close up into neighbouring places of the pizza (slots 0, 1, 2…), exactly as big as they are
+  const slotOf={}; idsA.forEach((i,j)=>slotOf[i]=j);
+  const outline=i=>{ const h=partEl(i).querySelector(".hit"), L=h.getTotalLength(), P=[]; for(let t=0;t<48;t++){ const q=h.getPointAtLength(L*t/48); P.push([q.x,q.y]); } return P; };
+  const massOf=group=>{ let A=0,X=0,Y=0; group.forEach(i=>{ const P=outline(i); let a=0,x=0,y=0;
+      for(let j=0;j<P.length;j++){ const [x0,y0]=P[j],[x1,y1]=P[(j+1)%P.length], c=x0*y1-x1*y0; a+=c; x+=(x0+x1)*c; y+=(y0+y1)*c; }
+      if(Math.abs(a)<1e-6) return; A+=a/2; X+=x/(3*a)*a/2; Y+=y/(3*a)*a/2; }); return A?{x:X/A,y:Y/A}:{x:300,y:300}; };
+  const pc={x:300,y:300};
+  let tgt={}, cA, reachU, rotA=0;
+  if(o.shape==="round"){
+    const slots=idsA.map((_,j)=>j); cA=massOf(slots);
+    rotA=(idsA.length<ids.length&&Math.hypot(cA.x-pc.x,cA.y-pc.y)>1)?-90-Math.atan2(cA.y-pc.y,cA.x-pc.x)*180/Math.PI:0;   // crust on top, tip down
+    reachU=0; slots.forEach(i=>outline(i).forEach(([x,y])=>{ reachU=Math.max(reachU,Math.hypot(x-cA.x,y-cA.y)); }));
+  } else {
+    const [,gCols]=gridOf(o.shape,G.parts.length), bb=partEl(0).querySelector(".hit").getBBox(), cw=bb.width, ch=bb.height, P0={x:G.parts[0].cx,y:G.parts[0].cy};
+    const m=idsA.length, rows=Math.ceil(m/gCols);
+    idsA.forEach((i,j)=>{ const r=Math.floor(j/gCols), c=j%gCols, inRow=r===rows-1?m-(rows-1)*gCols:gCols; tgt[i]={x:P0.x+(c+(gCols-inRow)/2)*cw,y:P0.y+r*ch}; });
+    const xs=idsA.map(i=>tgt[i].x), ys=idsA.map(i=>tgt[i].y);
+    cA={x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2};
+    reachU=Math.hypot((Math.max(...xs)-Math.min(...xs)+cw)/2,(Math.max(...ys)-Math.min(...ys)+ch)/2);
+  }
+  // the plate: its rim (radius 286 of 600) holds the served group with a little room to spare
+  // design pass: the plate is exactly as big as the board's round part (the paddle's disc is ~1.075 x the pizza box)
+  const discW=br.width*(bw.classList.contains("onpaddle")?1.075:1), fitU=.9*286/600*discW/u0;
+  if(o.shape==="round"&&reachU>fitU){ cA={...pc}; reachU=0; idsA.forEach((_,j)=>outline(j).forEach(([x,y])=>{ reachU=Math.max(reachU,Math.hypot(x-pc.x,y-pc.y)); })); }   // too wide to centre on its own middle: keep it in its place on the pizza
+  const plateW1=discW;   // plate width at full board size
+  // the space for the scene: below the banner, above NEXT, right of the stars, with safe margins
+  const card=document.querySelector("#app>.card").getBoundingClientRect(), tr=$("trail").getBoundingClientRect(), dn=$("done");
+  // the labels share the bottom strip with NEXT: the plate and the board stand either side of NEXT, so nothing overlaps
+  const hdr=document.querySelector("header.top").getBoundingClientRect(), doneW=Math.max(230,dn.offsetWidth||0), LBL=Math.max(80,80/Z), doneH=Math.max(72,dn.offsetHeight||0);
+  const port=document.documentElement.classList.contains("portrait"), vRail=tr.width&&tr.height>tr.width;   // design pass: the star row now sits beside Pause while serving
+  const L=Math.max(M,(vRail?tr.right:0)+M), R=port?innerWidth-M:Math.min(innerWidth-M,hdr.width?hdr.left-12:innerWidth-M), T=Math.max(M,card.bottom+M*.6), B=port?innerHeight-M-doneH-12:innerHeight-M;
+  const gap=port?M:Math.max(M*1.6,doneW+2*M), availW=R-L, availH=B-T-LBL;   // portrait: NEXT sits under the labels, so the plate and board stand close together
+  const mid=innerWidth/2;   // NEXT stands at the centre: the plate to its left, the board to its right
+  const s=Math.min(1,(mid-gap/2-L)/plateW1,(R-mid-gap/2)/br.width,availH/Math.max(br.height,plateW1*630/600));
+  const bW=br.width*s, pW=plateW1*s, pH=pW*630/600;
+  const plateCx=Math.max(L+pW/2,mid-gap/2-pW/2-Math.max(0,(mid-gap/2-L-pW)/3)), boardCx=Math.min(R-bW/2,mid+gap/2+bW/2+Math.max(0,(R-mid-gap/2-bW)/3)), cy=T+availH/2;
+  // move and scale the board as one piece (its slices and the served slices keep one size)
+  const c0={x:br.left+br.width/2,y:br.top+br.height/2}, dx=boardCx-c0.x, dy=cy-c0.y;
+  // where the served slices lay: a faint dusting of flour and a dashed outline, so the gap reads as "a slice was here"
+  { const rnd=rng(77); const stains=idsA.map(i=>{ const pt=G.parts[i];
+      const dust=[...Array(22)].map(()=>{ const q=piecesFor(G,i,o.d), b=q[Math.floor(rnd()*q.length)]||{x:pt.cx,y:pt.cy};
+        return `<circle cx="${(b.x+(rnd()-.5)*46).toFixed(1)}" cy="${(b.y+(rnd()-.5)*46).toFixed(1)}" r="${(1+rnd()*2.2).toFixed(1)}" fill="rgba(255,244,222,.55)"/>`; }).join("");
+      return `<g clip-path="url(#stainclip${i})"><path d="${pt.d}" fill="rgba(255,236,200,.12)"/>${dust}</g><path d="${pt.d}" fill="none" stroke="rgba(255,244,225,.7)" stroke-width="2.6" stroke-linejoin="round" stroke-dasharray="14 7"/>`; }).join("");
+    PZ.insertAdjacentHTML("afterbegin",`<defs>${idsA.map(i=>`<clipPath id="stainclip${i}"><path d="${G.parts[i].d}"/></clipPath>`).join("")}</defs><g class="stains">${stains}</g>`); }
+  bw.style.transformOrigin="50% 50%"; bw.style.transition=rm()?"none":"transform 1s cubic-bezier(.45,0,.25,1)";
+  bw.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
+  await wait(rm()?500:1050); if(!live(gen)) return;
+  bw.style.transition="none";
+  // the plate (and the two labels) in stage coordinates
+  const sr=st.getBoundingClientRect(), bAfter=bw.getBoundingClientRect(), pAfter=PZ.getBoundingClientRect();
+  const plateTop=Math.max(T,Math.min(B-LBL-pH,(pAfter.top+pAfter.height/2)-pH*302/630));
+  const layer=document.createElement("div"); layer.className="servelayer r3serve"; layer.style.setProperty("--ph",pH+"px");
+  layer.innerHTML=`<figure class="a" style="left:${(plateCx-sr.left).toFixed(1)}px;top:${(plateTop-sr.top).toFixed(1)}px"><img src="assets/draft2/plate_white.svg?v=a2b6a1af" alt=""><figcaption><span class="dsLbl">Served</span>${fracify(o.n+"/"+o.d)}</figcaption></figure>
+    <figure class="b" style="left:${(pAfter.left+pAfter.width/2-sr.left).toFixed(1)}px;top:${(Math.min(B-LBL+8,bAfter.bottom+8)-sr.top).toFixed(1)}px"><figcaption><span class="dsLbl">Left</span>${fracify((o.d-o.n)+"/"+o.d)}</figcaption></figure>`;
+  st.appendChild(layer);
+  { // design pass: "Served" and "Left" stand on one line (the lower of the two)
+    const fa=layer.querySelector(".a figcaption"), fb=layer.querySelector(".b"), ra=layer.querySelector(".a").getBoundingClientRect(), rb=fb.getBoundingClientRect();
+    const ya=ra.bottom-rb.height, yb=rb.top;   // the figures hold still (the captions pop in with a transform), and figure b is just its caption
+    if(ya>yb) fb.style.top=(parseFloat(fb.style.top)+ya-yb).toFixed(1)+"px"; else if(yb>ya) fa.style.marginTop=(yb-ya).toFixed(1)+"px"; }
+  await Promise.all([...layer.querySelectorAll("img")].map(im=>im.decode().catch(()=>{})));
+  await wait(rm()?500:700); if(!live(gen)) return;
+  // the plate's centre in the pizza's own units: the served group's centre goes there, unscaled
+  const m=PZ.getScreenCTM(); if(!m) return; const pl=layer.querySelector(".a>img").getBoundingClientRect();
+  const Tp=new DOMPoint(pl.left+pl.width/2,pl.top+pl.height*302/630).matrixTransform(m.inverse());
+  const rot=(v,deg,c)=>{ const r=deg*Math.PI/180, x=v.x-c.x, y=v.y-c.y; return {x:c.x+x*Math.cos(r)-y*Math.sin(r),y:c.y+x*Math.sin(r)+y*Math.cos(r)}; };
+  const ang=i=>Math.atan2(G.parts[i].cy-pc.y,G.parts[i].cx-pc.x)*180/Math.PI;
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2, lerp=(a,b,t)=>a+(b-a)*t;
+  await Promise.all(idsA.map((i,k)=>new Promise(done=>{ const el=partEl(i), p=G.parts[i];
+    el.style.removeProperty("transform"); el.style.transition="none"; el.parentNode.appendChild(el);
+    let R=0, d={x:0,y:0}, Rc=cA;
+    if(o.shape==="round"){ R=rotA+ang(slotOf[i])-ang(i); Rc=rot(cA,rotA,pc); } else d={x:tgt[i].x-p.cx,y:tgt[i].y-p.cy};
+    const fx=Tp.x+d.x-Rc.x, fy=Tp.y+d.y-Rc.y;
+    const set=(x,y,r)=>el.setAttribute("transform",`translate(${x.toFixed(2)} ${y.toFixed(2)})`+(r?` rotate(${r.toFixed(2)} ${pc.x} ${pc.y})`:""));
+    if(rm()){ el.style.opacity=0; set(fx,fy,R); el.style.transition="opacity .3s"; requestAnimationFrame(()=>{ el.style.opacity=1; }); setTimeout(done,320); return; }
+    const K=[[0,0,0,0],[.2,0,-26,0],[.6,fx/2,fy/2-110,R/2],[1,fx,fy,R]], dur=1400, t0=performance.now()+k*90;
+    (function f(now){ if(!live(gen)){ done(); return; } const t=Math.min(1,Math.max(0,(now-t0)/dur)), e=ease(t);
+      let j=1; while(j<K.length-1&&K[j][0]<e) j++; const A=K[j-1], Bk=K[j], q=(e-A[0])/(Bk[0]-A[0]||1);
+      set(lerp(A[1],Bk[1],q),lerp(A[2],Bk[2],q),lerp(A[3],Bk[3],q)); if(t<1) requestAnimationFrame(f); else done(); })(performance.now());
+    setTimeout(()=>{ if(live(gen)) set(fx,fy,R); done(); },k*90+dur+400); })));
+  if(!live(gen)) return;
+  layer.classList.add("show"); if(Sound.plop) Sound.plop();
+  await wait(500);
+};
+
+/* ===== P1.15 the "So many customers!" board: the order tickets are up at once (no empty rails) ===== */
+/* (the ticket timings are set where the board is built) */
+
+/* ===== P1.17 story scene 1: the narrator's line is shown as a caption, like the other scenes' words ===== */
+{ const sl0=window.sLine; window.sLine=function(who,text,...a){ document.querySelectorAll(".r3cap").forEach(e=>e.remove());
+    const p=sl0.call(this,who,text,...a);
+    if(who==="narr"&&!(window.STORY_RW&&STORY_RW.ff)){ const c=document.createElement("div"); c.className="r3cap"; c.innerHTML=fracify(noNames(text)); $("sworld").appendChild(c);
+      const off=()=>c.remove(); Promise.resolve(p).then(off,off); }
+    return p; }; }
+
+/* ===== P3.27 pause during gameplay: Resume, Restart order, Back to levels, Music on/off ===== */
+const pb=$("r3pause"), menu=$("r3menu"), mus=$("r3music"); let lastFocus=null;
+document.querySelector("header.top").prepend(pb);   // inside the header, so a guiding hand never blocks it
+const musicOn=()=>{ const b=$("bgmBtn"); return !(b&&b.classList.contains("off")); };
+const paintMusic=()=>{ const on=musicOn(); mus.textContent="Music: "+(on?"on":"off"); mus.setAttribute("aria-pressed",on?"true":"false"); };
+function openMenu(){ lastFocus=document.activeElement; paintMusic(); menu.hidden=false; PAUSE.menu=true; if(PAUSE.set) PAUSE.set(true); else PAUSE.on=true; $("app").inert=true; $("r3resume").focus(); }
+function closeMenu(){ menu.hidden=true; PAUSE.menu=false; $("app").inert=false; if(PAUSE.set) PAUSE.set(false); else PAUSE.on=false; (lastFocus&&lastFocus.isConnected?lastFocus:pb).focus&&(lastFocus&&lastFocus.isConnected?lastFocus:pb).focus(); }
+pb.addEventListener("click",e=>{ e.stopPropagation(); openMenu(); });
+$("r3resume").addEventListener("click",closeMenu);
+$("r3restart").addEventListener("click",()=>{ closeMenu(); stopGuide(); S.twKey=null; loadOrder(); });
+$("r3levels").addEventListener("click",()=>{ closeMenu(); stopGuide(); try{ VOICE.stop&&VOICE.stop(); }catch(e){} $("home").click(); });
+mus.addEventListener("click",()=>{ if(typeof BGM!=="undefined") BGM.toggle(); paintMusic(); });
+menu.addEventListener("keydown",e=>{ if(e.key==="Escape"){ e.preventDefault(); closeMenu(); return; }
+  if(e.key==="Tab"){ const f=[...menu.querySelectorAll("button")], i=f.indexOf(document.activeElement);
+    if(e.shiftKey&&i<=0){ e.preventDefault(); f[f.length-1].focus(); } else if(!e.shiftKey&&i===f.length-1){ e.preventDefault(); f[0].focus(); } } });
+
+/* ===== P3.24 / P3.25 controls that are not shown cannot be reached; every picture has alt text ===== */
+const STORY_ALT=[[/scene1_/,"Billu the cat chef and Noori the owl at Billu’s Pizza Kitchen"],[/scene2_whole/,"Chintu the monkey orders half a pizza from Billu"],
+  [/scene2_half/,"Billu has cut the pizza into one big piece and one small piece"],[/scene3_puzzled/,"Chintu points at the big piece; Noori sees the pieces are not equal"],
+  [/slices_board/,"Sign: Slices! Get 1 slice or a whole pizza. You choose!"],[/prelbd_n/,"Billu and Noori in front of the pizza shop"]];
+function seen(el){ if(!el.isConnected||el.closest("[hidden],[inert]")) return false; const r=el.getClientRects(); if(!r.length) return false;
+  for(let e=el;e&&e!==document.body;e=e.parentElement){ const c=getComputedStyle(e); if(c.display==="none"||c.visibility==="hidden"||+c.opacity<.05||c.pointerEvents==="none"&&e===el) return false; }
+  return true; }
+function sweep(){
+  pb.hidden=!(isGame()&&S.phase!=="idle"); if(!menu.hidden&&!isGame()) closeMenu();
+  document.querySelectorAll("button,select,[role='button'],a[href]").forEach(el=>{ if(el.closest("#pz,#r3menu")) return;
+    const vis=seen(el);
+    if(!vis){ if(!el.hasAttribute("data-r3t")){ el.setAttribute("data-r3t",el.getAttribute("tabindex")??""); el.setAttribute("tabindex","-1"); el.setAttribute("aria-hidden","true"); } }
+    else if(el.hasAttribute("data-r3t")){ const t=el.getAttribute("data-r3t"); t===""?el.removeAttribute("tabindex"):el.setAttribute("tabindex",t); el.removeAttribute("data-r3t"); el.removeAttribute("aria-hidden"); } });
+  const bar=$("pctl"); if(bar){ const on=bar.classList.contains("on"); bar.inert=!on; on?bar.removeAttribute("aria-hidden"):bar.setAttribute("aria-hidden","true"); }
+  document.querySelectorAll("img").forEach(im=>{ const src=im.getAttribute("src")||""; if(!im.hasAttribute("alt")||(im.getAttribute("alt")===""&&/assets\/story\/scene|slices_board/.test(src))){
+      const hit=STORY_ALT.find(([re])=>re.test(src)); im.setAttribute("alt",hit?hit[1]:""); } });
+}
+setInterval(sweep,400); sweep();
+
+/* ===== P3.28 reduced motion: moving animations become fades; no confetti (a soft glow instead) ===== */
+{ const A0=Element.prototype.animate;
+  Element.prototype.animate=function(kf,opt){ if(!rm()||!Array.isArray(kf)||!kf.length) return A0.call(this,kf,opt);
+    const last=kf[kf.length-1], keep=["transform","translate","scale","rotate"];
+    const k2=kf.map(f=>{ const g={...f}; keep.forEach(p=>{ if(p in last) g[p]=last[p]; else delete g[p]; }); delete g.filter; return g; });
+    const o2=typeof opt==="number"?{duration:Math.min(opt,300)}:{...opt,duration:Math.min(+opt.duration||300,300),iterations:1,delay:0};
+    return A0.call(this,k2,o2); }; }
+{ const c0=window.confetti; const soft=function(){ if(!rm()) return c0.apply(this,arguments);
+    const g=document.createElement("div"); g.style.cssText="position:fixed;inset:0;z-index:99990;pointer-events:none;background:radial-gradient(circle,rgba(255,220,120,.35),rgba(255,220,120,0) 70%);opacity:0;transition:opacity .4s";
+    document.body.appendChild(g); requestAnimationFrame(()=>{ g.style.opacity=1; }); setTimeout(()=>{ g.style.opacity=0; setTimeout(()=>g.remove(),450); },700); };
+  soft.busy=()=>rm()?false:(c0.busy?c0.busy():false); soft.hurry=(...a)=>c0.hurry&&c0.hurry(...a); window.confetti=soft; }
+})();
+</script>
+
+<link rel="stylesheet" href="assets/ui/design.css?v=ds9">
+<script src="assets/ui/design.js?v=ds9"></script>
+<script src="assets/ui/focus.js?v=ds9"></script>
 </body>
 </html>

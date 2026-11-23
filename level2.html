@@ -21,6 +21,7 @@ body{margin:0;font:14px system-ui,-apple-system,sans-serif}
 img{max-width:100%}
 [hidden]{display:none!important}
 </style>
+<link rel="stylesheet" href="assets/ui/tokens.css?v=ds9">
 </head>
 <body>
 <script>
@@ -68,11 +69,12 @@ if(!/^#(play|qa=)/.test(location.hash)) location.replace(new URL(location.protoc
   const iw=g(window,"innerWidth")||g(Window.prototype,"innerWidth"), ih=g(window,"innerHeight")||g(Window.prototype,"innerHeight");
   const realW=()=>iw.get.call(window), realH=()=>ih.get.call(window);
   let Z=1;
-  function fit(){ Z=Math.min(6,realW()/W0,realH()/H0); Z=Math.max(Z,.2); d.style.zoom=Z===1?"":String(Z);
+  function fit(){ const P=realW()<realH();   /* design pass: portrait is played upright (a stacked layout), laid out at least 430 wide; landscape as before */
+    Z=P ? (realW()<430 ? realW()/430 : realW()>900 ? realW()/900 : 1) : Math.min(6,realW()/W0,realH()/H0); Z=Math.max(Z,.2); d.style.zoom=Z===1?"":String(Z); d.classList.toggle("portrait",P);
     // viewport units follow the page's own (drawn) size: the CSS uses var(--vw) etc. in place of vw
     const w=realW()/Z/100, h=realH()/Z/100;
     d.style.setProperty("--vw",w+"px"); d.style.setProperty("--vh",h+"px"); d.style.setProperty("--vmin",Math.min(w,h)+"px"); d.style.setProperty("--vmax",Math.max(w,h)+"px");
-    media(); d.classList.toggle("turnme", realW()<realH()); const tm=document.getElementById("turnme"); if(tm) tm.style.zoom=String(1/Z); }
+    media(); d.classList.toggle("turnme", false); const tm=document.getElementById("turnme"); if(tm) tm.style.zoom=String(1/Z); }
   // width/height conditions in @media rules are judged on the page's own size too
   function media(){ for(const sh of document.styleSheets){ let rs; try{ rs=sh.cssRules; }catch(e){ continue; }
     for(const r of rs){ if(!(r instanceof CSSMediaRule)) continue; if(r._o===undefined) r._o=r.media.mediaText;
@@ -1631,21 +1633,22 @@ const RULE_SAME_D="Same denominator? The parts are the same size. Compare the nu
 const RULE_SAME_N="Same numerator? Compare the size of the parts. The smaller denominator means bigger parts.";
 
 const STEPS=[
+/* review 3: the matches rise in difficulty (fifths, sixths, ninths; then quarters and eighths, thirds and tenths, fifths and ninths) */
   {kind:"match",set:"A",label:"Match 1",a:{k:"tez",n:3,d:5},b:{k:"monty",n:1,d:5},win:"a",intro:"Match 1: Tez and Monty! Show how much each one ate.",
     quotes:[["tez","Slow and steady wins!"]]},
-  {kind:"match",set:"A",label:"Match 2",a:{k:"madhu",n:2,d:9},b:{k:"ant",n:7,d:9},win:"b",intro:"Match 2: Madhu and the ant!",quotes:[["ant","Small ant, big appetite!"]]},
-  {kind:"match",set:"A",label:"Match 3",a:{k:"bijli",n:5,d:6},b:{k:"badal",n:1,d:6},win:"a",intro:"Match 3: twin against twin!",
+  {kind:"match",set:"A",label:"Match 2",a:{k:"bijli",n:5,d:6},b:{k:"badal",n:1,d:6},win:"a",intro:"Match 2: twin against twin!",
     quotes:[["bijli","Sssorry, twin!"],["badal","Next time!"]]},
+  {kind:"match",set:"A",label:"Match 3",a:{k:"madhu",n:2,d:9},b:{k:"ant",n:7,d:9},win:"b",intro:"Match 3: Madhu and the ant!",quotes:[["ant","Small ant, big appetite!"]]},
   {kind:"intro",set:"B",label:"Set B",text:"Now the pizzas are cut into different numbers of parts. Watch the size of the slices!",rules:["n"]},
-  {kind:"match",set:"B",label:"Match 4",a:{k:"ant",n:1,d:3},b:{k:"madhu",n:1,d:10},win:"a",intro:"Match 4: the ant and Madhu!",quotes:[["ant","One big slice for me!"]]},
-  {kind:"match",set:"B",label:"Match 5",a:{k:"monty",n:2,d:9},b:{k:"tez",n:2,d:5},win:"b",intro:"Match 5: Monty and Tez!",quotes:[["tez","Slow… but steady!"]]},
-  {kind:"match",set:"B",label:"Match 6",a:{k:"squirrel",n:3,d:4},b:{k:"mouse",n:3,d:8},win:"a",intro:"Match 6: the squirrel and the mouse!",
+  {kind:"match",set:"B",label:"Match 4",a:{k:"squirrel",n:3,d:4},b:{k:"mouse",n:3,d:8},win:"a",intro:"Match 4: the squirrel and the mouse!",
     quotes:[["squirrel","Quick, quick, I win!"],["mouse","Squeak! Good match!"]]},
+  {kind:"match",set:"B",label:"Match 5",a:{k:"ant",n:1,d:3},b:{k:"madhu",n:1,d:10},win:"a",intro:"Match 5: the ant and Madhu!",quotes:[["ant","One big slice for me!"]]},
+  {kind:"match",set:"B",label:"Match 6",a:{k:"monty",n:2,d:9},b:{k:"tez",n:2,d:5},win:"b",intro:"Match 6: Monty and Tez!",quotes:[["tez","Slow… but steady!"]]},
   {kind:"intro",set:"C",label:"Set C",text:"Now just the fractions, no pizza! Use the rules to find who ate more.",rules:["d","n"]},
-  {kind:"cards",set:"C",label:"Round 7",shape:"round",a:{k:"monty",n:4,d:7},b:{k:"peacock",n:6,d:7},win:"b",intro:"Monty or the peacock: who ate more?",
-    yes:"Yes! Same denominator, and 6 is more than 4."},
-  {kind:"cards",set:"C",label:"Round 8",shape:"square",a:{k:"mouse",n:1,d:6},b:{k:"ant",n:1,d:4},win:"b",intro:"The mouse or the ant: who ate more?",
+  {kind:"cards",set:"C",label:"Round 7",shape:"square",a:{k:"mouse",n:1,d:6},b:{k:"ant",n:1,d:4},win:"b",intro:"The mouse or the ant: who ate more?",
     yes:"Yes! Same numerator, and fourths are bigger than sixths."},
+  {kind:"cards",set:"C",label:"Round 8",shape:"round",a:{k:"monty",n:4,d:7},b:{k:"peacock",n:6,d:7},win:"b",intro:"Monty or the peacock: who ate more?",
+    yes:"Yes! Same denominator, and 6 is more than 4."},
   {kind:"cards",set:"C",label:"Round 9",shape:"round",a:{k:"hippo",n:5,d:9},b:{k:"jhumru",n:2,d:9},win:"a",intro:"The hippo or Jhumru: who ate more?",
     yes:"Yes! Same denominator, and 5 is more than 2."},
   {kind:"cards",set:"C",label:"Round 10",shape:"rect",a:{k:"madhu",n:3,d:10},b:{k:"squirrel",n:3,d:5},win:"b",intro:"Last one! Madhu or the squirrel: who ate more?",
@@ -3078,6 +3081,7 @@ async function runLearning2(ok){
   const say=(w,t,o)=>tutSay(w,t,Object.assign({extra:3500},o||{}));
   // 1. two whole pizzas, the same size
   stage(`<div class="l2row">${side("monty",l2Pizza(1,{}),"")}${side("ant",l2Pizza(1,{}),"")}</div>`);
+  await say("noori","Let’s practise on a plain cheese pizza."); if(!ok()) return;   // review 3: the story's pizzas had toppings; the lesson says why these are plain
   await say("noori","First, both pizzas are the same size. That’s important!"); if(!ok()) return;
   // 2. cut into 8 and 4; the slice each one ate glows
   stage(`<div class="l2row">${side("monty",l2Pizza(8,{lit:[0]}),l2Card(1,8),"l2a")}${side("ant",l2Pizza(4,{lit:[0]}),l2Card(1,4),"l2b")}</div>`);
@@ -3105,7 +3109,7 @@ async function runLearning2(ok){
   L.classList.add("tight"); stage(`<div class="l2row">${side("tez",l2Pizza(8,{lit:[0,1,2]}),l2Card(3,8))}${side("jhumru",l2Pizza(8,{lit:[0,1,2,3,4]}),l2Card(5,8))}</div>
     <div class="l2more">${l2Card(5,8)}<span>is more than</span>${l2Card(3,8)}</div>
     <div class="l2rules two">${ruleCard("n").replace(/ id="rule-\w+"/,"")}${ruleCard("d").replace(/ id="rule-\w+"/,"")}</div>`);
-  await Promise.all([say("noori","Same denominator? Then the parts are the same size. Just compare the numerators."),l2Eat(L,ok)]); if(!ok()) return;
+  await Promise.all([say("noori","Same denominator? Then the parts are the same size. Just compare the numerators. Five-eighths is more than three-eighths."),l2Eat(L,ok)]); if(!ok()) return;
   // 9. more contestants line up
   stage(`<div class="l2line">${["squirrel","peacock","madhu","hippo","mouse","bijli"].map((k,i)=>`<div class="l2ava" style="animation-delay:${i*.12}s"><img src="${A}${k}.webp" alt=""></div>`).join("")}</div>`);
   L.classList.remove("tight");
@@ -3189,9 +3193,9 @@ if(location.hash==="#play"){ history.replaceState(null,"",location.pathname); co
       {t:"Level 1.2 · Cut, top and serve", items:[["1.2:0","Frog 1/4",["frog"]],["1.2:1","Gorilla 4/5",["gorilla"]],["1.2:2","Mouse 1/6",["mouse"]],["1.2:3","Sloth 3/10",["sloth"]],["1.2:4","Hippo 11/12",["hippo"]]]}]},
     {lvl:"Level 2 · Big Eater Contest", page:"l2", groups:[
       {t:"Start", items:[["S","Story 2",["billu_idle"]],["T","Tutorial 2 · Who ate more?",["noori"]]]},
-      {t:"Set A · Same denominator", items:[["0","Match 1",vs("tez","monty")],["1","Match 2",vs("madhu","ant")],["2","Match 3",vs("bijli","badal")]]},
-      {t:"Set B · Same numerator", items:[["3","Set B intro",["noori"]],["4","Match 4",vs("ant","madhu")],["5","Match 5",vs("monty","tez")],["6","Match 6",vs("squirrel","mouse")]]},
-      {t:"Set C · Fractions only", items:[["7","Set C intro",["noori"]],["8","Round 7",vs("monty","peacock")],["9","Round 8",vs("mouse","ant")],["10","Round 9",vs("hippo","jhumru")],["11","Round 10",vs("madhu","squirrel")]]},
+      {t:"Set A · Same denominator", items:[["0","Match 1",vs("tez","monty")],["1","Match 2",vs("bijli","badal")],["2","Match 3",vs("madhu","ant")]]},
+      {t:"Set B · Same numerator", items:[["3","Set B intro",["noori"]],["4","Match 4",vs("squirrel","mouse")],["5","Match 5",vs("ant","madhu")],["6","Match 6",vs("monty","tez")]]},
+      {t:"Set C · Fractions only", items:[["7","Set C intro",["noori"]],["8","Round 7",vs("mouse","ant")],["9","Round 8",vs("monty","peacock")],["10","Round 9",vs("hippo","jhumru")],["11","Round 10",vs("madhu","squirrel")]]},
       {t:"Golden Trophy Final", items:[["12","Final · put in order",["trophy"]],["13","Champion",["trophy"]]]}]}];
   const pic=k=>`<img src="assets/web/${k}.webp" alt="" loading="lazy">`;
   const label=v=>{ for(const L of MAP) if(L.page===PAGE) for(const g of L.groups) for(const it of g.items) if(it[0]===v) return `${/^Level/.test(g.t)?"":L.lvl.split(" · ")[0]+" · "}${g.t} · ${it[1]}`; return (sel.selectedOptions[0]||{}).text||""; };
@@ -3210,7 +3214,7 @@ if(location.hash==="#play"){ history.replaceState(null,"",location.pathname); co
   pan.addEventListener("click",e=>{ if(e.target.closest(".x")){ open(false); return; }
     const c=e.target.closest(".chip3"); if(!c) return; open(false);
     if(c.dataset.p===PAGE) go(c.dataset.v);
-    else location.href=(PAGE==="l1"?"level2":"./")+"#qa="+encodeURIComponent(c.dataset.v); });
+    else location.href=(PAGE==="l1"?"level2.html":"./")+"#qa="+encodeURIComponent(c.dataset.v); });
   // arriving from the other page's QA panel: jump straight to the step
   const m=/^#qa=(.+)$/.exec(location.hash);
   if(m){ const v=decodeURIComponent(m[1]); history.replaceState(null,"",location.pathname); setTimeout(()=>go(v),300); }
@@ -3269,7 +3273,7 @@ body.paused #story::after,body.paused #tut::after{content:"";position:absolute;i
   // the signs show only while a story or a tutorial is on screen
   setInterval(()=>{ const inStory=!st.hidden, inTut=!tu.hidden&&tu.classList.contains("open"), on=inStory||inTut;
     bar.classList.toggle("on",on); bar.classList.toggle("intut",!inStory&&inTut);
-    if(!on&&PAUSE.on&&!PAUSE.away) setPause(false); },200);
+    if(!on&&PAUSE.on&&!PAUSE.away&&!PAUSE.menu) setPause(false); },200);   // review 3: the gameplay pause menu keeps its pause
   // another tab or window: everything goes quiet and waits right there, and carries on on return
   const goAway=()=>{ if(!PAUSE.on){ PAUSE.away=true; setPause(true); } };
   document.addEventListener("gameaway",goAway);
@@ -3987,6 +3991,7 @@ body .tut .talk.talk:has(p.tall),body #ssub#ssub:not(.bub):has(p.tall),body .car
    the box and the speaker's round photo are measured together and the whole thing is nudged to the centre */
 (()=>{ let q=0;
   const fix=()=>{ q=0; const W=innerWidth;
+    if(document.documentElement.classList.contains("portrait")) return;   // design pass: on phones the boxes span the screen (no nudging)
     document.querySelectorAll("#app>.card,.tut .talk,#ssub:not(.bub)").forEach(b=>{
       if(!b.getClientRects().length) return; const old=+b.dataset.cx||0;
       let L=Infinity,R=-Infinity; [b,b.querySelector(".guide,.who")].forEach(e=>{ if(!e||!e.getClientRects().length) return; const r=e.getBoundingClientRect(); L=Math.min(L,r.left); R=Math.max(R,r.right); });
@@ -4309,7 +4314,7 @@ html body #guide img.faceimg.faceimg,html body img#guideImg.faceimg.faceimg,html
 .dbx>.say,.dbx>p,.dbx .say{margin-left:calc(-1 * var(--dbxshift,0px))!important}
 </style>
 <script>
-(()=>{ const BOX=new Set(["noori","billu_idle","chintu_face","ant","mouse","squirrel","jhumru","sloth","madhu","parrot","hippo","giraffe","gorilla","bijli","bear","tez","badal","frog"]);
+(()=>{ const BOX=new Set(), BOX_ART=new Set(["noori","billu_idle","chintu_face","ant","mouse","squirrel","jhumru","sloth","madhu","parrot","hippo","giraffe","gorilla","bijli","bear","tez","badal","frog"]);
   const IM={}; BOX.forEach(n=>{ const i=new Image(); i.src="assets/ui/dbox/"+n+".webp"; IM[n]=i; });
   const L=560, R=260, SH=452;   // the box picture: left end (photo circle) and right end keep their shape, the even middle stretches
   const ALIAS={monty:"chintu_face",chintu_full:"chintu_face"};   // Monty is the monkey with the blue cap: the same box as Chintu
@@ -4733,5 +4738,253 @@ html body #t2learn .l2cap{display:flex;justify-content:center}
 html body #t2learn.tight .l2row{zoom:.8}
 html body #t2learn.tight .l2more{margin-top:clamp(2px,calc(.6*var(--vh)),8px)!important}
 </style>
+<!-- ===================================================================================================
+     REVIEW 3 (Level 2): maths visuals, gameplay feedback, layout and accessibility, as in Level 1
+     =================================================================================================== -->
+<style id="r3css">
+/* --- P0.4 the rule hint: the number being compared is highlighted (bigger, red, a gentle pulse), the other faded --- */
+html body .fr b.r3hi{color:#C8402E!important;display:inline-block;animation:r3num 1.6s ease-in-out infinite!important;text-shadow:0 0 .25em rgba(255,206,80,.9)!important}
+html body .fr b.r3lo{opacity:.3!important}
+@keyframes r3num{0%,100%{transform:scale(1.15)}50%{transform:scale(1.3)}}
+@keyframes r3fadeIn{from{opacity:0}to{opacity:1}}
+/* --- P1.8 / P1.10 a live counter under each plate, with its reset button --- */
+.r3cntw{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;position:relative;z-index:4}
+.r3cnt{font-family:var(--display);font-weight:800;font-size:clamp(16px,calc(2.7*var(--vh)),22px);color:#5A2E10;background:#FFF6E2;
+  border:3px solid #D9A55A;border-radius:999px;padding:.15em .75em;white-space:nowrap;transition:background .25s,border-color .25s,color .25s}
+.r3cnt b{font-size:1.15em}
+.r3cnt.full{background:#E3F5DB;border-color:#3F8A3C;color:#1F5E1F}
+.r3reset{width:max(48px,calc(48px / var(--z,1)));height:max(48px,calc(48px / var(--z,1)));border-radius:50%;border:3px solid #D9A55A;background:#FFF6E2;color:#5A2E10;
+  display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 auto}
+.r3reset svg{width:55%;height:55%}
+.r3reset[hidden],.r3cntw[hidden]{display:none!important}
+.side.win .r3cntw,.side.ok .r3cntw{display:none!important}
+.match .side .r3cntw{position:absolute;margin:0;flex-direction:column;gap:6px}   /* under the contestant's fraction card, beside the plate (out of the layout flow) */
+.match .side.a .r3cntw{left:0}
+.match .side.b .r3cntw{right:0}
+/* --- P1.9 CHECK only when it can be used; it pulses when both plates are right. NEXT waits for the win animation --- */
+html body #done[hidden]{display:none!important}
+html body #done.r3pulse{animation:r3pulse 1.1s ease-in-out infinite}
+@keyframes r3pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09);filter:brightness(1.1) drop-shadow(0 0 12px rgba(120,220,90,.9))}}
+/* --- P1.18 safe margins (24 screen px) --- */
+html body #done{bottom:max(24px,calc(24px / var(--z,1)))!important;min-height:max(48px,calc(48px / var(--z,1)))}
+html body .trail{left:max(24px,calc(24px / var(--z,1)))!important}
+/* --- P1.7 a wrong plate stays on screen with a soft red outline and a little shake --- */
+.side.r3wrong .plate{border-radius:50%;box-shadow:0 0 0 6px rgba(229,57,53,.85),0 0 22px rgba(229,57,53,.55);animation:r3shake .5s ease-in-out 2}
+@keyframes r3shake{25%{translate:-6px 0}75%{translate:6px 0}}
+html body .fr b.r3glow{color:#C8402E!important;text-shadow:0 0 .3em rgba(255,200,60,1),0 0 .6em rgba(255,200,60,.8)!important;animation:r3num 1.4s ease-in-out infinite!important;display:inline-block}
+/* --- P1.11 the Final: the picked card is clearly selected (raised, a thick green ring, a check badge); the others dim --- */
+html body .fl2 .fin.sel{transform:translateY(-10px)!important;box-shadow:0 0 0 6px #2E8B3A,0 0 0 9px #FFFFFF,0 12px 22px rgba(46,139,58,.45)!important;position:relative}
+html body .fl2 .fin.sel::after{content:"✓";position:absolute;right:-12px;top:-12px;width:34px;height:34px;border-radius:50%;background:#2E8B3A;color:#FFFFFF;
+  font:900 22px/1 system-ui,sans-serif;display:grid;place-items:center;box-shadow:0 0 0 3px #FFFFFF,0 3px 6px rgba(0,0,0,.3);z-index:5}
+html body .fl2:has(.fin.sel) .home5 .fin:not(.sel){opacity:.55;filter:saturate(.6)}
+/* --- P1.13 only the star just earned pops --- */
+html body .trail .tok.qs.got{animation:none}
+html body .trail .tok.qs.got.r3pop{animation:r3star .8s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes r3star{0%{transform:scale(.4)}45%{transform:scale(1.7) rotate(18deg)}100%{transform:scale(1)}}
+/* --- P3.27 pause button and menu during play --- */
+#r3pause{position:fixed;left:max(24px,calc(24px / var(--z,1)));top:max(24px,calc(24px / var(--z,1)));z-index:460;width:max(56px,calc(52px / var(--z,1)));height:max(56px,calc(52px / var(--z,1)));
+  border:0;padding:0;border-radius:50%;cursor:pointer;background:url("assets/ui/round_wood.webp?v=5ef7504d") center/100% 100% no-repeat;color:#FFF3D6;
+  display:grid;place-items:center;filter:drop-shadow(0 4px 5px rgba(50,25,0,.4));pointer-events:auto}
+#r3pause svg{width:44%;height:44%}
+#r3pause[hidden]{display:none!important}
+#r3menu{position:fixed;inset:0;z-index:99995;display:grid;place-items:center;background:rgba(30,16,6,.55)}
+#r3menu[hidden]{display:none!important}
+#r3menu .box{background:#FFF6E2;border:5px solid #8A5A2E;border-radius:28px;padding:26px 30px;display:grid;gap:14px;min-width:min(340px,86vw);box-shadow:0 14px 0 rgba(60,30,10,.35)}
+#r3menu h2{margin:0 0 4px;text-align:center;font-family:var(--display);font-weight:800;font-size:30px;color:#5A2E10}
+#r3menu button{min-height:56px;border-radius:999px;border:0;cursor:pointer;font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:.03em;
+  background:linear-gradient(180deg,#FFB75C,#F07F12);color:#2A1405;box-shadow:0 5px 0 #A9540A}
+#r3menu button.alt{background:linear-gradient(180deg,#FFFFFF,#F1E4CC);box-shadow:0 5px 0 #C9AE84}
+/* --- P3.23 focus ring --- */
+html body button:focus-visible,html body [role="button"]:focus-visible,html body select:focus-visible,html body a:focus-visible,html body [tabindex]:not([tabindex="-1"]):focus-visible{
+  outline:3px solid #1A3FAA!important;outline-offset:3px!important;box-shadow:0 0 0 6px rgba(255,255,255,.85)!important}
+html body .pie:focus-visible{border-radius:50%}
+/* --- P3.26 tap targets at least 48 x 48 screen px --- */
+html body #bgmBtn,html body .top>.qa,html body button.qa{width:max(48px,calc(48px / var(--z,1)))!important;height:max(48px,calc(48px / var(--z,1)))!important;scale:1!important}
+html body #bgmBtn svg{width:46%;height:46%}
+html body .pctl button{height:max(var(--pch,60px),calc(48px / var(--z,1)))!important;min-width:calc(48px / var(--z,1))}
+
+html body .stack{min-height:max(48px,calc(48px / var(--z,1)));min-width:max(48px,calc(48px / var(--z,1)))}
+.r3sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* --- P3.28 reduced motion --- */
+@media (prefers-reduced-motion: reduce){
+  html body *,html body *::before,html body *::after{animation-name:r3fadeIn!important;animation-duration:.3s!important;animation-iteration-count:1!important;animation-delay:0s!important;
+    transition-property:opacity!important;transition-duration:.25s!important;scroll-behavior:auto!important}
+  .side.r3wrong .plate{animation:none!important}
+}
+</style>
+<div id="r3live" class="r3sr" role="status" aria-live="polite"></div>
+<button id="r3pause" type="button" aria-label="Pause" hidden><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1.5"/><rect x="14" y="4" width="5" height="16" rx="1.5"/></svg></button>
+<div id="r3menu" role="dialog" aria-modal="true" aria-labelledby="r3mt" hidden>
+  <div class="box"><h2 id="r3mt">Paused</h2>
+    <button type="button" id="r3resume">Resume</button>
+    <button type="button" id="r3restart" class="alt">Restart match</button>
+    <button type="button" id="r3levels" class="alt">Back to levels</button>
+    <button type="button" id="r3music" class="alt" aria-pressed="true">Music: on</button>
+  </div>
+</div>
+<script>
+(()=>{ "use strict";
+const RM=matchMedia("(prefers-reduced-motion: reduce)"), rm=()=>RM.matches, root=document.documentElement;
+const setZ=()=>root.style.setProperty("--z",String(window.FITZ?FITZ():1)); setZ(); addEventListener("resize",setZ);
+const liveEl=document.getElementById("r3live");
+const announce=t=>{ liveEl.textContent=""; setTimeout(()=>{ liveEl.textContent=String(t).replace(/(\d+)\/(\d+)/g,"$1 out of $2").replace(/[“”]/g,""); },40); };
+const poss=k=>who(k)+"’s", sl=x=>x===1?"slice":"slices";
+const isGame=()=>$("story").hidden&&$("tut").hidden&&$("start").hidden&&$("end").hidden;
+const cur=()=>STEPS[S.i];
+
+/* ===== P1.8 / P1.10 / P3.22 the plates: a counter and a reset under each, the plate itself is a button (Enter takes a slice off) ===== */
+function placeCounters(){ ["a","b"].forEach(sd=>{ const w=$("r3cntw-"+sd), side=$("side-"+sd), wh=side&&side.querySelector(".who"); if(!w||!wh) return;
+    const sr=side.getBoundingClientRect(), r=wh.getBoundingClientRect(); w.style.top=(r.bottom-sr.top+10).toFixed(1)+"px";
+    const card=wh.querySelector(".info")||wh; const cr=card.getBoundingClientRect();
+    if(sd==="a") w.style.left=Math.max(0,cr.left+cr.width/2-sr.left-w.offsetWidth/2).toFixed(1)+"px"; else w.style.right=Math.max(0,sr.right-(cr.left+cr.width/2)-w.offsetWidth/2).toFixed(1)+"px"; }); }
+addEventListener("resize",()=>setTimeout(placeCounters,60));
+function paintPlates(st){ if(!st||!st.a) return; requestAnimationFrame(placeCounters);
+  ["a","b"].forEach(sd=>{ const o=st[sd], c=$("r3cnt-"+sd), w=$("r3cntw-"+sd), rs=$("r3reset-"+sd), pie=$("pie-"+sd); const x=S.cnt[sd]||0;
+    if(w){ w.hidden=S.phase!=="build"; c.innerHTML=`Slices: <b>${x}</b> of ${o.n}`; c.classList.toggle("full",x===o.n); rs.hidden=!(x>0&&!(S.locked&&S.locked[sd])); }
+    if(pie){ pie.setAttribute("role","button"); pie.setAttribute("tabindex",S.phase==="build"&&x>0&&!(S.locked&&S.locked[sd])?"0":"-1");
+      pie.setAttribute("aria-label",`${Who(o.k)}’s plate: ${x} ${sl(x)} of 1/${o.d}. Press to take one off.`); } });
+  const b=$("done"); if(S.phase==="build"&&/CHECK/.test(b.textContent)){ const any=S.cnt.a>0&&S.cnt.b>0; b.hidden=!any; b.classList.toggle("r3pulse",any&&S.cnt.a===st.a.n&&S.cnt.b===st.b.n); }
+  else b.classList.remove("r3pulse"); }
+let taught=false, firstHint=false;
+{ const sm0=window.showMatch; window.showMatch=function(st,...a){ const r=sm0.call(this,st,...a);
+    ["a","b"].forEach(sd=>{ const side=$("side-"+sd); if(!side) return;
+      side.insertAdjacentHTML("beforeend",`<div class="r3cntw" id="r3cntw-${sd}"><div class="r3cnt" id="r3cnt-${sd}">Slices: <b>0</b> of ${st[sd].n}</div>
+        <button class="r3reset" id="r3reset-${sd}" type="button" aria-label="Take all the slices off ${poss(st[sd].k)} plate" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v5h5"/></svg></button></div>`);
+      $("r3reset-"+sd).addEventListener("click",e=>{ e.stopPropagation(); if(S.phase!=="build"||(S.locked&&S.locked[sd])) return; S.cnt[sd]=0; drawPie(st,sd,false); Sound.pop(); afterChange(st); announce(`${Who(st[sd].k)}’s plate is empty.`); });
+      $("pie-"+sd).addEventListener("keydown",e=>{ if(e.key!=="Enter"&&e.key!==" ") return; e.preventDefault(); removeSlice(st,sd); }); });
+    paintPlates(st);
+    // P1.12 the first match: the hand shows a stack ("Tap a stack to add a slice.") until the first slice is on a plate
+    if(S.i===0&&!firstHint&&!st.guided){ firstHint=true; const g=S.gen;
+      (function w(){ if(!live(g)) return; if(VOICE.busy()||PAUSE.on){ setTimeout(w,150); return; }
+        if(S.cnt.a+S.cnt.b>0) return; say("Tap a stack to add a slice.","","noori");
+        const t=setInterval(()=>{ if(!live(g)||S.phase!=="build"||S.cnt.a+S.cnt.b>0){ clearInterval(t); if(!LOCK){ const h=$("phand"); if(h) h.remove(); } return; } if(!PAUSE.on) pointAt($("stack-a")); },250); })(); }
+    return r; }; }
+{ const a0=window.addSlice; window.addSlice=function(st,sd,...a){ const x0=S.cnt[sd]; const r=a0.call(this,st,sd,...a);
+    if(S.cnt[sd]>x0){ announce(`${Who(st[sd].k)}’s plate: ${S.cnt[sd]} ${sl(S.cnt[sd])}.`);
+      if(!taught&&!st.guided){ taught=true; say("Tap a slice on a plate to take it off.","","noori"); } }
+    paintPlates(st); return r; }; }
+{ const r0=window.removeSlice; window.removeSlice=function(st,sd,...a){ const x0=S.cnt[sd]; const r=r0.call(this,st,sd,...a);
+    if(S.cnt[sd]<x0) announce(`${Who(st[sd].k)}’s plate: ${S.cnt[sd]} ${sl(S.cnt[sd])}.`); paintPlates(st); return r; }; }
+{ const c0=window.afterChange; window.afterChange=function(st,...a){ const r=c0.call(this,st,...a); paintPlates(st); return r; }; }
+
+/* ===== P1.7 a wrong plate stays, outlined, with exactly what was wrong; it clears after 2.5 s or a tap.
+   Two wrong tries: the numerator glows and the hand shows how many slices to add ===== */
+{ const cp0=window.checkPlates; window.checkPlates=async function(st){
+    if(S.phase!=="build") return; const okA=S.cnt.a===st.a.n, okB=S.cnt.b===st.b.n;
+    if(okA&&okB){ ["a","b"].forEach(sd=>{ const w=$("r3cntw-"+sd); if(w) w.hidden=true; }); $("done").classList.remove("r3pulse"); return cp0.call(this,st); }
+    const g=S.gen; S.tries++; Sound.bad(); guideMood("hmm"); S.phase="checking";
+    const wrong=["a","b"].filter(x=>S.cnt[x]!==st[x].n);
+    const line=wrong.map(x=>`You put ${S.cnt[x]} ${sl(S.cnt[x])} on ${poss(st[x].k)} plate. ${Who(st[x].k)} ate ${st[x].n}/${st[x].d}.`).join("  ");
+    say(line,"bad","noori"); announce(line.replace(/\s{2,}/g," "));
+    wrong.forEach(x=>{ $("side-"+x).classList.add("r3wrong"); bump($("num-"+x),"blink",2600); });
+    $("done").hidden=true; $("done").classList.remove("r3pulse");
+    await new Promise(res=>{ let t=0; const fin=()=>{ clearTimeout(t); removeEventListener("pointerdown",fin,true); removeEventListener("keydown",fin,true); res(); };
+      t=setTimeout(fin,2500); setTimeout(()=>{ addEventListener("pointerdown",fin,true); addEventListener("keydown",fin,true); },250); });
+    if(!live(g)) return;
+    wrong.forEach(x=>{ $("side-"+x).classList.remove("r3wrong"); S.cnt[x]=0; drawPie(st,x,false); });
+    // a plate that is already right is locked (a tick on it, its stack closed)
+    ["a","b"].filter(x=>!wrong.includes(x)).forEach(x=>{ if(!S.locked) S.locked={a:false,b:false}; if(S.locked[x]) return; S.locked[x]=true;
+      const sd=$("side-"+x); if(sd) sd.classList.add("locked"); const sk=$("stack-"+x); if(sk) sk.classList.add("off");
+      const pl=sd&&sd.querySelector(".plate"); if(pl&&!pl.querySelector(".lockok")) pl.insertAdjacentHTML("beforeend",`<span class="lockok">${CHECK}</span>`); if(window.KSFX) KSFX.play("star",{vol:.35}); });
+    S.phase="build"; S.keepMsg=true; afterChange(st); S.keepMsg=false;
+    if(S.tries>=2){ const bad=wrong[0], o=st[bad];
+      wrong.forEach(x=>{ const n=$("num-"+x); if(n) n.classList.add("r3glow"); });
+      say(`Look at the top number. Follow the hand: put ${o.n} ${sl(o.n)} on ${poss(o.k)} plate.`,"","noori");
+      guide(()=>{ if(!live(g)||S.phase!=="build") return null;
+        for(const sd of [bad, bad==="a"?"b":"a"]){ if(S.cnt[sd]<st[sd].n) return $("stack-"+sd); if(S.cnt[sd]>st[sd].n) return $("pie-"+sd); }
+        return $("done"); }); }
+    else say(st.intro,"","billu");
+  }; }
+
+/* ===== P0.4 the rule hint lights the number being compared and fades the other ===== */
+function hiRule(st){ const r=activeRule(st); ["a","b"].forEach(x=>{ const side=$("side-"+x); if(!side) return; const b=side.querySelectorAll(".who .fr b, .eat .fr b");
+    if(b.length<2) return; const hi=b[r==="n"?1:0], lo=b[r==="n"?0:1]; hi.classList.add("r3hi"); lo.classList.add("r3lo"); }); }
+const clearHi=()=>document.querySelectorAll(".r3hi,.r3lo").forEach(e=>e.classList.remove("r3hi","r3lo"));
+
+/* ===== P1.13 praise in a few words, said and written; NEXT only once the win animation is over; the earned star pops ===== */
+const PRAISE=["Perfect! {W} ate more: {f} is more than {g}.","Great comparing! {W} wins with {f}.","Yes! {f} is more than {g}, so {W} wins!"];
+const MATCHES=()=>STEPS.map((s,i)=>i).filter(i=>STEPS[i].kind==="match");
+function holdNext(ms){ const b=$("done"); b.hidden=true; const g=S.gen; setTimeout(()=>{ if(live(g)&&/NEXT/.test(b.textContent)) b.hidden=false; },ms); }
+{ const pw0=window.pickWinner; window.pickWinner=async function(st,sd){ const ok=S.phase==="winner"&&sd===st.win, i=S.i;
+    if(S.phase==="winner"&&sd!==st.win&&(S.wTries||0)===0){ const r=await pw0.apply(this,arguments); hiRule(st); return r; }
+    if(ok) S.r3pop=SCORED.indexOf(i);
+    const r=await pw0.apply(this,arguments);
+    if(ok){ clearHi(); holdNext(1700);
+      if(st.kind==="match"){ const w=st[st.win], l=st[st.win==="a"?"b":"a"], k=MATCHES().indexOf(i);
+        const line=PRAISE[(k<0?0:k)%3].replace("{W}",Who(w.k)).replace("{f}",`${w.n}/${w.d}`).replace("{g}",`${l.n}/${l.d}`);
+        const quotes=(st.quotes||[]).map(([k2,q])=>`${NAMES[k2]}: “${q}”`).join("  ");
+        const nb=$("done"); nb._auto=(nb._auto||0)+1;   // NEXT moves on by itself only after the praise and the quotes
+        say(line,"good","noori"); announce(line); const g=S.gen;
+        if(quotes) setTimeout(function q(){ if(!live(g)) return; if(VOICE.busy()||PAUSE.on){ setTimeout(q,150); return; } say(quotes,"good","billu"); autoClick(nb,quotes,1000); },1200);
+        else autoClick(nb,line,1000); } }
+    return r; }; }
+{ const pc0=window.pickCard; window.pickCard=function(st,sd){ const ok=S.phase==="winner"&&sd===st.win, first=S.phase==="winner"&&sd!==st.win&&(S.wTries||0)===0;
+    if(ok) S.r3pop=SCORED.indexOf(S.i);
+    const r=pc0.apply(this,arguments); if(first) hiRule(st); if(ok){ clearHi(); holdNext(1700); announce(S.sayPlain); } return r; }; }
+{ const rt0=window.renderTop; window.renderTop=function(...a){ const r=rt0.apply(this,a); const t=$("trail");
+    if(t){ t.setAttribute("aria-hidden","false"); t.setAttribute("role","img"); t.setAttribute("aria-label",`Stars: ${SCORED.filter(i=>S.done[i]).length} of ${SCORED.length}`);
+      if(S.r3pop!=null&&S.r3pop>=0){ const s=t.querySelectorAll(".tok")[S.r3pop]; if(s&&s.classList.contains("got")){ s.classList.add("r3pop"); const k=S.r3pop; setTimeout(()=>{ if(S.r3pop===k) S.r3pop=null; },900); } } }
+    return r; }; }
+{ const go0=window.go; window.go=function(...a){ S.r3pop=null; clearHi(); return go0.apply(this,a); }; }
+
+/* ===== P3.22 the Final works from the keyboard: Enter picks a card, Enter on a place puts it there ===== */
+{ const sf0=window.showFinal; window.showFinal=function(...a){ const r=sf0.apply(this,a);
+    document.querySelectorAll(".fl2 .slot").forEach((s,i)=>{ s.setAttribute("role","button"); s.setAttribute("tabindex","0"); s.setAttribute("aria-label",`Place ${i+1} of 5`+(i===0?", smallest":i===4?", greatest":""));
+      s.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target===s){ e.preventDefault(); if(S.phase==="order"&&S.sel){ const c=S.sel; putIn(c,s); announce(`${c.getAttribute("aria-label")} is in place ${i+1}.`); } } }); });
+    document.querySelectorAll(".fl2 .fin").forEach(c=>c.addEventListener("keydown",e=>{ if(e.key!=="Enter"&&e.key!==" "||S.phase!=="order"||c.classList.contains("lock")) return; e.preventDefault();
+      if(c.parentNode.classList.contains("slot")){ putIn(c,null); announce("Card sent back."); return; }
+      document.querySelectorAll(".fl2 .fin.sel").forEach(x=>x.classList.remove("sel")); c.classList.add("sel"); S.sel=c; Sound.pick(); announce(`${c.getAttribute("aria-label")} picked. Now choose a place.`); }));
+    return r; }; }
+
+/* ===== P3.27 pause during play: Resume, Restart match, Back to levels, Music on/off ===== */
+const pb=$("r3pause"), menu=$("r3menu"), mus=$("r3music"); let lastFocus=null;
+document.querySelector("header.top").prepend(pb);
+const musicOn=()=>{ const b=$("bgmBtn"); return !(b&&b.classList.contains("off")); };
+const paintMusic=()=>{ const on=musicOn(); mus.textContent="Music: "+(on?"on":"off"); mus.setAttribute("aria-pressed",on?"true":"false"); };
+function openMenu(){ lastFocus=document.activeElement; paintMusic(); menu.hidden=false; PAUSE.menu=true; if(PAUSE.set) PAUSE.set(true); else PAUSE.on=true; $("app").inert=true; $("r3resume").focus(); }
+function closeMenu(){ menu.hidden=true; PAUSE.menu=false; $("app").inert=false; if(PAUSE.set) PAUSE.set(false); else PAUSE.on=false; const f=lastFocus&&lastFocus.isConnected?lastFocus:pb; if(f.focus) f.focus(); }
+pb.addEventListener("click",e=>{ e.stopPropagation(); openMenu(); });
+$("r3resume").addEventListener("click",closeMenu);
+$("r3restart").addEventListener("click",()=>{ closeMenu(); stopGuide(); S.done[S.i]=S.done[S.i]; go(S.i); });
+$("r3levels").addEventListener("click",()=>{ closeMenu(); stopGuide(); try{ VOICE.stop&&VOICE.stop(); }catch(e){} $("home").click(); });
+mus.addEventListener("click",()=>{ if(typeof BGM!=="undefined") BGM.toggle(); paintMusic(); });
+menu.addEventListener("keydown",e=>{ if(e.key==="Escape"){ e.preventDefault(); closeMenu(); return; }
+  if(e.key==="Tab"){ const f=[...menu.querySelectorAll("button")], i=f.indexOf(document.activeElement);
+    if(e.shiftKey&&i<=0){ e.preventDefault(); f[f.length-1].focus(); } else if(!e.shiftKey&&i===f.length-1){ e.preventDefault(); f[0].focus(); } } });
+
+/* ===== P3.24 / P3.25 hidden controls cannot be reached; every picture has alt text ===== */
+const STORY_ALT=[[/l2_scene1/,"Evening at Billu’s Pizza Kitchen: a Big Eater Contest banner and the golden trophy"],[/l2_scene2/,"Monty and the ant start eating the same size pizzas, one cut into 8 slices and one into 4"],
+  [/l2_scene3/,"The scoreboard: Monty 1/8, the ant 1/4"],[/l2_scene4/,"The ant points at the plates while Noori stands by the scoreboard"]];
+function seen(el){ if(!el.isConnected||el.closest("[hidden],[inert]")) return false; if(!el.getClientRects().length) return false;
+  for(let e=el;e&&e!==document.body;e=e.parentElement){ const c=getComputedStyle(e); if(c.display==="none"||c.visibility==="hidden"||+c.opacity<.05||(c.pointerEvents==="none"&&e===el)) return false; }
+  return true; }
+function sweep(){
+  pb.hidden=!(isGame()&&!!S.phase); if(!menu.hidden&&!isGame()) closeMenu();
+  document.querySelectorAll("button,select,[role='button'],a[href]").forEach(el=>{ if(el.closest("#r3menu")||el.classList.contains("pie")) return;
+    if(!seen(el)){ if(!el.hasAttribute("data-r3t")){ el.setAttribute("data-r3t",el.getAttribute("tabindex")??""); el.setAttribute("tabindex","-1"); el.setAttribute("aria-hidden","true"); } }
+    else if(el.hasAttribute("data-r3t")){ const t=el.getAttribute("data-r3t"); t===""?el.removeAttribute("tabindex"):el.setAttribute("tabindex",t); el.removeAttribute("data-r3t"); el.removeAttribute("aria-hidden"); } });
+  const bar=$("pctl"); if(bar){ const on=bar.classList.contains("on"); bar.inert=!on; on?bar.removeAttribute("aria-hidden"):bar.setAttribute("aria-hidden","true"); }
+  document.querySelectorAll("img").forEach(im=>{ const src=im.getAttribute("src")||""; if(!im.hasAttribute("alt")||(im.getAttribute("alt")===""&&/l2_scene/.test(src))){
+      const hit=STORY_ALT.find(([re])=>re.test(src)); im.setAttribute("alt",hit?hit[1]:""); } });
+}
+setInterval(sweep,400); sweep();
+
+/* ===== P3.28 reduced motion: moving animations become fades; no confetti (a soft glow instead) ===== */
+{ const A0=Element.prototype.animate;
+  Element.prototype.animate=function(kf,opt){ if(!rm()||!Array.isArray(kf)||!kf.length) return A0.call(this,kf,opt);
+    const last=kf[kf.length-1], keep=["transform","translate","scale","rotate","left","top"];
+    const k2=kf.map(f=>{ const g={...f}; keep.forEach(p=>{ if(p in last) g[p]=last[p]; else delete g[p]; }); delete g.filter; return g; });
+    const o2=typeof opt==="number"?{duration:Math.min(opt,300)}:{...opt,duration:Math.min(+(opt&&opt.duration)||300,300),iterations:1,delay:0};
+    return A0.call(this,k2,o2); }; }
+{ const c0=window.confetti; const soft=function(){ if(!rm()) return c0.apply(this,arguments);
+    const g=document.createElement("div"); g.style.cssText="position:fixed;inset:0;z-index:99990;pointer-events:none;background:radial-gradient(circle,rgba(255,220,120,.35),rgba(255,220,120,0) 70%);opacity:0;transition:opacity .4s";
+    document.body.appendChild(g); requestAnimationFrame(()=>{ g.style.opacity=1; }); setTimeout(()=>{ g.style.opacity=0; setTimeout(()=>g.remove(),450); },700); };
+  soft.busy=()=>rm()?false:(c0.busy?c0.busy():false); soft.hurry=(...a)=>c0.hurry&&c0.hurry(...a); window.confetti=soft; }
+})();
+</script>
+
+<link rel="stylesheet" href="assets/ui/design.css?v=ds9">
+<script src="assets/ui/design.js?v=ds9"></script>
+<script src="assets/ui/focus.js?v=ds9"></script>
 </body>
 </html>

@@ -1,0 +1,2037 @@
+{
+"L1_title": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(42, 20, 5)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(30, 33, 64)": 1,
+"rgb(201, 138, 74)": 1,
+"rgb(255, 241, 194)": 16,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 1,
+"21.7463px": 1
+},
+"ff": {
+"\"Baloo 2\"": 3
+},
+"rad": {
+"50%": 26,
+"20px": 1,
+"18px": 1,
+"12px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(255, 216, 115) 0px 0px 7.24941px 0px": 16,
+"rgb(59, 34, 16) 0px 0px 0px 2px inset": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"mainPlay | none | 0px | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_01": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(217, 180, 138)": 5
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 9,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_02": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(122, 74, 34)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(217, 180, 138)": 4
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_03": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(181, 84, 26)": 4
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(122, 74, 34)": 2,
+"rgb(217, 74, 46)": 1,
+"rgb(217, 180, 138)": 3
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1,
+"16.5933px": 4
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_04": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(122, 74, 34)": 3,
+"rgb(217, 74, 46)": 1,
+"rgb(217, 180, 138)": 2
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_05": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(122, 74, 34)": 4,
+"rgb(217, 74, 46)": 1,
+"rgb(217, 180, 138)": 1
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_01": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"26.53px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 5,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_02": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"26.53px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 5,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_03": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 16)": 4,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(90, 46, 16)": 2,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"25.84px": 4,
+"26.53px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 9,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"11.3696px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(255, 208, 138) 0px 0px 0px 1.0336px inset, rgba(255, 255, 255, 0.85) 0px 3.1": 2,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_04": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 16)": 4,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgba(255, 255, 255, 0.03)": 2,
+"rgb(90, 46, 16)": 2,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"25.84px": 4,
+"26.53px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"11.3696px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(217, 138, 0) 0px 9.7764px 0px 0px, rgba(242, 166, 44, 0.286) 0px 0px 0px 5.6": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.0336px inset, rgba(255, 255, 255, 0.85) 0px 3.1": 2,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_05": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 16)": 4,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(90, 46, 16)": 2,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"25.84px": 4,
+"26.53px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 9,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"11.3696px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(255, 208, 138) 0px 0px 0px 1.0336px inset, rgba(255, 255, 255, 0.85) 0px 3.1": 2,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_06": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(255, 243, 214)": 2,
+"rgb(255, 224, 138)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"20px": 3,
+"26.53px": 1,
+"13px": 1
+},
+"ff": {
+"\"Baloo 2\"": 7,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"999px": 4
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_07": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_08": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 16)": 4,
+"rgb(255, 243, 214)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(90, 46, 16)": 2,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"31.28px": 4,
+"27.2px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 9,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"13.7632px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(255, 208, 138) 0px 0px 0px 1.2512px inset, rgba(255, 255, 255, 0.85) 0px 3.7": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_09": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 16)": 8,
+"rgb(255, 224, 138)": 1,
+"rgb(255, 243, 214)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(90, 46, 16)": 4,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"25.84px": 4,
+"26.53px": 1,
+"23.12px": 4,
+"24.48px": 1,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 14,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 2,
+"18px": 1,
+"24px": 2,
+"11.3696px": 2,
+"10.1728px": 2,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(255, 208, 138) 0px 0px 0px 1.0336px inset, rgba(255, 255, 255, 0.85) 0px 3.1": 2,
+"rgb(74, 38, 16) 0px 0px 0px 3px, rgb(246, 195, 74) 0px 0px 0px 6px, rgba(60, 25,": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.9248px inset, rgba(255, 255, 255, 0.85) 0px 2.7": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_10": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(127, 196, 232)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 13,
+"20px": 2,
+"18px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_11": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 4,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(58, 34, 16)": 1,
+"rgb(122, 74, 34)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"31.28px": 2,
+"20px": 2,
+"13px": 1
+},
+"ff": {
+"\"Baloo 2\"": 7,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"12px": 1,
+"10px": 2,
+"1.564px": 1,
+"999px": 3
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 4,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_12": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 4,
+"rgb(181, 72, 28)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(58, 34, 16)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 4,
+"31.28px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"12px": 1,
+"10px": 2,
+"1.564px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 4,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_13": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 4,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(58, 34, 16)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"31.28px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 6,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"12px": 1,
+"10px": 2,
+"1.564px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 4,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_14": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 4,
+"rgb(181, 72, 28)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(58, 34, 16)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 4,
+"31.28px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"12px": 1,
+"10px": 2,
+"1.564px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 4,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_15": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(58, 34, 16)": 2,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"20px": 2,
+"18px": 1,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"lesson_16": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(255, 246, 230)": 11,
+"rgb(255, 213, 138)": 11,
+"rgb(62, 34, 16)": 11,
+"rgb(58, 34, 16)": 24,
+"rgb(122, 74, 32)": 11,
+"rgb(255, 255, 255)": 1
+},
+"bg": {
+"rgb(255, 244, 220)": 3,
+"rgb(243, 227, 196)": 1,
+"rgb(255, 253, 246)": 11,
+"rgb(58, 34, 16)": 11,
+"rgb(255, 251, 241)": 1,
+"rgb(217, 74, 46)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 45,
+"24px": 24,
+"13px": 1,
+"20px": 1
+},
+"ff": {
+"\"Baloo 2\"": 70,
+"Nunito": 1
+},
+"rad": {
+"50%": 18,
+"20px": 2,
+"18px": 1,
+"99px": 2,
+"5px 5px 3px 3px": 11,
+"12px": 22,
+"10px": 22,
+"1.2px": 11,
+"999px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 14,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(80, 40, 10, 0.35) 0px 3px 5px 0px, rgba(255, 220, 170, 0.35) 0px 2px 0px 0p": 2,
+"rgba(255, 255, 255, 0.6) 0px 2px 0px 0px inset, rgba(80, 40, 10, 0.4) 0px 2px 3p": 11,
+"rgb(255, 255, 255) 0px 0px 0px 3px, rgba(60, 30, 10, 0.25) 0px 2px 5px 0px": 11,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(168, 50, 31) 0px 3px 0px 0px": 1,
+"rgb(169, 101, 10) 0px 5px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"dsSay | none | 50% | 14px": 1,
+"tutNext | linear-gradient(rgb(245, 179, 66), rgb(2 | 999px | 13px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_order": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 8,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 8,
+"rgb(255, 244, 220)": 2,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 1,
+"20px": 7,
+"48px": 2
+},
+"ff": {
+"\"Baloo 2\"": 12,
+"Nunito": 1
+},
+"rad": {
+"50%": 9,
+"999px": 7,
+"20px": 2,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 1,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 7,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"[object | none | 0px | 14px": 4,
+"bowl | none | 0px | 14px": 4,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_order_topped": {
+"color": {
+"rgb(255, 251, 241)": 3,
+"rgb(58, 34, 16)": 9,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 9,
+"rgb(255, 244, 220)": 2,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 2,
+"20px": 7,
+"48px": 2,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 13,
+"Nunito": 2
+},
+"rad": {
+"50%": 10,
+"999px": 7,
+"20px": 2,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 1,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 7,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgb(217, 180, 138) 0px 3px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"r3reset | none | 50% | 14px": 1,
+"[object | none | 0px | 14px": 4,
+"bowl | none | 0px | 14px": 4,
+"done | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_order_wrong": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 9,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 9,
+"rgb(255, 244, 220)": 2,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 1,
+"20px": 7,
+"48px": 2,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 12,
+"Nunito": 2
+},
+"rad": {
+"50%": 10,
+"999px": 7,
+"20px": 2,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 1,
+"6.72px": 1,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 7,
+"rgb(242, 140, 120) 0px 0px 0px 4px, rgba(242, 140, 120, 0.7) 0px 0px 20px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgb(217, 180, 138) 0px 3px 0px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"r3reset | none | 50% | 14px": 1,
+"[object | none | 0px | 14px": 4,
+"bowl | none | 0px | 14px": 4,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_served": {
+"color": {
+"rgb(255, 251, 241)": 3,
+"rgb(58, 34, 16)": 13,
+"rgb(217, 74, 46)": 2,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 7,
+"rgb(255, 244, 220)": 3,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(227, 244, 218)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 6,
+"20px": 9,
+"48px": 2,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 19,
+"Nunito": 2
+},
+"rad": {
+"50%": 9,
+"999px": 8,
+"20px": 2,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 3,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 6,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 6,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"[object | none | 0px | 14px": 4,
+"bowl | none | 0px | 14px": 4,
+"done | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_mould": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 2,
+"rgb(217, 74, 46)": 2,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 3,
+"rgb(255, 244, 220)": 2,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 3,
+"20px": 1,
+"48px": 2
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 1
+},
+"rad": {
+"50%": 9,
+"999px": 2,
+"20px": 2,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 1,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 2,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"slot | none | 0px | 14px": 3,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L1_endcard": {
+"color": {
+"rgb(255, 251, 241)": 3,
+"rgb(58, 34, 16)": 6,
+"rgb(217, 74, 46)": 2,
+"rgb(90, 46, 16)": 2,
+"rgb(92, 58, 30)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 3,
+"rgb(255, 244, 220)": 3,
+"rgb(122, 74, 34)": 1,
+"rgb(252, 243, 228)": 1,
+"rgb(90, 46, 16)": 1,
+"rgb(30, 33, 64)": 1,
+"rgb(255, 248, 234)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 3,
+"24px": 6,
+"20px": 1,
+"48px": 3,
+"32px": 1
+},
+"ff": {
+"\"Baloo 2\"": 12,
+"Nunito": 2
+},
+"rad": {
+"50%": 8,
+"999px": 3,
+"20px": 3,
+"12.2752px": 1,
+"6.16px": 1,
+"12px": 1,
+"1.75359px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 2,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 2,
+"rgb(255, 255, 255) 0px 0px 0px 2.45503px, rgba(60, 30, 10, 0.25) 0px 2.63039px 5": 1,
+"rgb(255, 208, 138) 0px 0px 0px 0.56px inset, rgba(255, 255, 255, 0.85) 0px 1.68p": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"slot | none | 0px | 14px": 3,
+"goL2 | none | 0px | 24px": 1,
+"again | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"story_06": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(42, 20, 5)": 1,
+"rgb(90, 46, 14)": 1,
+"rgb(58, 34, 16)": 2
+},
+"bg": {
+"rgb(255, 244, 220)": 2,
+"rgb(32, 56, 28)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1,
+"rgb(122, 74, 34)": 5,
+"rgb(217, 74, 46)": 1
+},
+"fs": {
+"16px": 2,
+"24px": 1,
+"31.0674px": 1,
+"20.7417px": 1
+},
+"ff": {
+"\"Baloo 2\"": 4,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"20px": 1,
+"18px": 2,
+"999px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(169, 84, 10) 0px 5px 0px 0px, rgba(255, 154, 60, 0.35) 0px 0px 18px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | linear-gradient(rgb(255, 183, 92), rgb(2 | 18px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_match": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 5,
+"rgb(90, 46, 16)": 4,
+"rgb(35, 53, 111)": 2
+},
+"bg": {
+"rgb(255, 251, 241)": 4,
+"rgb(255, 244, 220)": 1,
+"rgb(122, 74, 34)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 4,
+"48px": 4,
+"20px": 4
+},
+"ff": {
+"\"Baloo 2\"": 12,
+"Nunito": 1
+},
+"rad": {
+"50%": 11,
+"999px": 3,
+"20px": 1,
+"28px": 2,
+"19.7472px": 2,
+"12px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 3,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 5px, rgba(60, 40, 10, 0.3) 0px 6px 10px 0px": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.7952px inset, rgba(255, 255, 255, 0.85) 0px 5.3": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"pie-a | none | 0px | 14px": 1,
+"stack-a | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"pie-b | none | 0px | 14px": 1,
+"stack-b | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_match_wrong": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 9,
+"rgb(217, 74, 46)": 4,
+"rgb(90, 46, 16)": 4,
+"rgb(35, 53, 111)": 2
+},
+"bg": {
+"rgb(255, 251, 241)": 6,
+"rgb(255, 244, 220)": 1,
+"rgb(122, 74, 34)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 8,
+"48px": 4,
+"64px": 3,
+"20px": 4,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 16,
+"Nunito": 5
+},
+"rad": {
+"50%": 15,
+"999px": 3,
+"20px": 1,
+"28px": 2,
+"19.7472px": 2,
+"12px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 3,
+"rgb(242, 140, 120) 0px 0px 0px 4px, rgba(242, 140, 120, 0.7) 0px 0px 20px 0px": 3,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 5px, rgba(60, 40, 10, 0.3) 0px 6px 10px 0px": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.7952px inset, rgba(255, 255, 255, 0.85) 0px 5.3": 2,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 2,
+"rgb(217, 180, 138) 0px 3px 0px 0px": 2,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"pie-a | none | 0px | 14px": 1,
+"stack-a | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"r3reset-a | none | 50% | 14px": 1,
+"pie-b | none | 0px | 14px": 1,
+"stack-b | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"r3reset-b | none | 50% | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_match_pick": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 6,
+"rgb(90, 46, 16)": 4,
+"rgb(35, 53, 111)": 2
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 1,
+"rgba(18, 10, 4, 0.62)": 1,
+"rgba(255, 248, 225, 0.08)": 2,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 4,
+"48px": 4,
+"64px": 4,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 8,
+"Nunito": 6
+},
+"rad": {
+"50%": 10,
+"999px": 1,
+"20px": 1,
+"24px": 2,
+"28px": 2,
+"19.7472px": 2,
+"12px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(255, 213, 74) 0px 0px 0px 3px, rgba(255, 206, 60, 0.75) 0px 0px 18px 6px, rg": 2,
+"rgb(255, 255, 255) 0px 0px 0px 5px, rgba(60, 40, 10, 0.3) 0px 6px 10px 0px": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.7952px inset, rgba(255, 255, 255, 0.85) 0px 5.3": 2,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"side-a | none | 28px | 14px": 1,
+"pie-a | none | 0px | 14px": 1,
+"stack-a | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"side-b | none | 28px | 14px": 1,
+"pie-b | none | 0px | 14px": 1,
+"stack-b | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_match_won": {
+"color": {
+"rgb(255, 251, 241)": 3,
+"rgb(58, 34, 16)": 6,
+"rgb(217, 74, 46)": 4,
+"rgb(90, 46, 16)": 4,
+"rgb(35, 53, 111)": 2
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 9,
+"48px": 4,
+"64px": 4,
+"14px": 1
+},
+"ff": {
+"\"Baloo 2\"": 13,
+"Nunito": 6
+},
+"rad": {
+"50%": 11,
+"999px": 1,
+"20px": 1,
+"28px": 2,
+"19.7472px": 2,
+"12px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(255, 255, 255) 0px 0px 0px 5px, rgba(60, 40, 10, 0.3) 0px 6px 10px 0px": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.7952px inset, rgba(255, 255, 255, 0.85) 0px 5.3": 2,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"side-a | none | 28px | 14px": 1,
+"pie-a | none | 0px | 14px": 1,
+"stack-a | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"side-b | none | 28px | 14px": 1,
+"pie-b | none | 0px | 14px": 1,
+"stack-b | url(\"http://game.local/assets/ui/tile_pa | 0px | 16.8828px": 1,
+"done | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_setB_intro": {
+"color": {
+"rgb(255, 251, 241)": 2,
+"rgb(58, 34, 16)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 1,
+"rgb(255, 244, 220)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 2
+},
+"ff": {
+"\"Baloo 2\"": 2,
+"Nunito": 1
+},
+"rad": {
+"50%": 5,
+"999px": 1,
+"20px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"done | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_cards": {
+"color": {
+"rgb(255, 251, 241)": 1,
+"rgb(58, 34, 16)": 1,
+"rgb(90, 46, 16)": 4
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 1,
+"rgba(18, 10, 4, 0.62)": 1,
+"rgba(255, 248, 225, 0.08)": 2,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 1,
+"48px": 4
+},
+"ff": {
+"\"Baloo 2\"": 5,
+"Nunito": 1
+},
+"rad": {
+"50%": 10,
+"999px": 1,
+"20px": 1,
+"24px": 2,
+"40px": 2,
+"16.1568px": 2,
+"12px": 2
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 3,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(255, 213, 74) 0px 0px 0px 3px, rgba(255, 206, 60, 0.75) 0px 0px 18px 6px, rg": 2,
+"rgb(255, 255, 255) 0px 0px 0px 5px, rgba(60, 40, 10, 0.3) 0px 6px 10px 0px": 2,
+"rgb(255, 208, 138) 0px 0px 0px 1.4688px inset, rgba(255, 255, 255, 0.85) 0px 4.4": 2,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"side-a | none | 40px | 14px": 1,
+"side-b | none | 40px | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_final": {
+"color": {
+"rgb(255, 251, 241)": 3,
+"rgb(58, 34, 16)": 11
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 1,
+"rgba(122, 74, 34, 0.1)": 5,
+"rgb(122, 74, 34)": 2,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 1,
+"23.936px": 10,
+"20px": 2
+},
+"ff": {
+"\"Baloo 2\"": 13,
+"Nunito": 1
+},
+"rad": {
+"50%": 8,
+"999px": 3,
+"20px": 1,
+"12px": 10,
+"18px": 5,
+"3px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 3,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 6,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(90, 50, 16, 0.2) 0px 2px 6px 0px inset": 5,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"r3pause | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"fin-0 | none | 12px | 14px": 1,
+"fin-1 | none | 12px | 14px": 1,
+"fin-2 | none | 12px | 14px": 1,
+"fin-3 | none | 12px | 14px": 1,
+"fin-4 | none | 12px | 14px": 1,
+"slot-0 | none | 18px | 14px": 1,
+"slot-1 | none | 18px | 14px": 1,
+"slot-2 | none | 18px | 14px": 1,
+"slot-3 | none | 18px | 14px": 1,
+"slot-4 | none | 18px | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_champion": {
+"color": {
+"rgb(255, 251, 241)": 6,
+"rgb(58, 34, 16)": 1,
+"rgb(74, 42, 16)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 1,
+"rgb(255, 253, 244)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 1,
+"34px": 5,
+"17.68px": 1
+},
+"ff": {
+"\"Baloo 2\"": 7,
+"Nunito": 1
+},
+"rad": {
+"50%": 7,
+"999px": 1,
+"20px": 1,
+"16px 16px 0px 0px": 5,
+"18px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(74, 37, 8) 0px 0px 0px 3px, rgba(255, 220, 170, 0.35) 0px 3px 0px 0px inset": 5,
+"rgb(233, 165, 58) 0px 0px 0px 3px, rgba(0, 0, 0, 0.3) 0px 6px 12px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+},
+"L2_endcard": {
+"color": {
+"rgb(255, 251, 241)": 6,
+"rgb(58, 34, 16)": 6,
+"rgb(74, 42, 16)": 1
+},
+"bg": {
+"rgb(255, 251, 241)": 2,
+"rgb(255, 244, 220)": 2,
+"rgb(255, 253, 244)": 1,
+"rgb(30, 33, 64)": 1,
+"rgb(255, 248, 234)": 1,
+"rgb(251, 241, 220)": 1,
+"rgba(20, 10, 0, 0.35)": 1
+},
+"fs": {
+"16px": 1,
+"24px": 4,
+"34px": 5,
+"17.68px": 1,
+"32px": 1,
+"48px": 1
+},
+"ff": {
+"\"Baloo 2\"": 11,
+"Nunito": 2
+},
+"rad": {
+"50%": 7,
+"999px": 2,
+"20px": 2,
+"16px 16px 0px 0px": 5,
+"18px": 1
+},
+"sh": {
+"rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgba(59, 34, 16, 0.22) 0px 4px 10px 0px": 1,
+"rgb(59, 34, 16) 0px 0px 0px 3px, rgba(59, 34, 16, 0.18) 0px 2px 4px 0px": 1,
+"rgb(74, 37, 8) 0px 0px 0px 3px, rgba(255, 220, 170, 0.35) 0px 3px 0px 0px inset": 5,
+"rgb(233, 165, 58) 0px 0px 0px 3px, rgba(0, 0, 0, 0.3) 0px 6px 12px 0px": 1,
+"rgba(59, 34, 16, 0.28) 0px 10px 24px 0px": 1,
+"rgba(30, 12, 0, 0.45) -12px 0px 34px 0px": 1
+},
+"btn": {
+"bgmBtn | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"qa | url(\"http://game.local/assets/ui/round_w | 50% | 16px": 1,
+"guide | none | 50% | 14px": 1,
+"again | none | 0px | 24px": 1,
+"toL1 | none | 0px | 24px": 1,
+"pcBack | none | 50% | 14px": 1,
+"pcPause | none | 50% | 14px": 1,
+"pcNext | none | 50% | 14px": 1
+}
+}
+}

@@ -1,0 +1,565 @@
+/* =====================================================================================
+   BILLU'S PIZZA KITCHEN — COMPONENT LAYER (design pass)
+   Loaded last on both pages. Every value comes from assets/ui/tokens.css: no raw colours
+   or font sizes here (the only literals are image paths and geometry).
+   "html:root body" raises specificity above the older layered rules it replaces.
+   ===================================================================================== */
+
+/* ---------- base ---------- */
+html:root body{font-family:var(--font-body);color:var(--text)}
+html:root body{--display:var(--font-display);--body:var(--font-body)}   /* the older rules read these two names */
+
+/* ===================================================================== */
+/* 1. SPEECH BANNER: avatar + text + read-aloud icon (game, lesson, story) */
+/* ===================================================================== */
+html:root body #app>.card,
+html:root body .tut .talk{
+  background:var(--surface-card)!important;border:3px solid var(--outline)!important;border-radius:var(--r-card)!important;
+  box-shadow:var(--sh-2)!important;backdrop-filter:none!important;gap:var(--sp-2)!important;
+  transition:border-color var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease)}
+html:root body #app>.card::before,html:root body #app>.card::after{display:none!important}
+html:root body #say,
+html:root body #tutLine,
+html:root body .story #ssub p{
+  font-family:var(--font-body)!important;font-weight:var(--fw-display)!important;color:var(--text)!important;
+  font-size:max(var(--fs-speech),calc(22px / var(--z,1)))!important;line-height:var(--lh-body)!important;text-shadow:none!important}
+@media (max-width:600px){
+  html:root body #say,html:root body #tutLine,html:root body .story #ssub p{font-size:max(var(--fs-speech),calc(18px / var(--z,1)))!important}
+}
+/* fractions inside the speech text are the accent colour */
+html:root body #say .fr,html:root body #tutLine .fr,html:root body .story #ssub p .fr,html:root body .story .sbub .t .fr{color:var(--accent)!important}
+/* "try again" lines: the banner's rim turns soft coral (the words stay dark for contrast) */
+html:root body #app>.card:has(.say.bad),html:root body .tut .talk:has(p.bad){border-color:var(--error)!important;box-shadow:var(--glow-error)!important}
+html:root body #say.bad,html:root body #tutLine.bad{color:var(--text)!important}
+html:root body #app>.card:has(.say.good){border-color:var(--success)!important}
+/* the speaker's round avatar */
+html:root body #guide,
+html:root body .tut .talk .who,
+html:root body .story #sWho{border-radius:50%!important;box-shadow:0 0 0 3px var(--outline),var(--sh-1)!important;background:var(--surface-card-2)!important}
+/* the read-aloud icon (a small speaker badge on the avatar; a button of its own in the lesson) */
+html:root body #guide .spk{background:var(--accent)!important;color:var(--c-white)!important;box-shadow:0 0 0 2px var(--surface-card)!important}
+.dsSay{flex:0 0 auto;width:var(--tap);height:var(--tap);min-width:var(--tap);border-radius:50%;border:3px solid var(--outline);background:var(--accent);color:var(--c-white);
+  display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 3px 0 var(--accent-dark);transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease)}
+.dsSay svg{width:55%;height:55%}
+.dsSay:hover{transform:translateY(-1px)}
+.dsSay:active{transform:translateY(3px);box-shadow:0 0 0 var(--accent-dark)}
+
+/* ===================================================================== */
+/* 2. STACKED FRACTION: one component, numerator / bar / denominator      */
+/* ===================================================================== */
+/* inline fractions (in sentences) */
+html:root body .fr{font-family:var(--font-display)!important;font-weight:var(--fw-display)!important;line-height:1!important}
+html:root body .fr b:first-child{border-bottom-color:currentColor!important}
+/* (body:not(#ds) lifts these above an older rule that carries an id inside :is())
+   ONE fraction tile, both levels (the Level 1 order card's look): a cream tile with a cheese-yellow rim and a soft inner base,
+   dark numbers on a rounded bar. Tiles that hold a fraction (order card, Level 2 match tiles, lesson tags) are the tile and the
+   fraction inside them is plain; cards that ARE the fraction (lesson cards, Level 2 lesson, Final, Served/Left) are the tile. */
+html:root body:not(#ds) :is(.ocard .oc-fr,.eat>span.ate,.tut .tsd .tag,.tut .lf,.l2f,.fl2 .fin .mini,.servelayer figcaption .fr){
+  background:var(--surface-card-2)!important;border:3px solid var(--highlight-dark)!important;border-image:none!important;border-radius:var(--r-sm)!important;
+  box-shadow:inset 0 -4px 0 var(--highlight-soft),var(--sh-2)!important;color:var(--text)!important;text-shadow:none!important;-webkit-text-stroke:0!important}
+html:root body:not(#ds) :is(.ocard .oc-fr,.eat>span.ate){border-radius:var(--r-card)!important}
+html:root body:not(#ds) :is(.eat>span.ate,.tut .tsd .tag) .fr{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;color:var(--text)!important}
+html:root body:not(#ds) :is(.ocard .rc-frac,.eat>span.ate,.tut .tsd .tag,.tut .lf,.l2f,.fl2 .fin .mini,.servelayer figcaption .fr) b{-webkit-text-stroke:0!important;color:var(--text)!important;text-shadow:none!important}
+html:root body :is(.ocard .rc-frac,.tut .lf,.l2f,.fl2 .fin .mini) b:first-child,
+html:root body:not(#ds) :is(.servelayer figcaption .fr,.eat>span.ate .fr,.tut .tsd .tag .fr) b:first-child{border-bottom-color:var(--text)!important}
+html:root body .tut .lf i{background:var(--text)!important}
+/* highlight one number (numerator OR denominator): cheese glow, accent ink, a gentle pulse; the other number dims */
+html:root body:not(#ds) :is(.tut .lf b.lit,.tut .lf.fn b.n,.tut .lf.fd b.d,.fr b.r3hi,.fr b.r3glow,.ocard .rc-frac b.r3glow,.ocard .rc-frac b.blinknum,.fr b.blink,.tag b.blink){
+  color:var(--accent)!important;text-shadow:0 0 .3em var(--highlight)!important;background:none!important;box-shadow:none!important}
+html:root body:not(#ds) :is(.tut .lf.fn b.d,.tut .lf.fd b.n,.fr b.r3lo){opacity:.35!important}
+
+/* ===================================================================== */
+/* 3. PILLS: labels and counters                                          */
+/* ===================================================================== */
+html:root body :is(.tut .lword,.ocard .oc-name,.bowl-label,.l2cap:not(:has(.l2f)),.scale5 span){
+  font-family:var(--font-display)!important;font-weight:var(--fw-display)!important;font-size:var(--fs-2)!important;line-height:var(--lh-tight)!important;
+  border-radius:var(--r-pill)!important;padding:4px var(--sp-2)!important;letter-spacing:.02em!important}
+html:root body :is(.tut .lword,.scale5 span){background:var(--surface-wood)!important;color:var(--text-on-wood)!important;border:2px solid var(--outline)!important;box-shadow:var(--sh-1)!important;text-shadow:none!important}
+html:root body :is(.ocard .oc-name,.bowl-label){background:var(--surface-card-2)!important;color:var(--text)!important;border:2px solid var(--outline)!important;box-shadow:var(--sh-1)!important}
+html:root body .bowl-label{font-size:var(--fs-1)!important;padding:2px var(--sp-1)!important}
+/* the counters ("Topped: X of N", "Slices: X of N") */
+html:root body .r3cntw{display:none!important}
+html:root body .r3cnt{font-family:var(--font-display)!important;font-size:var(--fs-2)!important;color:var(--text)!important;background:var(--surface-card-2)!important;
+  border:2px solid var(--outline)!important;border-radius:var(--r-pill)!important;padding:4px var(--sp-2)!important;box-shadow:var(--sh-1)!important;
+  transition:background var(--t-med) var(--ease),border-color var(--t-med) var(--ease)}
+html:root body .r3cnt.full{background:var(--success-soft)!important;border-color:var(--success)!important;color:var(--success-dark)!important}
+/* Served / Left (game): the same pair as the lesson: a label pill (basil for Served, wood for Left) beside a fraction card */
+html:root body .servelayer figcaption{
+  border-image:none!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;padding:0!important;
+  color:var(--text)!important;text-shadow:none!important;-webkit-text-stroke:0!important;paint-order:normal!important;
+  font-family:var(--font-display)!important;font-size:var(--fs-3)!important;gap:var(--sp-1)!important;align-items:center!important}
+html:root body .servelayer .dsLbl{font-family:var(--font-display);font-weight:var(--fw-display);font-size:var(--fs-2);line-height:var(--lh-tight);letter-spacing:.02em;
+  color:var(--text-on-wood);background:var(--surface-wood);border:2px solid var(--outline);border-radius:var(--r-pill);padding:4px var(--sp-2);box-shadow:var(--sh-1);
+  -webkit-text-stroke:0;text-shadow:none;white-space:nowrap}
+html:root body .servelayer figure.a .dsLbl{background:var(--success);border-color:var(--success-dark)}
+html:root body .servelayer figcaption .fr{font-size:var(--fs-3)!important;padding:4px 12px!important;margin:0!important;-webkit-text-stroke:0!important}
+html:root body .tut .learn .lleft .lword{font-size:var(--fs-2)!important}
+html:root body .tut .learn .lleft.lserved .lword{background:var(--success)!important;border-color:var(--success-dark)!important}
+
+/* ===================================================================== */
+/* 4. BUTTONS                                                             */
+/* ===================================================================== */
+/* 4a. primary: the green wooden plank (CHECK, NEXT, SERVE, PLAY AGAIN…) */
+html:root body :is(.pk-green,.pk-orange,#tutServe,#t2check,#goNext,#goL2,#r3resume){
+  font-family:var(--font-display)!important;font-weight:var(--fw-display)!important;font-size:var(--fs-3)!important;letter-spacing:.06em!important;
+  color:var(--text-on-wood)!important;min-height:var(--btn-h)!important;min-width:max(160px,calc(var(--tap) / var(--z,1)))!important;
+  filter:drop-shadow(0 5px 0 var(--success-dark)) drop-shadow(0 8px 10px rgba(59,34,16,.25))!important;
+  transition:transform var(--t-fast) var(--ease),filter var(--t-fast) var(--ease)!important}
+html:root body :is(.pk-green,.pk-orange,#tutServe,#t2check,#goNext,#goL2):hover{transform:translateY(-2px)!important;filter:brightness(1.06) drop-shadow(0 7px 0 var(--success-dark)) drop-shadow(0 10px 12px rgba(59,34,16,.28))!important}
+html:root body :is(.pk-green,.pk-orange,#tutServe,#t2check,#goNext,#goL2):active{transform:translateY(3px)!important;filter:drop-shadow(0 1px 0 var(--success-dark)) drop-shadow(0 2px 3px rgba(59,34,16,.25))!important}
+html:root body :is(.pk-green,.pk-orange,#tutServe,#t2check,#goNext,#goL2):disabled,
+html:root body :is(.pk-green,.pk-orange,#tutServe,#t2check,#goNext,#goL2)[aria-disabled="true"]{filter:grayscale(.7) opacity(.55)!important;cursor:not-allowed!important;transform:none!important}
+html:root body #done.pk-grey{font-size:var(--fs-2)!important}
+/* the secondary plank (parchment): PLAY AGAIN, LEVEL 1 */
+html:root body :is(.pk-parch,#again,#toL1){font-family:var(--font-display)!important;font-size:var(--fs-3)!important;color:var(--text)!important;min-height:var(--btn-h)!important;
+  transition:transform var(--t-fast) var(--ease),filter var(--t-fast) var(--ease)!important}
+html:root body :is(.pk-parch,#again,#toL1):active{transform:translateY(3px)!important}
+/* the pause menu's buttons */
+html:root body #r3menu .box{background:var(--surface-card)!important;border:4px solid var(--outline)!important;border-radius:var(--r-card)!important;padding:var(--sp-3) var(--sp-4)!important;gap:var(--sp-2)!important;box-shadow:var(--sh-3)!important}
+html:root body #r3menu h2{font-family:var(--font-display)!important;font-size:var(--fs-4)!important;color:var(--text)!important}
+html:root body #r3menu button{min-height:var(--btn-h)!important;border-radius:var(--r-pill)!important;font-family:var(--font-display)!important;font-size:var(--fs-3)!important;
+  background:var(--success)!important;color:var(--text-on-wood)!important;box-shadow:0 4px 0 var(--success-dark)!important;border:0!important;filter:none!important;
+  transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease)!important}
+html:root body #r3menu button.alt{background:var(--surface-card-2)!important;color:var(--text)!important;box-shadow:0 0 0 3px var(--outline) inset,0 4px 0 var(--c-wood-300)!important}
+html:root body #r3menu button:hover{transform:translateY(-1px)}
+html:root body #r3menu button:active{transform:translateY(3px)!important;box-shadow:0 1px 0 var(--success-dark)!important}
+html:root body #r3menu button.alt:active{box-shadow:0 0 0 3px var(--outline) inset,0 1px 0 var(--c-wood-300)!important}
+
+/* 4b. round icon: the wooden circle (pause, back, next, music, QA, reset) */
+html:root body :is(#r3pause,#bgmBtn,button.qa,.top>.qa){
+  width:max(var(--icon-btn),calc(var(--tap) / var(--z,1)))!important;height:max(var(--icon-btn),calc(var(--tap) / var(--z,1)))!important;
+  border-radius:50%!important;color:var(--text-on-wood)!important;font-family:var(--font-display)!important;font-size:var(--fs-1)!important;opacity:1!important;scale:1!important;
+  background:url("round_wood.webp?v=5ef7504d") center/100% 100% no-repeat!important;box-shadow:none!important;
+  filter:drop-shadow(0 3px 0 var(--surface-wood-dark)) drop-shadow(0 6px 8px rgba(59,34,16,.3))!important;
+  transition:transform var(--t-fast) var(--ease),filter var(--t-fast) var(--ease)!important}
+html:root body .pctl button{transition:transform var(--t-fast) var(--ease),filter var(--t-fast) var(--ease)!important}
+html:root body :is(#r3pause,#bgmBtn,button.qa,.top>.qa,.pctl button):hover{transform:translateY(-2px)!important}
+html:root body :is(#r3pause,#bgmBtn,button.qa,.top>.qa,.pctl button):active{transform:translateY(3px)!important;filter:drop-shadow(0 0 0 var(--surface-wood-dark)) drop-shadow(0 2px 3px rgba(59,34,16,.3))!important}
+html:root body :is(#r3pause,#bgmBtn,button.qa,.top>.qa,.pctl button):disabled{filter:grayscale(.7) opacity(.5)!important;cursor:not-allowed!important}
+html:root body .r3reset{width:var(--tap)!important;height:var(--tap)!important;border:2px solid var(--outline)!important;background:var(--surface-card-2)!important;color:var(--text)!important;
+  box-shadow:0 3px 0 var(--c-wood-300)!important;transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease)!important}
+html:root body .r3reset:active{transform:translateY(3px);box-shadow:0 0 0 var(--c-wood-300)!important}
+/* music + QA grouped bottom-right, one gap */
+html:root body header.top{gap:var(--sp-1)!important;right:var(--safe-right)!important;bottom:var(--safe-bottom)!important}
+html:root body #r3pause{left:var(--safe-left)!important;top:var(--safe-top)!important}
+
+/* 4c. focus: one ring everywhere */
+html:root body :is(button,[role="button"],select,a,[tabindex]:not([tabindex="-1"])):focus-visible{outline:3px solid var(--focus)!important;outline-offset:3px!important}
+
+/* ===================================================================== */
+/* 5. ORDER SCREEN                                                        */
+/* ===================================================================== */
+html:root body #slip.rcpt.ocard{background:var(--surface-card)!important;border:3px solid var(--outline)!important;border-radius:var(--r-card)!important;box-shadow:var(--sh-3)!important}
+html:root body .ocard .oc-top{background:var(--surface-wood)!important;color:var(--text-on-wood)!important;font-family:var(--font-display)!important;font-size:var(--fs-1)!important;letter-spacing:.14em!important}
+html:root body .ocard .oc-of{font-family:var(--font-display)!important;font-size:var(--fs-1)!important;color:var(--text-soft)!important}
+/* the order's fraction: one cream tile with a cheese-yellow rim; big dark numbers on a rounded bar */
+html:root body .ocard .oc-fr{width:auto!important;min-width:52%!important;padding:var(--sp-1) var(--sp-4)!important;box-sizing:border-box!important}
+html:root body .ocard .rc-frac{font-size:var(--fs-5)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;line-height:1!important;color:var(--text)!important;text-shadow:none!important}
+html:root body .ocard .rc-frac i{width:140%!important;height:6px!important;margin:4px 0 6px!important;border-radius:var(--r-pill)!important;background:var(--text)!important}
+/* the star tracker: a light wooden rail, laid out in a row under the order card (placed by design.js) */
+html:root body .trail{background:var(--surface-card-2)!important;border:2px solid var(--outline)!important;border-radius:var(--r-pill)!important;box-shadow:var(--sh-1)!important;padding:6px var(--sp-1)!important}
+html:root body .trail.dsRow{flex-direction:row!important;translate:none!important;right:auto!important}
+html:root body .trail .tok.got path:first-child{fill:var(--highlight)!important;stroke:var(--highlight-dark)!important}
+/* slices: hover and press highlight; a topped slice lifts a little and glows */
+html:root body #pz .hit{transition:fill var(--t-fast) var(--ease)}
+html:root body #pz .part:not(.dsTop) .hit:hover{fill:rgba(255,200,61,.22)!important}
+html:root body #pz .part .hit:active{fill:rgba(255,200,61,.4)!important}
+html:root body #pz .part.dsTop{translate:0 -5px;filter:drop-shadow(0 6px 4px rgba(59,34,16,.35)) drop-shadow(0 0 8px rgba(255,200,61,.8));transition:translate var(--t-med) var(--ease),filter var(--t-med) var(--ease)}
+/* the topping bowls: the picked one is raised, ringed in cheese yellow, with a basil check badge */
+html:root body #slots .katori{transition:transform var(--t-med) var(--ease),opacity var(--t-med) var(--ease),filter var(--t-med) var(--ease)!important}
+html:root body #slots .katori.sel::before{border-color:var(--highlight)!important;box-shadow:0 0 0 3px var(--outline),0 0 18px rgba(255,200,61,.8)!important}
+html:root body #slots .katori.sel::after{background:var(--success)!important;color:var(--c-white)!important;box-shadow:0 0 0 3px var(--surface-card),var(--sh-1)!important}
+/* wrong answer: soft coral, never a harsh red */
+html:root body #pz .part.r3wrong .hit{fill:rgba(242,140,120,.22)!important;stroke:var(--error-glow)!important}
+html:root body #pz .hit.bad{fill:rgba(242,140,120,.3)!important}
+html:root body .side.r3wrong .plate{box-shadow:var(--glow-error)!important}
+html:root body .side.bad,html:root body .fin.bad{box-shadow:var(--glow-error)!important}
+html:root body #slip.shake{border-color:var(--error)!important}
+
+/* ===================================================================== */
+/* 6. STORY                                                               */
+/* ===================================================================== */
+html:root body .story .sbub .t{font-family:var(--font-body)!important;color:var(--text)!important}
+/* the narrator's caption: the same cream / dark-brown look as the speech bubbles */
+html:root body .r3cap{background:var(--surface-card)!important;border:4px solid var(--outline)!important;border-radius:var(--r-card)!important;box-shadow:var(--sh-3)!important;
+  font-family:var(--font-body)!important;font-size:max(var(--fs-speech),calc(22px / var(--z,1)))!important;color:var(--text)!important;padding:var(--sp-2) var(--sp-3)!important}
+html:root body .story #ssub:not(.bub),html.portrait:root body .story #ssub{background:var(--surface-card)!important;border:3px solid var(--outline)!important;border-radius:var(--r-card)!important;box-shadow:var(--sh-2)!important}
+/* the progress dots (step x / y) */
+.dsDots{position:fixed;left:50%;bottom:var(--safe-bottom);translate:-50% 0;z-index:9100;display:flex;align-items:center;gap:var(--sp-1);
+  padding:6px var(--sp-2);border-radius:var(--r-pill);background:var(--surface-card);border:2px solid var(--outline);box-shadow:var(--sh-2);pointer-events:none;
+  font-family:var(--font-display);font-weight:var(--fw-display);font-size:var(--fs-1);color:var(--text);transition:opacity var(--t-med) var(--ease)}
+.dsDots[hidden]{display:none}
+.dsDots .dot{width:10px;height:10px;border-radius:50%;background:var(--c-wood-300);transition:background var(--t-med) var(--ease),transform var(--t-med) var(--ease)}
+.dsDots .dot.dsPast{background:var(--surface-wood)}
+.dsDots .dot.dsNow{background:var(--accent);transform:scale(1.35)}
+.dsDots .dot{display:block;flex:0 0 auto}
+.dsDots .lab{margin-left:var(--sp-1)}
+
+/* ===================================================================== */
+/* 7. TEACHING SLIDES                                                     */
+/* ===================================================================== */
+.dsStep{position:fixed;left:var(--safe-left);bottom:var(--safe-bottom);z-index:9050;padding:6px var(--sp-2);border-radius:var(--r-pill);background:var(--surface-card);
+  border:2px solid var(--outline);box-shadow:var(--sh-2);font-family:var(--font-display);font-weight:var(--fw-display);font-size:var(--fs-2);color:var(--text);pointer-events:none}
+.dsStep[hidden]{display:none}
+html:root body .tut .talk{display:flex!important;align-items:center!important}
+html:root body .tut .learn .oticket .ot-paper{border-radius:var(--r-sm)!important}
+
+/* ===================================================================== */
+/* 8. TITLE SCREEN                                                        */
+/* ===================================================================== */
+html:root body .pre .pplay{container-type:inline-size}
+html:root body .pre.idle .pplay{animation:dsBreathe 2.4s var(--ease) infinite!important}
+@keyframes dsBreathe{0%,100%{scale:1}50%{scale:1.05}}
+/* a crisp PLAY label over the ribbon: cream letters with a dark-wood outline on a deep tomato band */
+.dsPlay{position:absolute;left:19%;right:19%;top:76.5%;height:14.5%;display:grid;place-items:center;border-radius:var(--r-sm);
+  background:linear-gradient(180deg,var(--accent),var(--accent-dark));box-shadow:inset 0 0 0 2px var(--outline);pointer-events:none;
+  font-family:var(--font-display);font-weight:var(--fw-display);font-size:12cqw;line-height:1;letter-spacing:.06em;color:var(--c-cream-50);
+  -webkit-text-stroke:.05em var(--outline);paint-order:stroke fill;text-shadow:0 .06em 0 var(--outline)}
+/* Level 2's start PLAY */
+html:root body .mainplay{font-family:var(--font-display)!important;font-size:var(--fs-4)!important;background:var(--success)!important;color:var(--text-on-wood)!important;
+  border-radius:var(--r-pill)!important;box-shadow:0 5px 0 var(--success-dark),var(--sh-2)!important;animation:dsBreathe 2.4s var(--ease) infinite}
+
+/* ===================================================================== */
+/* 9. LEVEL 2                                                             */
+/* ===================================================================== */
+html:root body .view.match .mid .vs{font-family:var(--font-display)!important;background:var(--surface-wood)!important;color:var(--text-on-wood)!important;box-shadow:0 0 0 3px var(--outline),var(--sh-2)!important}
+html:root body .view.match .mid .ask,html:root body .tut .ask2{font-family:var(--font-display)!important;font-size:var(--fs-3)!important;color:var(--text-on-wood)!important}
+html:root body .stack{transition:transform var(--t-fast) var(--ease),filter var(--t-fast) var(--ease)!important}
+html:root body .stack:hover{transform:translateY(-2px)}
+html:root body .stack:active{transform:translateY(3px)!important;filter:brightness(.97)}
+html:root body .view .side.pick{transition:transform var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease)!important}
+html:root body .view .side.pick:hover{box-shadow:var(--glow-select)!important}
+html:root body .fl2 .fin.sel{box-shadow:0 0 0 5px var(--highlight),0 0 0 8px var(--outline),var(--sh-3)!important}
+html:root body .fl2 .fin.sel::after{background:var(--success)!important}
+html:root body .podium .blk span{font-family:var(--font-display)!important;color:var(--text-on-wood)!important}
+
+/* ===================================================================== */
+/* 10. END CARDS                                                          */
+/* ===================================================================== */
+html:root body .endcard{background:var(--surface-card)!important;border:4px solid var(--outline)!important;border-radius:var(--r-card)!important;box-shadow:var(--sh-3)!important;color:var(--text)!important}
+html:root body .endcard h2{font-family:var(--font-display)!important;font-size:var(--fs-4)!important;color:var(--text)!important}
+html:root body .endcard p{font-family:var(--font-body)!important;font-size:var(--fs-3)!important;color:var(--text)!important}
+html:root body .endcard .bigstars{font-family:var(--font-display)!important;font-size:var(--fs-5)!important;color:var(--text)!important}
+
+/* ===================================================================== */
+/* 11. PORTRAIT: stacked layouts (tablet upright 768 x 1024, phone 390 x 844)  */
+/* ===================================================================== */
+/* -- top row: pause on the left, music + QA on the right; the banner under them -- */
+html.portrait body header.top{top:var(--safe-top)!important;bottom:auto!important;right:var(--safe-right)!important}
+html.portrait body #app{padding:calc(var(--safe-top) + var(--icon-btn) + var(--sp-1)) var(--sp-2) calc(var(--btn-h) + var(--safe-bottom) + var(--sp-2))!important;
+  grid-template-rows:auto minmax(0,1fr)!important;gap:var(--sp-1)!important;height:100%!important;box-sizing:border-box}
+html.portrait body #app>.card{justify-self:stretch!important;width:auto!important;max-width:none!important;margin:0!important;padding:var(--sp-1) var(--sp-2) var(--sp-1) var(--sp-1)!important}
+html.portrait body #app>.card #say{flex:1 1 auto!important;max-width:none!important;width:auto!important}
+html.portrait:root body #app>.card{translate:none!important;width:auto!important;max-width:none!important;flex-wrap:nowrap!important;justify-self:stretch!important}
+html.portrait:root body #app>.card #say{flex:1 1 0!important;min-width:0!important;flex-basis:0!important}
+html.portrait body #app>.card #guide{position:relative!important;left:auto!important;top:auto!important;translate:none!important;width:64px!important;height:64px!important;flex:0 0 64px!important}
+html.portrait body #app>.card #say{padding-left:0!important;margin-left:0!important}
+/* -- order screen: order card + stars in one row -> pizza -> four bowls in one row -> CHECK -- */
+html.portrait body .stage{grid-template-columns:1fr!important;grid-template-rows:auto minmax(0,1fr) auto!important;grid-template-areas:"cust" "board" "tray"!important;
+  align-content:stretch!important;row-gap:var(--sp-1)!important;padding:0!important;min-height:0!important}
+html.portrait body .cust{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:var(--sp-2)!important;flex-wrap:wrap}
+html.portrait body #slip.rcpt.ocard{container-type:normal!important;width:max-content!important;max-width:64%!important;max-width:none!important;flex:0 0 auto;display:flex!important;flex-direction:row!important;align-items:center!important;aspect-ratio:auto!important}
+html.portrait body #slip .oc-top{display:none!important}
+html.portrait body #slip .oc-body{display:flex!important;flex-direction:row!important;align-items:center!important;gap:var(--sp-1)!important;padding:var(--sp-1) var(--sp-2)!important;margin:0!important}
+html.portrait body #slip .oc-fr{width:auto!important;min-width:0!important}
+html.portrait body #slip .oc-ava{width:56px!important;height:56px!important}
+html.portrait body #slip .oc-ava img{height:60px!important}
+html.portrait body #slip .rc-frac{font-size:var(--fs-4)!important}
+html.portrait body #slip .oc-of{display:none!important}
+html.portrait body .r3cntw{flex-direction:column!important;margin:0!important;gap:var(--sp-1)!important}
+html.portrait body .boardzone{min-height:0!important}
+html.portrait body .boardwrap{--bsz:min(calc(100*var(--vw) - 32px),calc(100*var(--vh) - 600px))!important;width:var(--bsz)!important;height:auto!important;aspect-ratio:1!important}
+html.portrait body .trayzone{width:100%!important}
+html.portrait body .tray{--tsz:auto!important;width:100%!important;max-width:none!important;aspect-ratio:auto!important;transform:none!important}
+html.portrait body .tray>img{display:none!important}
+html.portrait body #slots{position:static!important;width:100%!important;box-sizing:border-box!important;display:grid!important;grid-auto-flow:column!important;grid-template-rows:auto auto!important;grid-auto-columns:1fr!important;
+  justify-items:center!important;column-gap:var(--sp-1)!important;row-gap:4px!important;padding:var(--sp-1)!important;border-radius:var(--r-card)!important;
+  background:var(--surface-wood)!important;border:3px solid var(--outline)!important;box-shadow:var(--sh-2)!important}
+html.portrait body #slots>.katori,html.portrait body #slots>.mould{position:relative!important;left:auto!important;top:auto!important;width:min(100%,88px)!important;height:auto!important;aspect-ratio:1!important;translate:none!important;transform:none}
+html.portrait body #slots>.katori.sel{transform:translateY(-6px)!important}
+html.portrait body #slots>.mould{grid-row:1 / span 2!important}
+html.portrait body #slots>.katori img{width:100%!important;height:100%!important;object-fit:contain}
+html.portrait body #slots>.bowl-label{position:static!important;translate:none!important;transform:none!important;font-size:var(--fs-1)!important;white-space:normal!important;text-align:center!important;line-height:1.05!important;max-width:100%}
+html.portrait body #done{bottom:var(--safe-bottom)!important}
+/* the star tracker: one row in the top bar, between Pause and music / QA */
+html.portrait body .trail{padding:4px var(--sp-1)!important}
+html.portrait body.l1page .trail.dsRow{position:fixed!important;left:50%!important;top:calc(var(--safe-top) + 12px)!important;translate:-50% 0!important;bottom:auto!important}
+/* -- the lesson board: the banner spans the board; the pictures stack -- */
+html.portrait body .tut .talk #tutWho{position:relative!important;left:auto!important;top:auto!important;translate:none!important;flex:0 0 auto}
+html.portrait body .tut .page{left:var(--sp-1)!important;right:var(--sp-1)!important;width:auto!important}
+html.portrait body .tut .talk{left:var(--sp-2)!important;right:var(--sp-2)!important;width:auto!important;translate:none!important;margin:0!important;top:calc(var(--safe-top) + var(--icon-btn) + var(--sp-1))!important}
+html.portrait body .tut .page.learning .learn{--ls:min(calc(58*var(--vw)),calc(30*var(--vh)))!important;flex-wrap:wrap!important;align-content:center!important;row-gap:var(--sp-2)!important}
+html.portrait body .tut .page.learning .learn.three,html.portrait body .tut .learn.halves{--ls:min(calc(36*var(--vw)),calc(24*var(--vh)))!important}
+html.portrait body .tut .learn.pzcards{--ls:min(calc(40*var(--vw)),calc(22*var(--vh)))!important;flex-wrap:wrap!important}
+html.portrait body .tut .learn .li.row{flex-direction:column!important}
+html.portrait body .tut .learn.serveplate .lsrv{flex-direction:column!important;gap:var(--sp-5)!important}
+html.portrait body .tut .learn.serveplate .lplw.in{margin-left:0!important}
+html.portrait body .tut .learn.orders .orail{flex-wrap:wrap!important;justify-content:center!important;row-gap:var(--sp-1)}
+html.portrait body .tut .learn.orders .oticket{zoom:.72}
+html.portrait body #t2learn .l2row{flex-wrap:wrap;justify-content:center}
+/* -- story: the picture fits the width; the words sit in the banner under it -- */
+html.portrait body .story .sworld{width:calc(120*var(--vw))!important;top:40%!important}
+html.portrait body .story .sbub{display:none!important}
+html.portrait body .story .sworld .sshot{inset:0!important;left:0!important;top:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important}
+html.portrait body .story .sworld .sshot img:not(.blur){position:absolute!important;inset:0!important;width:100%!important;height:100%!important;left:0!important;top:0!important;object-fit:cover!important}
+html.portrait body .story .sworld .sshot img.blur{display:none!important}
+html.portrait body .story #ssub.bub>*:not(.snext){visibility:visible!important}
+html.portrait body .story #ssub{display:flex!important;opacity:1!important;visibility:visible!important;top:auto!important;bottom:calc(var(--safe-bottom) + 48px)!important;left:var(--sp-2)!important;right:var(--sp-2)!important;
+  width:auto!important;max-width:none!important;translate:none!important;min-height:0!important;padding:var(--sp-1) var(--sp-2) var(--sp-1) var(--sp-1)!important}
+html.portrait body .story{background:var(--surface-wood-dark)!important}
+html.portrait body #story.narrline #ssub{display:flex!important}
+html.portrait body .r3cap{display:none!important}
+/* -- the title screen: the picture a little wider than the screen, centred, over a soft blurred copy of itself -- */
+html.portrait body #start:has(.world.pre){background:var(--surface-wood-dark)!important}
+html.portrait body #start:has(.world.pre)::before{content:"";position:fixed;inset:-20px;background:url("../prelbd/prelbd_n0_b0.webp?v=34ab1cdc") center/cover;filter:blur(14px) brightness(.7);z-index:0}
+html.portrait body #start:has(.world.pre) .start-wrap{place-items:center!important;z-index:1}
+html.portrait body .world.pre{width:calc(150 * var(--vw))!important;margin-left:calc(-25 * var(--vw))!important;justify-self:start;border-radius:var(--r-card)!important}
+html.portrait body .pre .pplay{width:30%!important;bottom:4%!important}
+/* -- Level 2 matches: two columns, each a contestant over its plate -- */
+html.portrait body .view.match:not(.cardsv){grid-template-columns:1fr 1fr!important;grid-template-areas:"a b"!important;column-gap:var(--sp-1)!important}
+html.portrait body .view.match:not(.cardsv) .mid{position:absolute!important;left:50%!important;top:calc(var(--sp-6) * 3.2)!important;translate:-50% 0;z-index:5}
+html.portrait body .view.match:not(.cardsv) .mid .vs{width:44px!important;height:44px!important;font-size:var(--fs-1)!important}
+html.portrait body .view.match:not(.cardsv) .side{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:var(--sp-1)!important}
+html.portrait body .view.match:not(.cardsv) .side>*{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;margin:0!important;translate:none!important}
+html.portrait body .view.match:not(.cardsv) .side .who{flex-direction:row!important;gap:var(--sp-1)!important}
+html.portrait body .view.match:not(.cardsv) .side.b .who{flex-direction:row-reverse!important}
+html.portrait body .view.match:not(.cardsv) .side .plate{width:min(calc(42*var(--vw)),calc(30*var(--vh)))!important;--pw:min(calc(42*var(--vw)),calc(30*var(--vh)))!important;margin:0!important}
+html.portrait body .view.match:not(.cardsv) .side .plate img{width:100%!important;height:auto!important}
+html.portrait body .view.match .side .who{position:relative!important;left:auto!important;right:auto!important;top:auto!important;justify-self:center!important;align-items:center!important}
+html.portrait body .view.match .side{padding-top:0!important;justify-items:center!important}
+html.portrait body .view.match .side .r3cntw{position:static!important;flex-direction:row!important}
+html.portrait body .view.match .side .who .ava{width:72px!important;height:72px!important}
+html.portrait body .view.match .side .eat .ate .fr{font-size:var(--fs-4)!important}
+html.portrait body .view.cardsv{grid-template-columns:1fr 1fr!important;column-gap:var(--sp-1)!important}
+html.portrait body .view.cardsv .side.withpz{flex-direction:column!important}
+html.portrait body .view.cardsv .side .cpz{width:min(calc(40*var(--vw)),160px)!important}
+html.portrait body .fl2 .row5{gap:var(--sp-1)!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}
+html.portrait body .fl2 .board5{width:calc(100% - 16px)!important;max-width:none!important;padding:var(--sp-1)!important}
+html.portrait body .fl2 .cell,html.portrait body .fl2 .slot{min-width:0!important;width:auto!important}
+html.portrait body .fl2 .fin{width:100%!important;min-width:0!important;height:auto!important;box-sizing:border-box}
+html.portrait body .fl2 .fin .cimg{width:100%!important;height:auto!important;aspect-ratio:1}
+html.portrait body .fl2 .slots5 .slot{width:auto!important;min-width:0!important;height:auto!important;aspect-ratio:3/4}
+/* Level 2: the star rail is one row across the top, between Pause and the music / QA buttons */
+html.portrait body.l2page #app{padding-bottom:calc(var(--btn-h) + var(--safe-bottom) + 56px)!important}
+html.portrait body.l2page .trail{position:fixed!important;top:auto!important;bottom:calc(var(--safe-bottom) + var(--btn-h) + 12px)!important;left:50%!important;right:auto!important;translate:-50% 0!important;flex-direction:row!important;gap:2px!important;padding:4px 6px!important}
+html.portrait body.l2page .trail .tok{width:16px!important;height:16px!important}
+html.portrait body .fl2 .scale5 span{font-size:var(--fs-1)!important}
+html.portrait body .endcard{width:calc(100% - 32px)!important;max-width:none!important;padding:var(--sp-3)!important}
+html.portrait body .endcard .crowd img{width:44px!important;height:auto!important}
+html.portrait body .podium .steps{gap:4px!important}
+html.portrait body .podium .step .a{width:min(calc(17*var(--vw)),90px)!important}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html:root body .pre.idle .pplay,html:root body .mainplay{animation:none!important}
+  html:root body #pz .part.dsTop{translate:none}
+}
+
+/* ---------- portrait: final fixes ---------- */
+html.portrait:root body #view.view.match:not(.cardsv) .side>.who,
+html.portrait:root body #view.view.match:not(.cardsv) .side>.plate{left:0!important;right:0!important;inset-inline:0!important;transform:none!important;scale:1!important}
+html.portrait:root body #view.view.match:not(.cardsv) .side>.who .ava{width:56px!important;height:56px!important}
+html.portrait:root body #view.view.match:not(.cardsv) .side>.who .eat .ate .fr{font-size:var(--fs-3)!important}
+html.portrait:root body #view.view.match:not(.cardsv) .side>.plate{width:min(calc(40*var(--vw)),calc(28*var(--vh)))!important}
+html.portrait:root body #slip .rc-frac{font-size:var(--fs-3)!important;padding:2px var(--sp-1)!important}
+html.portrait:root body #slip.rcpt.ocard{max-width:none!important;overflow:visible!important}
+html.portrait:root body .cust .r3cnt{font-size:var(--fs-1)!important}
+html.portrait:root body .tray{left:0!important;margin:0!important}
+html.portrait:root body #slots{max-width:100%!important;margin:0!important}
+html.portrait:root body .fl2 .row5{justify-items:stretch!important}
+html.portrait:root body .fl2 .slots5 .slot{width:100%!important;min-height:calc(18*var(--vw))!important}
+html.portrait:root body .story .sworld{width:calc(150*var(--vw))!important}
+
+/* ---------- portrait: lesson details, Level 2 lesson board, end screens ---------- */
+html.portrait:root body .tut .learn.pzcards{flex-direction:row!important;flex-wrap:nowrap!important;--ls:min(calc(27*var(--vw)),calc(17*var(--vh)))!important;gap:var(--sp-1)!important}
+html.portrait:root body .tut .learn .lchar.lpuzz{width:calc(30*var(--vw))!important;height:auto!important;left:auto!important;right:var(--sp-1)!important;top:auto!important;bottom:var(--sp-1)!important;zoom:.7}
+html.portrait:root body .tut .learn.denom #lSlot{flex-direction:column!important;gap:var(--sp-2)!important}
+html.portrait:root body .tut .learn.denom #lSlot #lDc{width:auto!important}
+html.portrait:root body .tut .learn.numer{flex-direction:column!important}
+html.portrait:root body #t2learn .l2row{flex-direction:row!important;flex-wrap:nowrap!important;gap:var(--sp-1)!important;zoom:1!important}
+html.portrait:root body #t2learn .l2side{width:calc(42*var(--vw))!important;min-width:0!important;margin:0!important}
+html.portrait:root body #t2learn .l2pz,html.portrait:root body #t2learn .l2sl{width:calc(40*var(--vw))!important;height:auto!important}
+html.portrait:root body #t2learn .l2who{position:relative!important;left:auto!important;right:auto!important;top:auto!important;justify-content:center!important}
+html.portrait:root body #t2learn .l2ava{width:56px!important;height:56px!important}
+html.portrait:root body #t2learn .l2more{flex-wrap:wrap!important;justify-content:center!important;gap:var(--sp-1)!important}
+html.portrait:root body #t2learn .l2more .l2pc .l2pz{width:calc(32*var(--vw))!important}
+html.portrait:root body #t2learn .l2rules{flex-direction:column!important;zoom:.8}
+html.portrait:root body #t2learn .l2line{flex-wrap:wrap!important;justify-content:center!important;gap:var(--sp-1)!important}
+html.portrait:root body #t2learn .l2line .l2ava{width:72px!important;height:72px!important}
+html.portrait:root body #t2learn .l2solo img{max-width:calc(70*var(--vw))!important;height:auto!important}
+html.portrait:root body .tut .tmid,html.portrait:root body .tut .duel .vs{display:none}
+html.portrait:root body.l2page #app>.card{width:100%!important;box-sizing:border-box!important}
+html.portrait:root body .view.match .mid .ask{display:none!important}
+html.portrait:root body.l2page .trail{bottom:calc(var(--safe-bottom) + var(--btn-h) + 36px)!important}
+html.portrait:root body.l2page #app{padding-bottom:calc(var(--btn-h) + var(--safe-bottom) + 80px)!important}
+html.portrait:root body:has(#view.podium) .trail,html.portrait:root body:has(#end:not([hidden])) .trail{display:none!important}
+html.portrait:root body #slots{grid-auto-columns:minmax(0,1fr)!important}
+html.portrait:root body #slots>*{min-width:0!important}
+html.portrait:root body #slots>.mould{width:min(100%,110px)!important}
+html.portrait:root body #slots>.mould svg{width:100%!important;height:100%!important;position:static!important}
+
+/* portrait story and lessons: music + QA stay bottom-right (the story / lesson NEXT arrow owns the top-right corner) */
+html.portrait:root body.tutoring header.top,html.portrait:root body:has(#story:not([hidden])) header.top,html.portrait:root body:has(#tut:not([hidden])) header.top{top:auto!important;bottom:var(--safe-bottom)!important}
+
+/* Level 2 portrait: the star rail sits in the top bar too (small stars), clear of the stacks */
+html.portrait:root body.l2page .trail{top:calc(var(--safe-top) + 14px)!important;bottom:auto!important;gap:1px!important;padding:4px 6px!important}
+html.portrait:root body.l2page .trail .tok{width:12px!important;height:12px!important}
+html.portrait:root body.l2page #app{padding-bottom:calc(var(--btn-h) + var(--safe-bottom) + var(--sp-2))!important}
+
+/* ---------- the type scale everywhere (remaining off-scale text) ---------- */
+html:root body .tut .learn .oticket .ot-top,html:root body .tut .learn .oticket .ot-name,html:root body .tut .learn .oticket .ot-of{font-size:var(--fs-1)!important;line-height:var(--lh-tight)!important}
+html:root body .tut .learn .oticket .ot-top{font-family:var(--font-display)!important}
+html:root body .tut .learn .oticket .lf{font-size:var(--fs-3)!important}
+html:root body .view.match .side .eat .ate .fr,html:root body .cardsv .side .eat .ate .fr{font-size:var(--fs-5)!important}
+html:root body #done.pk-grey{font-size:var(--fs-2)!important}
+html:root body .r3cnt b{font-size:1em!important}
+html:root body .stack .plus{font-size:var(--fs-3)!important}
+html:root body .view.match .mid .vs{font-size:var(--fs-3)!important}
+html:root body #done:is(.pk-green,.pk-orange){font-size:var(--fs-3)!important}
+html:root body :is(#say,#tutLine,.story #ssub p) .fr{font-size:1em!important}
+html:root body #done{font-size:var(--fs-3)!important}
+/* phones: the Served / Left pairs a size smaller, so the two sit side by side under the plate and the board */
+html.portrait:root body .servelayer figcaption{gap:6px!important}
+html.portrait:root body .servelayer .dsLbl{font-size:var(--fs-1);padding:2px 12px}
+html.portrait:root body .servelayer figcaption .fr{font-size:var(--fs-2)!important;padding:2px 8px!important}
+
+/* ===================================================================== */
+/* LEVEL 2 LESSON: the same board as Level 1 (cream panel in a leafy wooden frame, café behind, gingham cloth below),
+   with the instruction banner up on the frame between the round keys */
+/* ===================================================================== */
+html:root body.l2page .tut{background:var(--c-cream-200) url("../tutorial/lesson_bg.webp") center/100% 100% no-repeat!important}
+html:root body.l2page .tut::before{inset:0!important;background:var(--c-cream-200) url("../tutorial/lesson_bg.webp") center/100% 100% no-repeat!important;filter:none!important;opacity:1!important}
+html:root body.l2page .tut .rig{background:none!important;clip-path:none!important;inset:0!important;left:0!important;right:0!important}
+html:root body.l2page .tut .sheet{left:5.5%!important;right:5.5%!important;top:13%!important;height:78%!important;background:none!important;box-shadow:none!important;border-radius:0!important}
+html:root body.l2page .tut .talk.talk{position:fixed!important;top:calc(1.2*var(--vh,1vh))!important;left:0!important;right:0!important;margin:0 auto!important;
+  width:min(780px,calc(100*var(--vw) - 400px))!important;z-index:9!important;justify-self:auto!important}
+html:root body.l2page .tut .page{grid-template-rows:0 auto minmax(0,1fr)!important}
+/* the pictures and signs were drawn for the dark board: on cream they get a soft wood shadow instead of a glow */
+html:root body.l2page .tut :is(.pz,.tsd svg,.duel svg){filter:drop-shadow(0 8px 10px rgba(90,50,15,.3))}
+
+/* ===================================================================== */
+/* SPOTLIGHT (assets/ui/focus.js): a warm dim with soft holes, and a glowing cheese-yellow ring that breathes,
+   with two little twinkles, round the thing to look at. Never blocks a tap. */
+/* ===================================================================== */
+.dsVeil{position:fixed;inset:0;z-index:100;pointer-events:none;background:rgba(43,24,9,.42);opacity:0;transition:opacity var(--t-slow) var(--ease);
+  -webkit-mask-image:var(--holes,none);mask-image:var(--holes,none);-webkit-mask-composite:source-in;mask-composite:intersect}
+.dsVeil.on{opacity:1}
+.dsRing{position:fixed;z-index:120;pointer-events:none;border-radius:var(--r-card);opacity:0;scale:.94;
+  box-shadow:0 0 0 4px var(--highlight),0 0 0 9px rgba(255,200,61,.32),0 0 32px 8px rgba(255,200,61,.6),inset 0 0 18px rgba(255,231,163,.55);
+  transition:opacity var(--t-med) var(--ease),scale var(--t-med) var(--ease)}
+.dsRing.round{border-radius:var(--r-pill)}
+.dsRing.on{opacity:1;scale:1;animation:dsRingPulse 1.6s var(--ease) var(--t-med) infinite}
+.dsRing::before,.dsRing::after{content:"";position:absolute;width:18px;height:18px;pointer-events:none;
+  background:var(--c-white);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  filter:drop-shadow(0 0 4px var(--highlight)) drop-shadow(0 0 8px var(--highlight));animation:dsTwinkle 1.6s var(--ease) infinite}
+.dsRing::before{top:-9px;right:12%}
+.dsRing::after{bottom:-9px;left:10%;width:13px;height:13px;animation-delay:.8s}
+@keyframes dsRingPulse{0%,100%{box-shadow:0 0 0 4px var(--highlight),0 0 0 9px rgba(255,200,61,.32),0 0 32px 8px rgba(255,200,61,.6),inset 0 0 18px rgba(255,231,163,.55)}
+  50%{box-shadow:0 0 0 5px var(--highlight),0 0 0 14px rgba(255,200,61,.18),0 0 44px 14px rgba(255,200,61,.75),inset 0 0 22px rgba(255,231,163,.7)}}
+@keyframes dsTwinkle{0%,100%{opacity:.2;scale:.5;rotate:0deg}50%{opacity:1;scale:1;rotate:45deg}}
+@media (prefers-reduced-motion: reduce){ .dsRing.on,.dsRing::before,.dsRing::after{animation:none} .dsRing::before,.dsRing::after{opacity:.9} }
+/* Level 2 lesson captions ("8 equal parts"): the wood pill Level 1's lesson labels use (they were cream text for the dark board) */
+html:root body:not(#ds) #t2learn .l2cap:not(:has(.l2f)):not(:empty){background:var(--surface-wood)!important;color:var(--text-on-wood)!important;border:2px solid var(--outline)!important;box-shadow:var(--sh-1)!important;text-shadow:none!important;width:fit-content;margin-inline:auto}
+html:root body:not(#ds) #t2learn .l2cap:not(:has(.l2f)) .fr{color:var(--highlight)!important}
+
+/* ===================================================================== */
+/* INSTRUCTION PANEL (redesign): a warm paper card with a wooden edge, the speaker's photo set into its left edge in a
+   cheese-yellow ring, a wooden name tab on top, and a gentle slide-in for every new line. Basil when it's right,
+   soft coral (one gentle shake) for "try again". Positions and sizes of the box are untouched. */
+/* ===================================================================== */
+html:root body:not(#ds) :is(#app>.card,.tut .talk){
+  background:linear-gradient(180deg,var(--c-cream-50) 0%,var(--surface-card) 70%,var(--c-cream-200) 100%)!important;
+  border:3px solid var(--c-wood-800)!important;border-radius:24px!important;overflow:visible!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 5px 0 var(--c-wood-300),0 6px 0 var(--c-wood-800),0 14px 22px rgba(59,34,16,.25)!important;
+  padding-top:var(--sp-2)!important;padding-bottom:var(--sp-2)!important;padding-right:var(--sp-2)!important;
+  transition:border-color var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease)!important}
+/* the name tab */
+html:root body:not(#ds) :is(#app>.card,.tut .talk)[data-name]::before{
+  content:attr(data-name)!important;display:block!important;position:absolute!important;left:72px!important;top:-15px!important;right:auto!important;bottom:auto!important;
+  width:auto!important;height:auto!important;inset:auto auto auto 72px!important;top:-15px!important;
+  font:var(--fw-display) 14px/1 var(--font-display)!important;letter-spacing:.12em!important;text-transform:uppercase!important;
+  color:var(--text-on-wood)!important;background:var(--surface-wood)!important;border:2px solid var(--c-wood-900)!important;border-radius:var(--r-pill)!important;
+  padding:5px 12px 4px!important;box-shadow:var(--sh-1)!important;opacity:1!important;transform:none!important;filter:none!important;z-index:3!important;
+  transition:background var(--t-med) var(--ease),border-color var(--t-med) var(--ease)}
+/* the ✓ badge for a right answer */
+html:root body:not(#ds) #app>.card:has(.say.good)::after{content:"✓"!important;display:grid!important;place-items:center!important;position:absolute!important;inset:auto!important;right:-12px!important;top:-14px!important;
+  width:32px!important;height:32px!important;border-radius:50%!important;background:var(--success)!important;color:var(--c-white)!important;font:var(--fw-display) 18px/1 var(--font-display)!important;
+  border:3px solid var(--surface-card)!important;box-shadow:0 0 0 2px var(--success-dark),var(--sh-1)!important;opacity:1!important;transform:none!important;z-index:3!important;animation:dsBadge var(--t-slow) var(--ease) both}
+@keyframes dsBadge{0%{scale:0;rotate:-30deg}70%{scale:1.15}100%{scale:1;rotate:0deg}}
+/* the speaker's photo, set into the left edge */
+html:root body:not(#ds) #app>.card #guide,html:root body:not(#ds) .tut .talk .who{
+  width:64px!important;height:64px!important;min-width:64px!important;flex:0 0 64px!important;margin-left:-34px!important;
+  background:radial-gradient(circle at 50% 40%,var(--c-white),var(--c-basil-100))!important;
+  box-shadow:0 0 0 4px var(--highlight),0 0 0 7px var(--c-wood-800),0 6px 10px rgba(59,34,16,.3)!important}
+html:root body:not(#ds) :is(#app>.card,.tut .talk).dsNew :is(#guide,.who){animation:dsHop var(--t-slow) var(--ease)}
+@keyframes dsHop{0%{translate:0 0}40%{translate:0 -6px}100%{translate:0 0}}
+/* every new line slides in */
+html:root body:not(#ds) :is(#say,#tutLine).dsIn{animation:dsLine var(--t-med) var(--ease) both}
+@keyframes dsLine{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+/* right: basil; try again: soft coral + one gentle shake */
+html:root body:not(#ds) :is(#app>.card:has(.say.good),.tut .talk:has(p.good)){border-color:var(--success-dark)!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 5px 0 var(--c-basil-400),0 6px 0 var(--success-dark),0 0 0 4px rgba(109,184,90,.35),0 14px 22px rgba(59,34,16,.22)!important}
+html:root body:not(#ds) :is(#app>.card:has(.say.good),.tut .talk:has(p.good))::before{background:var(--success)!important;border-color:var(--success-dark)!important}
+html:root body:not(#ds) :is(#app>.card:has(.say.bad),.tut .talk:has(p.bad)){border-color:var(--error)!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 5px 0 var(--c-coral-400),0 6px 0 var(--error),var(--glow-error),0 14px 22px rgba(59,34,16,.22)!important}
+html:root body:not(#ds) :is(#app>.card:has(.say.bad),.tut .talk:has(p.bad))::before{background:var(--error)!important;border-color:var(--c-tomato-700)!important}
+html:root body:not(#ds) :is(#app>.card,.tut .talk).dsShake{animation:dsShake var(--t-slow) var(--ease)}
+@keyframes dsShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+/* the read-aloud badge on the photo and the lesson's read-aloud key match */
+html:root body:not(#ds) #guide .spk{background:var(--accent)!important;border:2px solid var(--c-wood-900)!important;box-shadow:0 2px 0 var(--accent-dark)!important}
+/* phones: a smaller photo and tab */
+html.portrait:root body:not(#ds) #app>.card #guide,html.portrait:root body:not(#ds) .tut .talk .who{width:52px!important;height:52px!important;min-width:52px!important;flex-basis:52px!important;margin-left:0!important}
+html.portrait:root body:not(#ds) :is(#app>.card,.tut .talk)[data-name]::before{left:16px!important;inset:auto auto auto 16px!important;top:-13px!important;font-size:12px!important;padding:4px 10px 3px!important}
+html.portrait:root body:not(#ds) :is(#app>.card,.tut .talk){margin-top:12px}
+@media (prefers-reduced-motion: reduce){ html:root body :is(#app>.card,.tut .talk).dsShake{animation:none} }
+/* landscape: the panel is the anchor; the photo sits half over its left edge and the words start clear of it */
+html:not(.portrait):root body:not(#ds) #app>.card{position:relative!important;padding-left:52px!important}
+html:not(.portrait):root body:not(#ds) .tut .talk{padding-left:48px!important}
+html:not(.portrait):root body:not(#ds) #app>.card #guide,html:not(.portrait):root body:not(#ds) .tut .talk .who{position:absolute!important;left:-34px!important;top:50%!important;margin-left:0!important;translate:0 -50%!important}
+html:not(.portrait):root body:not(#ds) :is(#app>.card,.tut .talk)[data-name]::before{left:44px!important;inset:auto auto auto 44px!important;top:-15px!important}
+
+/* ===================================================================== */
+/* REVIEW 4                                                              */
+/* ===================================================================== */
+/* title: no extra PLAY label over the play art */
+.dsPlay{display:none!important}
+/* story: the narrator is voice only (no caption box), no progress dots, no NEXT button (the story moves on by itself after each line) */
+/* the narrator's line box stays laid out but unseen: the story's own auto-advance needs its (hidden) NEXT to have a box */
+html:root body #story.narrline #ssub,html.portrait:root body #story.narrline #ssub{display:flex!important;visibility:hidden!important;pointer-events:none!important}
+html:root body .r3cap{display:none!important}
+html:root body .dsDots,html:root body .dsStep{display:none!important}
+html:root body #story #sNext{position:absolute!important;width:1px!important;height:1px!important;min-width:0!important;padding:0!important;margin:0!important;border:0!important;
+  opacity:0!important;pointer-events:none!important;overflow:hidden!important;clip-path:inset(50%)!important;box-shadow:none!important}
+/* Level 2 story: no spotlight on the speaker */
+html:root body.l2page #sspot,html:root body.l2page .sspot{display:none!important}
+/* instruction panel: no name tab; the words a little smaller */
+html:root body:not(#ds) :is(#app>.card,.tut .talk)::before{content:none!important;display:none!important}
+html:root body:not(#ds) :is(#say,#tutLine),html:root body:not(#ds) .story #ssub p{font-size:max(21px,calc(19px / var(--z,1)))!important;line-height:1.28!important}
+@media (max-width:600px){ html:root body:not(#ds) :is(#say,#tutLine),html:root body:not(#ds) .story #ssub p{font-size:max(18px,calc(16px / var(--z,1)))!important} }
+/* the lesson banner grows with its words, so two lines never spill over its rim */
+html:root body:not(#ds) .tut .talk{height:auto!important;max-height:none!important;min-height:64px!important;padding-top:12px!important;padding-bottom:12px!important;overflow:visible!important}
+html:root body:not(#ds) .tut .talk #tutLine{margin:0!important;overflow:visible!important;max-height:none!important}
+
+/* spotlight ring: steady (no growing pulse, no twinkles), and it stands out on light wood as well as dark:
+   a white inner line, a bold tomato ring and a dark-wood outline, with a soft breathing glow only */
+.dsRing{scale:1!important;transition:opacity var(--t-med) var(--ease)!important;
+  box-shadow:inset 0 0 0 3px var(--c-white),0 0 0 4px var(--accent),0 0 0 7px var(--c-wood-900),0 0 18px 6px rgba(217,74,46,.35)!important}
+.dsRing.on{animation:dsRingGlow 1.8s ease-in-out infinite!important}
+.dsRing::before,.dsRing::after{content:none!important;display:none!important}
+@keyframes dsRingGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,200,61,0))}50%{filter:drop-shadow(0 0 8px rgba(255,200,61,.95))}}
+@media (prefers-reduced-motion: reduce){ .dsRing.on{animation:none!important} }
+
+/* Level 2 "who ate more?": the choice is each plate. A soft round pool of light under both, and the one under the
+   finger lifts with a glowing cheese-yellow rim round the plate itself (no hard boxes, no glow on the whole column) */
+html:root body .view .side.pick:hover{box-shadow:none!important;transform:none!important}
+html:root body .spotlay .pool{border-radius:50%!important;box-shadow:none!important;
+  background:radial-gradient(closest-side,rgba(255,236,170,.38),rgba(255,226,140,.18) 70%,rgba(255,226,140,0))!important;animation:dsPool 2.4s ease-in-out infinite!important}
+@keyframes dsPool{50%{opacity:.7}}
+html:root body .side.pick .plate{transition:scale var(--t-med) var(--ease),filter var(--t-med) var(--ease)!important}
+html:root body .side.pick .plate>img{transition:filter var(--t-med) var(--ease)!important}
+html:root body .side.pick:is(:hover,:focus-visible) .plate{scale:1.05}
+html:root body .side.pick:is(:hover,:focus-visible) .plate>img{filter:drop-shadow(0 0 0 var(--highlight)) drop-shadow(0 0 4px var(--highlight)) drop-shadow(0 0 14px rgba(255,200,61,.9))!important}
+html:root body .side.pick .ava{animation:dsBob 1.6s ease-in-out infinite}
+html:root body .side.b.pick .ava{animation-delay:.8s}
+@keyframes dsBob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@media (prefers-reduced-motion: reduce){ html:root body .side.pick .ava{animation:none} }
