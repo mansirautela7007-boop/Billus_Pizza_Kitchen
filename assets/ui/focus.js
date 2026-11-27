@@ -55,25 +55,17 @@ window.DSSpot={cue,hand};
 /* any tap clears the dim (the child has seen it); the hand's ring stays while the hand does */
 document.addEventListener("pointerdown",()=>{ if(cue.on) cue.hide(); },true);
 
-/* the pointing hand: whatever it points at gets the ring too */
-{ const p0=window.pointAt; if(typeof p0==="function") window.pointAt=function(el,...a){ const r=p0.call(this,el,...a); if(el) hand.show([el],{ms:0}); else hand.hide(); return r; }; }
-{ const u0=window.unpoint; if(typeof u0==="function") window.unpoint=function(...a){ hand.hide(); return u0.apply(this,a); }; }
+/* review 4: no ring round what the hand points at (the hand is enough) */
+
 
 const once=new Set();   // a cue that should only spotlight the first time it comes up for this question
 const qkey=()=>typeof S==="object"&&S?(S.lv||"")+":"+S.i:"";
 
 if(PAGE==="l1"){
   const tile=()=>document.querySelector("#slip .oc-fr");
-  /* a new customer: their order's fraction is what to read first */
-  { const f=window.showCustomer; if(typeof f==="function") window.showCustomer=function(...a){ const r=f.apply(this,a);
-      setTimeout(()=>{ if(inGame()&&!(S.tut&&S.tut.guided)) cue.show([tile()],{ms:2600}); },450); return r; }; }
-  /* a number on the order is being talked about */
-  { const f=window.blinkNum; if(typeof f==="function") window.blinkNum=function(...a){ const r=f.apply(this,a); if(inGame()&&!cue.on) cue.show([tile()],{ms:1800,dim:false}); return r; }; }
+  /* review 4: no spotlight for a new order or a number being read out: only when the child needs help */
   /* "Pick a topping first!": the bowls */
   { const f=window.showHint; if(typeof f==="function") window.showHint=function(...a){ const r=f.apply(this,a); if(inGame()) cue.next([$("slots")],{ms:2400},()=>inGame()&&S.phase==="top"&&!S.topping); return r; }; }
-  /* the right number of parts topped: CHECK, once per order */
-  setInterval(()=>{ const d=$("done"); if(!d||!inGame()||paused()||typeof S!=="object") return;
-    if(S.phase==="top"&&d.classList.contains("r3pulse")&&!d.hidden&&d.getClientRects().length&&!once.has("chk"+qkey())){ once.add("chk"+qkey()); cue.next([d],{ms:1800,dim:false},()=>d.classList.contains("r3pulse")&&!d.hidden); } },200);
   /* a second wrong try: back to the order's top number */
   { const f=window.miss; if(typeof f==="function") window.miss=function(...a){ const r=f.apply(this,a); if(typeof S==="object"&&S.tw>=2) setTimeout(()=>cue.show([tile()],{ms:2600}),200); return r; }; }
 }
@@ -83,18 +75,8 @@ if(PAGE==="l2"){
   { const f=window.bump; let pend=[], tm=0;
     if(typeof f==="function") window.bump=function(el,cls,...a){ const r=f.call(this,el,cls,...a);
       if(cls==="blink"&&el&&inGame()){ pend.push(el.closest(".eat>span.ate")||el); clearTimeout(tm); tm=setTimeout(()=>{ cue.show([...new Set(pend)],{ms:2200}); pend=[]; },60); } return r; }; }
-  /* the rule to compare by: both fractions */
-  { const f=window.hiRule; if(typeof f==="function") window.hiRule=function(...a){ const r=f.apply(this,a); if(inGame()) cue.show([tileOf("a"),tileOf("b")],{ms:2600}); return r; }; }
-  /* each new match opens with a look at the two fractions */
-  setInterval(()=>{ if(typeof S!=="object"||!S||!inGame()||paused()) return; const st=typeof STEPS!=="undefined"&&STEPS[S.i];
-    if(st&&st.kind==="match"&&S.phase==="build"&&!once.has("m"+S.i)){ once.add("m"+S.i); setTimeout(()=>{ if(S.phase==="build") cue.show([tileOf("a"),tileOf("b")],{ms:2400}); },700); } },250);
 }
-/* lessons (both levels): the fraction card being talked about */
-{ const learn=()=>document.querySelector("#tutLearn,#t2learn");
-  new MutationObserver(ms=>{ const tu=$("tut"); if(!tu||tu.hidden) return;
-    for(const m of ms){ const el=m.target; if(!(el instanceof Element)||!el.classList.contains("hi")||m.oldValue&&/\bhi\b/.test(m.oldValue)) continue;
-      if(el.closest("#tutLearn,#t2learn")&&el.matches(".lf,.l2f,.tag,.lleft")){ cue.show([el],{ms:1800}); break; } } })
-    .observe(document.body,{subtree:true,attributes:true,attributeFilter:["class"],attributeOldValue:true}); }
+/* review 4: no spotlights in the lessons (the lesson's own highlights are enough) */
 
 /* =====================================================================================
    2. VOICE: within one level, a line's voice plays only the first time it comes up.

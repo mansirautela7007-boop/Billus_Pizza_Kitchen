@@ -563,3 +563,15 @@ html:root body .side.pick .ava{animation:dsBob 1.6s ease-in-out infinite}
 html:root body .side.b.pick .ava{animation-delay:.8s}
 @keyframes dsBob{0%,100%{translate:0 0}50%{translate:0 -6px}}
 @media (prefers-reduced-motion: reduce){ html:root body .side.pick .ava{animation:none} }
+
+/* ===================================================================== */
+/* REVIEW 5                                                              */
+/* ===================================================================== */
+/* story: no NEXT anywhere (the story moves on by itself after each line; BACK and Pause stay) */
+html:root body:has(#story:not([hidden])) #pcNext{display:none!important}
+/* no speaker spotlight in either story, and no dark dim behind Level 2's choices (the soft pools of light stay) */
+html:root body #sspot,html:root body .sspot{display:none!important}
+html:root body .spotlay .dk{display:none!important}
+/* music on / off: always there, bottom right beside QA, in the story, the lessons and the game */
+html:root body.tutoring .top>#bgmBtn,html:root body .top>#bgmBtn{visibility:visible!important;pointer-events:auto!important;opacity:1!important}
+html:root body #bgmBtn.off{filter:saturate(.35) brightness(.9) drop-shadow(0 4px 5px rgba(50,25,0,.4))!important}

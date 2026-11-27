@@ -77,16 +77,24 @@ function paintTops(){ if(typeof PZ==="undefined"||typeof S!=="object") return;
 { const s0=window.serve; if(PAGE==="l1"&&typeof s0==="function") window.serve=function(...a){ PZ.querySelectorAll(".part.dsTop").forEach(p=>p.classList.remove("dsTop")); return s0.apply(this,a); }; }
 
 /* ---------- lesson "serve" slides: "Left" sits under the board's pizza, "Served" under the plate, both on one line ---------- */
+/* review 4: each label takes its final place the moment it appears (it used to pop in at its own height and then
+   jump to line up with the other one). The pop-in only scales a label about its centre, so the centre gives the
+   resting place even mid-animation; the shared line is the lowest of the labels seen so far on this slide. */
+let serveLine={slide:null,y:-Infinity};
 function alignServeLabels(){
-  const ll=[...document.querySelectorAll(".tut .learn.serveplate .lleft")]; if(ll.length!==2) return;
-  if(ll.some(e=>e.getAnimations().some(an=>an.playState==="running"))) return;   // wait for the pop-in to finish
-  ll.forEach(e=>e.style.removeProperty("translate"));
+  const ll=[...document.querySelectorAll(".tut .learn.serveplate .lleft")].filter(e=>e.getClientRects().length); if(!ll.length) return;
+  const slide=ll[0].closest(".learn"); if(serveLine.slide!==slide||!slide.isConnected) serveLine={slide,y:-Infinity};
   const anchor=e=>e.closest(".lplw")?$("lPl"):(e.closest(".lsp")||e.parentNode).querySelector("svg")||e.parentNode;
-  const r=ll.map(e=>e.getBoundingClientRect()), a=ll.map(e=>anchor(e).getBoundingClientRect());
-  if(!(r[0].right<=r[1].left||r[1].right<=r[0].left)) return;   // stacked (narrow screens): leave them be
-  const y=Math.max(r[0].top,r[1].top);
-  ll.forEach((e,k)=>{ const dx=(a[k].left+a[k].width/2)-(r[k].left+r[k].width/2); e.style.setProperty("translate",`calc(-50% + ${dx.toFixed(1)}px) ${(y-r[k].top).toFixed(1)}px`,"important"); }); }
-setInterval(alignServeLabels,200); addEventListener("resize",alignServeLabels);
+  const nat=ll.map(e=>{ const old=e.style.getPropertyValue("translate"); e.style.removeProperty("translate");
+    const r=e.getBoundingClientRect(), cy=r.top+r.height/2, h=e.offsetHeight||r.height;
+    if(old) e.style.setProperty("translate",old,"important");
+    return {top:cy-h/2,cx:r.left+r.width/2,w:e.offsetWidth||r.width}; });
+  if(ll.length===2&&!(nat[0].cx+nat[0].w/2<=nat[1].cx-nat[1].w/2||nat[1].cx+nat[1].w/2<=nat[0].cx-nat[0].w/2)) return;   // stacked (narrow screens): leave them be
+  nat.forEach(n=>{ if(n.top>serveLine.y) serveLine.y=n.top; });
+  ll.forEach((e,k)=>{ const a=anchor(e).getBoundingClientRect(), dx=(a.left+a.width/2)-nat[k].cx, dy=serveLine.y-nat[k].top;
+    const want=`calc(-50% + ${dx.toFixed(1)}px) ${dy.toFixed(1)}px`; if(e.style.getPropertyValue("translate")!==want) e.style.setProperty("translate",want,"important"); }); }
+setInterval(alignServeLabels,60); addEventListener("resize",()=>{ serveLine.y=-Infinity; alignServeLabels(); });
+new MutationObserver(()=>alignServeLabels()).observe(document.body,{subtree:true,childList:true});
 
 /* ---------- instruction panel: the speaker's name tab, a slide-in for each new line, one gentle shake for "try again" ---------- */
 const NICE={noori:"Noori",billu:"Billu",billu_idle:"Billu",chintu_face:"Chintu",chintu_full:"Chintu"};
